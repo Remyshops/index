@@ -347,6 +347,46 @@
   }
   .video-item:hover{ border-color:var(--drop); }
   .video-item svg{width:18px; height:18px; fill:var(--drop); flex-shrink:0;}
+
+  /* ---------- inline video player overlay ---------- */
+  .video-overlay{
+    position:fixed; inset:0;
+    background:rgba(3,10,11,0.88);
+    backdrop-filter:blur(3px);
+    display:none;
+    align-items:center; justify-content:center;
+    z-index:60;
+    padding:16px;
+  }
+  .video-overlay.show{ display:flex; }
+  .video-player-box{
+    position:relative;
+    width:100%;
+    max-width:720px;
+  }
+  .video-frame-wrap{
+    position:relative;
+    width:100%;
+    padding-top:56.25%; /* نسبت 16:9 */
+    background:#000;
+    border-radius:12px;
+    overflow:hidden;
+  }
+  .video-frame-wrap iframe{
+    position:absolute;
+    top:0; left:0;
+    width:100%; height:100%;
+    border:0;
+  }
+  .video-close-btn{
+    position:absolute;
+    top:-40px; left:0;
+    color:#ffffff;
+    font-size:28px;
+    background:none;
+    border:none;
+    cursor:pointer;
+  }
   .modal-note{
     margin-top:14px;
     font-size:11.5px;
@@ -553,6 +593,44 @@
   .catalog-intro ul{ list-style:none; }
   .catalog-intro li{ padding:3px 0; }
 
+  /* ---------- catalog attention animation ---------- */
+  #catalogSection .drop{
+    animation: pulseDrop 1.8s ease-in-out infinite;
+  }
+  @keyframes pulseDrop{
+    0%{ box-shadow:0 0 0 0 rgba(10,79,219,0.55); }
+    70%{ box-shadow:0 0 0 12px rgba(10,79,219,0); }
+    100%{ box-shadow:0 0 0 0 rgba(10,79,219,0); }
+  }
+  #catalogSection h2{
+    background:linear-gradient(90deg, var(--drop), var(--drop-2), var(--drop), var(--drop-2));
+    background-size:300% auto;
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    -webkit-text-fill-color:transparent;
+    animation: shimmerText 4s linear infinite;
+  }
+  #catalogSection h2 span{
+    -webkit-text-fill-color:currentColor;
+  }
+  @keyframes shimmerText{
+    0%{ background-position:0% center; }
+    100%{ background-position:300% center; }
+  }
+  .catalog-hint{
+    text-align:center;
+    font-size:14px;
+    font-weight:700;
+    color:var(--drop);
+    margin-bottom:14px;
+    animation: hintBounce 1.5s ease-in-out infinite;
+  }
+  @keyframes hintBounce{
+    0%,100%{ transform:translateY(0); }
+    50%{ transform:translateY(7px); }
+  }
+
   /* ---------- why test section ---------- */
   .why-test{
     display:grid;
@@ -589,14 +667,14 @@
     left:18px; bottom:18px;
     z-index:40;
     display:flex; align-items:center; gap:8px;
-    background:linear-gradient(135deg, var(--orange), var(--orange-2));
+    background:linear-gradient(135deg, var(--green), var(--green-2));
     color:#ffffff;
     font-weight:700;
     font-size:13.5px;
     padding:13px 18px;
     border-radius:100px;
     text-decoration:none;
-    box-shadow:0 4px 16px rgba(247,147,30,0.4);
+    box-shadow:0 4px 16px rgba(22,163,74,0.4);
     transition:transform .2s;
   }
   .floating-wa:hover{ transform:translateY(-2px); }
@@ -680,6 +758,8 @@
 
   <div class="cat-tabs" id="catTabs"></div>
 
+  <div class="catalog-hint">👇 محصولات رو ببین و روشون بزن 👇</div>
+
   <div class="search-box">
     <input type="text" id="searchInput" placeholder="جستجوی نام محصول...">
   </div>
@@ -702,7 +782,7 @@
   <!-- ================= END CTA ================= -->
   <div class="end-cta">
     <h3>هنوز محصول مورد نظرت را پیدا نکردی؟</h3>
-    <p>در واتساپ پیام بده و مشاوره رایگان دریافت کن</p>
+    <p>در ایتا پیام بده و مشاوره رایگان دریافت کن</p>
     <a href="https://eitaa.com/EZGAMETV" target="_blank" rel="noopener" class="btn-cta green" style="background:linear-gradient(135deg, var(--orange), var(--orange-2));">📱 پیام در ایتا</a>
   </div>
 
@@ -716,7 +796,7 @@
 <!-- ================= FLOATING WHATSAPP ================= -->
 <a class="floating-wa" href="https://eitaa.com/EZGAMETV" target="_blank" rel="noopener">
   <svg viewBox="0 0 24 24"><path d="M21.9 4.3 2.7 11.8c-.9.4-.9 1.6.1 1.9l4.6 1.5 1.8 5.7c.2.7 1.1.9 1.6.3l2.5-2.8 4.8 3.5c.7.5 1.7.1 1.9-.7l3.1-14.8c.2-1-.9-1.7-1.7-1.2zM8.7 14.6l9-6.2c.2-.1.4.1.2.3l-7.4 7.1c-.3.3-.5.7-.6 1.1l-.3 2.4-.9-4.7z"/></svg>
-  سفارش در ایتا
+  مشاوره رایگان
 </a>
 
 <!-- ================= MODAL ================= -->
@@ -729,6 +809,16 @@
     <div id="videoList"></div>
     <a href="https://basalam.com/editor" target="_blank" rel="noopener" class="order-here" id="orderLink">ثبت سفارش در باسلام</a>
     <div class="modal-note">لینک ویدیوها نمونه هستند — کافیه در کد، آدرس واقعی ویدیوهای هر محصول رو جایگزین کنید.</div>
+  </div>
+</div>
+
+<!-- ================= VIDEO PLAYER ================= -->
+<div class="video-overlay" id="videoOverlay">
+  <div class="video-player-box">
+    <button class="close-btn video-close-btn" id="closeVideoPlayer">×</button>
+    <div class="video-frame-wrap">
+      <iframe id="videoFrame" src="" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+    </div>
   </div>
 </div>
 
@@ -927,6 +1017,30 @@ const modalTitle = document.getElementById('modalTitle');
 const videoList = document.getElementById('videoList');
 const orderLink = document.getElementById('orderLink');
 const catTabs = document.getElementById('catTabs');
+const videoOverlay = document.getElementById('videoOverlay');
+const videoFrame = document.getElementById('videoFrame');
+
+/* تبدیل لینک صفحه ویدیوی آپارات به لینک embed (پلیر خام بدون صفحه سایت) */
+function toAparatEmbed(url){
+  const match = url.match(/\/v\/([a-zA-Z0-9]+)/);
+  if (match){
+    return `https://www.aparat.com/video/video/embed/videohash/${match[1]}/vt/frame`;
+  }
+  return url; // اگه فرمت لینک آپارات نبود، همون لینک اصلی رو برمی‌گردونه
+}
+
+function openVideoPlayer(url){
+  videoFrame.src = toAparatEmbed(url);
+  videoOverlay.classList.add('show');
+}
+
+function closeVideoPlayerFn(){
+  videoOverlay.classList.remove('show');
+  videoFrame.src = ""; // پخش ویدیو متوقف بشه
+}
+
+document.getElementById('closeVideoPlayer').addEventListener('click', closeVideoPlayerFn);
+videoOverlay.addEventListener('click', (e)=>{ if(e.target === videoOverlay) closeVideoPlayerFn(); });
 
 let activeCat = "همه";
 
@@ -996,7 +1110,7 @@ function renderSimpleCats(filter=""){
       block.className = "simple-block";
       const label = cat.introLabel || "ویدیوی تست";
       const videoLinks = cat.videoUrls.map((url,i)=>
-        `<a class="test-link" href="${url}" target="_blank" rel="noopener">🎬 ${label}${cat.videoUrls.length>1 ? ' '+(i+1) : ''}</a>`
+        `<a class="test-link" href="#" onclick="openVideoPlayer('${url}'); return false;">🎬 ${label}${cat.videoUrls.length>1 ? ' '+(i+1) : ''}</a>`
       ).join("");
       block.innerHTML = `
         <h3><span class="drop"></span>${cat.title}</h3>
@@ -1017,10 +1131,12 @@ function openModal(p){
   p.videos.forEach(v=>{
     const a = document.createElement('a');
     a.className = "video-item";
-    a.href = v.url;
-    a.target = "_blank";
-    a.rel = "noopener";
+    a.href = "#";
     a.innerHTML = `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>${v.label}`;
+    a.addEventListener('click', (e)=>{
+      e.preventDefault();
+      openVideoPlayer(v.url);
+    });
     videoList.appendChild(a);
   });
   orderLink.href = p.buyUrl || DEFAULT_BUY_URL;

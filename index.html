@@ -225,6 +225,50 @@
     display:none;
   }
 
+  /* ---------- best sellers ---------- */
+  .best-scroll{
+    display:flex;
+    gap:12px;
+    overflow-x:auto;
+    padding:4px 2px 14px;
+    scroll-snap-type:x proximity;
+  }
+  .best-scroll::-webkit-scrollbar{ height:6px; }
+  .best-scroll::-webkit-scrollbar-thumb{ background:var(--silver); border-radius:10px; }
+  .best-card{
+    position:relative;
+    flex:0 0 auto;
+    width:150px;
+    background:linear-gradient(160deg, var(--surface), var(--surface-2));
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:16px 14px 14px;
+    cursor:pointer;
+    scroll-snap-align:start;
+    box-shadow:0 3px 10px rgba(10,79,219,0.1);
+    transition:border-color .25s, transform .2s, box-shadow .25s;
+  }
+  .best-card:hover{ border-color:var(--drop); transform:translateY(-3px); }
+  .best-badge{
+    position:absolute;
+    top:-9px; right:12px;
+    background:linear-gradient(135deg, var(--drop), var(--drop-2));
+    color:#fff;
+    font-size:10.5px;
+    font-weight:700;
+    padding:3px 9px;
+    border-radius:100px;
+    box-shadow:0 2px 6px rgba(10,79,219,0.35);
+  }
+  .best-card .pname{
+    font-size:13.5px;
+    font-weight:700;
+    margin-top:6px;
+    line-height:1.5;
+  }
+  .best-card .pcount{ font-size:11.5px; color:var(--muted); display:flex; align-items:center; gap:6px; margin-top:8px; }
+  .best-card .pcount .drop{width:6px; height:6px;}
+
   /* ---------- modal ---------- */
   .overlay{
     position:fixed; inset:0;
@@ -437,6 +481,11 @@
     </div>
     <a class="save-contact" id="saveContact" href="#">+ ذخیره در مخاطبین</a>
   </header>
+
+  <!-- ================= BEST SELLERS ================= -->
+  <div class="section-title"><span class="drop"></span><h2>پرفروش‌ترین‌ها</h2><span class="line"></span></div>
+  <div class="section-sub">محبوب‌ترین محصولات بین مشتری‌ها — بزنید و ویدیوهای تست رو ببینید</div>
+  <div class="best-scroll" id="bestSellersRow"></div>
 
   <!-- ================= CATALOG ================= -->
   <div class="section-title"><span class="drop"></span><h2>کاتالوگ هوشمند <span class="gplus-logo"><span class="gplus-g">G<span class="gplus-plus-sign">+</span></span><span class="gplus-word">plus</span></span> | همراه با <span class="highlight-blue">ویدیو معرفی</span> و <span class="highlight-blue">تست محصولات</span></h2><span class="line"></span></div>
@@ -658,6 +707,18 @@ const simpleCategories = [
 
 const categories = ["همه","خانگی","خودرویی","واکس","عطر","ادکلن","خوشبو کننده","واکس چرم"];
 
+/* پرفروش‌ترین‌ها — دقیقاً باید با name محصول در آرایه products بالا یکی باشه.
+   اگه اسم محصولی رو عوض کردید، اینجا رو هم به‌روز کنید. */
+const bestSellerNames = [
+  "نانو چند منظوره خانگی",
+  "پاک کننده مبل، فرش و پارچه",
+  "پاک کننده چند منظوره خودرو",
+  "براق کننده چراغ",
+  "بلک مجیک",
+  "پاک کننده پارکت و سرامیک",
+  "پاک کننده سینک و شیر آلات"
+];
+
 const DEFAULT_BUY_URL = "https://basalam.com/editor";
 const grid = document.getElementById('productGrid');
 const noResult = document.getElementById('noResult');
@@ -704,6 +765,22 @@ function renderGrid(filter=""){
     .some(cat => cat.items.some(name => name.toLowerCase().includes(f)));
   noResult.style.display = (list.length || simpleMatches) ? "none" : "block";
   renderSimpleCats(f);
+}
+
+function renderBestSellers(){
+  const row = document.getElementById('bestSellersRow');
+  row.innerHTML = "";
+  bestSellerNames.forEach(name=>{
+    const p = products.find(pr => pr.name === name);
+    if(!p) return;
+    const card = document.createElement('div');
+    card.className = "best-card";
+    card.innerHTML = `<span class="best-badge">پرفروش</span>
+      <div class="pname">${p.name}</div>
+      <div class="pcount"><span class="drop"></span>${p.videos.length} ویدیوی تست</div>`;
+    card.addEventListener('click', ()=> openModal(p));
+    row.appendChild(card);
+  });
 }
 
 const simpleCatsWrap = document.getElementById('simpleCatsWrap');
@@ -774,6 +851,7 @@ END:VCARD`;
 
 renderTabs();
 renderGrid();
+renderBestSellers();
 </script>
 
 </body>

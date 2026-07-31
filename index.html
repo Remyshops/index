@@ -213,6 +213,16 @@
   }
   .card:hover::after{ right:130%; }
   .card:hover{ border-color:var(--drop); transform:translateY(-2px); }
+  .card .thumb{
+    width:100%;
+    aspect-ratio:1/1;
+    border-radius:10px;
+    overflow:hidden;
+    background:#fff;
+    margin-bottom:10px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .card .thumb img{ width:100%; height:100%; object-fit:contain; display:block; }
   .card .pname{ font-size:14.5px; font-weight:700; margin-bottom:6px; }
   .card .pcount{ font-size:12px; color:var(--muted); display:flex; align-items:center; gap:6px; }
   .card .pcount .drop{width:7px; height:7px;}
@@ -249,6 +259,15 @@
     transition:border-color .25s, transform .2s, box-shadow .25s;
   }
   .best-card:hover{ border-color:var(--drop); transform:translateY(-3px); }
+  .best-card .thumb{
+    width:100%;
+    aspect-ratio:1/1;
+    border-radius:8px;
+    overflow:hidden;
+    background:#fff;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .best-card .thumb img{ width:100%; height:100%; object-fit:contain; display:block; }
   .best-badge{
     position:absolute;
     top:-9px; right:12px;
@@ -294,6 +313,16 @@
     margin-bottom:16px;
   }
   .modal-head h3{ font-size:17px; }
+  .modal-thumb{
+    width:100%;
+    aspect-ratio:4/3;
+    border-radius:12px;
+    overflow:hidden;
+    background:#fff;
+    margin-bottom:14px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .modal-thumb img{ width:100%; height:100%; object-fit:contain; display:block; }
   .close-btn{
     background:none; border:none; color:var(--muted);
     font-size:22px; cursor:pointer; line-height:1;
@@ -397,6 +426,29 @@
     display:flex; align-items:center; gap:8px;
   }
   .simple-block h3 .drop{width:9px; height:9px;}
+  .cat-thumb{
+    width:100%;
+    max-height:150px;
+    border-radius:10px;
+    overflow:hidden;
+    background:#fff;
+    margin-bottom:12px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .cat-thumb img{ width:100%; height:100%; object-fit:contain; display:block; max-height:150px; }
+  .simple-items li.has-thumb{
+    display:flex; align-items:center; gap:10px;
+  }
+  .item-thumb{
+    flex-shrink:0;
+    width:38px; height:38px;
+    border-radius:8px;
+    overflow:hidden;
+    background:#fff;
+    display:flex; align-items:center; justify-content:center;
+    border:1px solid var(--line);
+  }
+  .item-thumb img{ width:100%; height:100%; object-fit:contain; display:block; }
   .simple-items{
     list-style:none;
     margin-bottom:14px;
@@ -543,6 +595,7 @@
       <h3 id="modalTitle">نام محصول</h3>
       <button class="close-btn" id="closeModal">×</button>
     </div>
+    <div id="modalThumbWrap"></div>
     <div id="videoList"></div>
     <a href="https://basalam.com/editor" target="_blank" rel="noopener" class="order-here" id="orderLink">ثبت سفارش در باسلام</a>
     <div class="modal-note">لینک ویدیوها نمونه هستند — کافیه در کد، آدرس واقعی ویدیوهای هر محصول رو جایگزین کنید.</div>
@@ -569,13 +622,13 @@
    لینک هر ویدیو رو با آدرس واقعی (یوتیوب/آپارات/درایو) جایگزین کنید.
 ========================================================= */
 const products = [
-  { name:"نانو چند منظوره خانگی", cat:"خانگی", buyUrl:"https://basalam.com/editor/product/41543803", videos:[
+  { name:"نانو چند منظوره خانگی", cat:"خانگی", buyUrl:"https://basalam.com/editor/product/41543803", img:"home-multi-cleaner.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://www.aparat.com/v/sva419y"},
     {label:"ویدیوی تست ۲", url:"https://www.aparat.com/v/mfq9184"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/jcs280x"},
     {label:"ویدیوی تست ۴", url:"https://aparat.com/v/wjmg0qy"}
   ]},
-  { name:"پاک کننده گاز", cat:"خانگی", buyUrl:"https://basalam.com/editor/product/42580333", videos:[
+  { name:"پاک کننده گاز", cat:"خانگی", buyUrl:"https://basalam.com/editor/product/42580333", img:"gas-stove-cleaner.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/gzrk14y"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/jdcm071"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/xulf06h"},
@@ -583,7 +636,7 @@ const products = [
     {label:"ویدیوی تست ۵", url:"https://www.aparat.com/v/ytrk65j"},
     {label:"ویدیوی تست ۶", url:"https://aparat.com/v/via8xqj"}
   ]},
-  { name:"پاک کننده سینک و شیر آلات", cat:"خانگی", buyUrl:"https://basalam.com/editor/product/42580846", videos:[
+  { name:"پاک کننده سینک و شیر آلات", cat:"خانگی", buyUrl:"https://basalam.com/editor/product/42580846", img:"sink-faucet-cleaner.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/pvj4ouv"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/rhcb4ko"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/wmv7rt5"},
@@ -593,7 +646,7 @@ const products = [
     {label:"ویدیوی تست ۷", url:"https://aparat.com/v/sxmx2bh"},
     {label:"ویدیوی تست ۸", url:"https://aparat.com/v/vko9q15"}
   ]},
-  { name:"پاک کننده مبل، فرش و پارچه", cat:"خانگی", buyUrl:"https://basalam.com/editor/product/42619107", videos:[
+  { name:"پاک کننده مبل، فرش و پارچه", cat:"خانگی", buyUrl:"https://basalam.com/editor/product/42619107", img:"sofa-carpet-cleaner.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/nrhp775"},
     {label:"ویدیوی تست ۲", url:"https://www.aparat.com/v/dgw87vw"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/kbgzbo9"},
@@ -602,50 +655,50 @@ const products = [
     {label:"ویدیوی تست ۶", url:"https://www.aparat.com/v/zju3eu2"},
     {label:"ویدیوی تست ۷", url:"https://www.aparat.com/v/lrs7eug"}
   ]},
-  { name:"پاک کننده ال ای دی و صفحه نمایش", cat:"خانگی", buyUrl:"https://basalam.com/editor/product/44743589", videos:[
+  { name:"پاک کننده ال ای دی و صفحه نمایش", cat:"خانگی", buyUrl:"https://basalam.com/editor/product/44743589", img:"led-screen-cleaner.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/zwal0vo"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/mric64p"},
     {label:"ویدیوی تست ۳", url:"https://www.aparat.com/v/zojwtss"}
   ]},
-  { name:"پاک کننده کاغذ دیواری", cat:"خانگی", buyUrl:"https://basalam.com/editor/product/42619327", videos:[
+  { name:"پاک کننده کاغذ دیواری", cat:"خانگی", buyUrl:"https://basalam.com/editor/product/42619327", img:"wallpaper-cleaner.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/pkbssva"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/ehf1x23"}
   ]},
-  { name:"پاک کننده پارکت و سرامیک", cat:"خانگی", buyUrl:"https://basalam.com/editor/product/42619670", videos:[
+  { name:"پاک کننده پارکت و سرامیک", cat:"خانگی", buyUrl:"https://basalam.com/editor/product/42619670", img:"tile-ceramic-cleaner.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/vqaspq1"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/xxi4uu9"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/hcnyubl"},
     {label:"ویدیوی تست ۴", url:"https://aparat.com/v/rgq0r6r"},
     {label:"ویدیوی تست ۵", url:"https://aparat.com/v/ridvud3"}
   ]},
-  { name:"واکس مات کننده لاستیک", cat:"واکس", buyUrl:"https://basalam.com/editor", videos:[
+  { name:"واکس مات کننده لاستیک", cat:"واکس", buyUrl:"https://basalam.com/editor", img:"tire-matte.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/kssq96r"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/zaubx68"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/smu8d4q"},
     {label:"ویدیوی تست ۴", url:"https://aparat.com/v/kqo7a41"},
     {label:"ویدیوی تست ۵", url:"https://aparat.com/v/wxx97h8"}
   ]},
-  { name:"واکس براق کننده لاستیک ( براق شاین)", cat:"واکس", buyUrl:"https://basalam.com/editor/", videos:[
+  { name:"واکس براق کننده لاستیک ( براق شاین)", cat:"واکس", buyUrl:"https://basalam.com/editor/", img:"black-shine.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/lnsddtl"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/mygqm4i"}
   ]},
-  { name:"واکس داشبورد سیلیکونی", cat:"واکس", buyUrl:"https://basalam.com/editor", videos:[
+  { name:"واکس داشبورد سیلیکونی", cat:"واکس", buyUrl:"https://basalam.com/editor", img:"dashboard-silicon-wax.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/gdz1dho"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/ntzk4v2"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/taeax83"}
   ]},
-  { name:"واکس داشبورد غیر سیلیکونی", cat:"واکس", buyUrl:"https://basalam.com/editor", videos:[
+  { name:"واکس داشبورد غیر سیلیکونی", cat:"واکس", buyUrl:"https://basalam.com/editor", img:"dashboard-wax.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://www.aparat.com/v/bla205b"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/phk64x2"}
   ]},
-  { name:"واکس سه کاره لاستیک داشبورد", cat:"واکس", buyUrl:"https://basalam.com/editor/product/44746616", videos:[
+  { name:"واکس سه کاره لاستیک داشبورد", cat:"واکس", buyUrl:"https://basalam.com/editor/product/44746616", img:"tire-dashboard-pro-wax.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/gpiaci8"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/jvz4214"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/uzou08s"},
     {label:"ویدیوی تست ۴", url:"https://aparat.com/v/cops4l1"},
     {label:"ویدیوی تست ۵", url:"https://www.aparat.com/v/merqvd1"}
   ]},
-  { name:"صفر شوی", cat:"خودرویی", buyUrl:"https://basalam.com/editor", videos:[
+  { name:"صفر شوی", cat:"خودرویی", buyUrl:"https://basalam.com/editor", img:"zero-car-wash.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://www.aparat.com/v/hbj049k"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/uee58ek"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/txol3r7"},
@@ -656,50 +709,50 @@ const products = [
     {label:"ویدیوی تست ۸", url:"https://aparat.com/v/ewm1o5w"},
     {label:"ویدیوی تست ۹", url:"https://aparat.com/v/cnog75c"}
   ]},
-  { name:"موتور شوی", cat:"خودرویی", buyUrl:"https://basalam.com/editor", videos:[
+  { name:"موتور شوی", cat:"خودرویی", buyUrl:"https://basalam.com/editor", img:"engine-cleaner.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://www.aparat.com/v/whc79m4"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/zzjjg65"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/wyz8k3k"},
     {label:"ویدیوی تست ۴", url:"https://aparat.com/v/xym0oe3"}
   ]},
-  { name:"رینگ شوی", cat:"خودرویی", buyUrl:"https://basalam.com/editor/product/45139589", videos:[
+  { name:"رینگ شوی", cat:"خودرویی", buyUrl:"https://basalam.com/editor/product/45139589", img:"rim-cleaner.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/osdeza7"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/bvb1n02"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/afvpo38"},
     {label:"ویدیوی تست ۴", url:"https://aparat.com/v/fsl0h32"}
   ]},
-  { name:"پاک کننده چند منظوره خودرو", cat:"خودرویی", buyUrl:"https://basalam.com/editor/product/41546837", videos:[
+  { name:"پاک کننده چند منظوره خودرو", cat:"خودرویی", buyUrl:"https://basalam.com/editor/product/41546837", img:"car-multi-cleaner.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/abso38f"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/ild383c"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/jci2528"},
     {label:"ویدیوی تست ۴", url:"https://aparat.com/v/ajgi3pr"},
     {label:"ویدیوی تست ۵", url:"https://aparat.com/v/ucka454"}
   ]},
-  { name:"شیشه شوی", cat:"خودرویی", buyUrl:"https://basalam.com/editor/product/45139055", videos:[
+  { name:"شیشه شوی", cat:"خودرویی", buyUrl:"https://basalam.com/editor/product/45139055", img:"windshield-cleaner.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/wab9wg9"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/owrkriv"}
   ]},
-  { name:"شامپو بدنه", cat:"خودرویی", buyUrl:"https://basalam.com/editor/product/44745609", videos:[
+  { name:"شامپو بدنه", cat:"خودرویی", buyUrl:"https://basalam.com/editor/product/44745609", img:"car-shampoo.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/vrr7v3g"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/ycq93tk"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/nwg6by3"},
     {label:"ویدیوی تست ۴", url:"https://aparat.com/v/ookw75z"},
     {label:"ویدیوی تست ۵", url:"https://aparat.com/v/lzcm1va"}
   ]},
-  { name:"براق کننده بدنه", cat:"خودرویی", buyUrl:"https://basalam.com/editor/product/44746229", videos:[
+  { name:"براق کننده بدنه", cat:"خودرویی", buyUrl:"https://basalam.com/editor/product/44746229", img:"body-polish.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/dkl8p3k"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/who3822"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/sur87s4"},
     {label:"ویدیوی تست ۴", url:"https://aparat.com/v/nyu9c48"},
     {label:"ویدیوی تست ۵", url:"https://aparat.com/v/asp5fdq"}
   ]},
-  { name:"براق کننده چراغ", cat:"خودرویی", buyUrl:"https://basalam.com/editor/product/41545678", videos:[
+  { name:"براق کننده چراغ", cat:"خودرویی", buyUrl:"https://basalam.com/editor/product/41545678", img:"headlight-polish.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/ver9e1y"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/bdywd36"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/syaky9v"},
     {label:"ویدیوی تست ۴", url:"https://aparat.com/v/mpp598q"}
   ]},
-  { name:"بلک مجیک", cat:"خودرویی", buyUrl:"https://basalam.com/editor/product/51881795", videos:[
+  { name:"بلک مجیک", cat:"خودرویی", buyUrl:"https://basalam.com/editor/product/51881795", img:"black-magic.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/mvz4qd5"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/qza45e0"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/zzmo12s"},
@@ -711,24 +764,24 @@ const products = [
    فقط اسم محصولات + یک ویدیوی تست کلی + یک لینک خرید کلی برای کل دسته.
    کافیه videoUrl و buyUrl هر دسته رو با لینک واقعی جایگزین کنید. */
 const simpleCategories = [
-  { title:"عطر", buyUrl:"https://basalam.com/editor", introLabel:"معرفی عطر", videoUrls:[
+  { title:"عطر", buyUrl:"https://basalam.com/editor", introLabel:"معرفی عطر", catImg:"perfume-set.webp", videoUrls:[
     "https://aparat.com/v/gcn0onx"
   ], items:[
     "عطر با رایحه دانهیل","عطر با رایحه ایفوریا","عطر با رایحه باس من",
     "عطر با رایحه مادام بیوتی","عطر با رایحه لوندر","عطر با رایحه کول فرش"
   ]},
-  { title:"ادکلن", buyUrl:"https://basalam.com/editor", introLabel:"معرفی ادکلن", videoUrls:[
+  { title:"ادکلن", buyUrl:"https://basalam.com/editor", introLabel:"معرفی ادکلن", catImg:"cologne-set.webp", videoUrls:[
     "https://aparat.com/v/myx2f11","https://aparat.com/v/negc5ae"
   ], items:[
     "ادکلن زنانه همراز","ادکلن مردانه کایرا"
   ]},
-  { title:"خوشبو کننده", buyUrl:"https://basalam.com/editor", introLabel:"معرفی خوشبو کننده", videoUrls:[
+  { title:"خوشبو کننده", buyUrl:"https://basalam.com/editor", introLabel:"معرفی خوشبو کننده", catImg:"air-freshener-set.webp", videoUrls:[
     "https://aparat.com/v/ejelu90","https://aparat.com/v/ezjv82d","https://aparat.com/v/phaxsff"
   ], items:[
     "اسپری خوشبوکننده هوا رایحه باس من","اسپری خوشبوکننده هوا رایحه مادام بیوتی",
     "اسپری خوشبوکننده هوا رایحه لاوندر","اسپری خوشبوکننده هوا رایحه کول فرش"
   ]},
-  { title:"واکس چرم", buyUrl:"https://basalam.com/editor", introLabel:"معرفی واکس چرم جی پلاس", videoUrls:[
+  { title:"واکس چرم", buyUrl:"https://basalam.com/editor", introLabel:"معرفی واکس چرم جی پلاس", catImg:"leather-wax.webp", videoUrls:[
     "https://aparat.com/v/rsslhf2"
   ], items:[
     "نانو چرم کیف و کفش بدون جعبه","نانو چرم کیف و کفش با جعبه"
@@ -754,6 +807,7 @@ const grid = document.getElementById('productGrid');
 const noResult = document.getElementById('noResult');
 const overlay = document.getElementById('overlay');
 const modalTitle = document.getElementById('modalTitle');
+const modalThumbWrap = document.getElementById('modalThumbWrap');
 const videoList = document.getElementById('videoList');
 const orderLink = document.getElementById('orderLink');
 const catTabs = document.getElementById('catTabs');
@@ -785,14 +839,15 @@ function renderGrid(filter=""){
   list.forEach(p=>{
     const card = document.createElement('div');
     card.className = "card";
-    card.innerHTML = `<div class="pname">${p.name}</div>
+    const thumb = p.img ? `<div class="thumb"><img src="${p.img}" alt="${p.name}" loading="lazy" decoding="async"></div>` : "";
+    card.innerHTML = `${thumb}<div class="pname">${p.name}</div>
       <div class="pcount"><span class="drop"></span>${p.videos.length} ویدیوی تست</div>`;
     card.addEventListener('click', ()=> openModal(p));
     grid.appendChild(card);
   });
   const simpleMatches = simpleCategories
     .filter(cat => activeCat === "همه" || cat.title === activeCat)
-    .some(cat => cat.items.some(name => name.toLowerCase().includes(f)));
+    .some(cat => cat.items.some(it => (typeof it === "string" ? it : it.name).toLowerCase().includes(f)));
   noResult.style.display = (list.length || simpleMatches) ? "none" : "block";
   renderSimpleCats(f);
 }
@@ -805,7 +860,9 @@ function renderBestSellers(){
     if(!p) return;
     const card = document.createElement('div');
     card.className = "best-card";
+    const thumb = p.img ? `<div class="thumb"><img src="${p.img}" alt="${p.name}" loading="lazy" decoding="async"></div>` : "";
     card.innerHTML = `<span class="best-badge">پرفروش</span>
+      ${thumb}
       <div class="pname">${p.name}</div>
       <div class="pcount"><span class="drop"></span>${p.videos.length} ویدیوی تست</div>`;
     card.addEventListener('click', ()=> openModal(p));
@@ -826,7 +883,7 @@ function renderSimpleCats(filter=""){
   simpleCategories
     .filter(cat => activeCat === "همه" || cat.title === activeCat)
     .forEach(cat=>{
-      const items = cat.items.filter(name => name.toLowerCase().includes(filter));
+      const items = cat.items.filter(it => (typeof it === "string" ? it : it.name).toLowerCase().includes(filter));
       if (!items.length) return;
       const block = document.createElement('div');
       block.className = "simple-block";
@@ -834,10 +891,19 @@ function renderSimpleCats(filter=""){
       const videoLinks = cat.videoUrls.map((url,i)=>
         `<a class="test-link" href="${url}" data-url="${url}" data-label="${label}${cat.videoUrls.length>1 ? ' '+(i+1) : ''}">🎬 ${label}${cat.videoUrls.length>1 ? ' '+(i+1) : ''}</a>`
       ).join("");
+      const catImgHtml = cat.catImg
+        ? `<div class="cat-thumb"><img src="${cat.catImg}" alt="${cat.title}" loading="lazy" decoding="async"></div>`
+        : "";
+      const itemsHtml = items.map(it=>{
+        if (typeof it === "string") return `<li>${it}</li>`;
+        const thumb = it.img ? `<span class="item-thumb"><img src="${it.img}" alt="${it.name}" loading="lazy" decoding="async"></span>` : "";
+        return `<li class="has-thumb">${thumb}<span>${it.name}</span></li>`;
+      }).join("");
       block.innerHTML = `
         <h3><span class="drop"></span>${cat.title}</h3>
+        ${catImgHtml}
         <ul class="simple-items">
-          ${items.map(name => `<li>${name}</li>`).join("")}
+          ${itemsHtml}
         </ul>
         <div class="simple-links">
           ${videoLinks}
@@ -849,6 +915,9 @@ function renderSimpleCats(filter=""){
 
 function openModal(p){
   modalTitle.textContent = p.name;
+  modalThumbWrap.innerHTML = p.img
+    ? `<div class="modal-thumb"><img src="${p.img}" alt="${p.name}" loading="lazy" decoding="async"></div>`
+    : "";
   videoList.innerHTML = "";
   p.videos.forEach(v=>{
     const a = document.createElement('a');

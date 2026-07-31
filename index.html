@@ -3,8 +3,39 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>رمی شاپ | پخش محصولات نانو</title>
-<meta name="description" content="رمی شاپ - پخش محصولات نانو، غیاث مدرسی. مشاهده ویدیوهای تست محصولات و ثبت سفارش مستقیم از طریق واتساپ.">
+<title>رمی شاپ | تست واقعی محصولات نانو قبل از خرید</title>
+<meta name="description" content="رمی شاپ - پخش محصولات نانو، غیاث مدرسی. بیش از ۱۰۰ ویدیوی تست واقعی محصولات، قبل از خرید ببینید و مستقیم از واتساپ سفارش دهید.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://remyshop.ir/">
+<meta name="theme-color" content="#0a4fdb">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fa_IR">
+<meta property="og:title" content="رمی شاپ | تست واقعی محصولات نانو قبل از خرید">
+<meta property="og:description" content="بیش از ۱۰۰ ویدیوی تست واقعی محصولات نانو G+Plus — قبل از خرید ببینید، بعد با خیال راحت سفارش دهید.">
+<meta property="og:url" content="https://remyshop.ir/">
+<meta property="og:site_name" content="رمی شاپ">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="رمی شاپ | تست واقعی محصولات نانو قبل از خرید">
+<meta name="twitter:description" content="بیش از ۱۰۰ ویدیوی تست واقعی محصولات نانو G+Plus — قبل از خرید ببینید، بعد با خیال راحت سفارش دهید.">
+
+<!-- Schema.org: Organization -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "رمی شاپ",
+  "description": "پخش محصولات نانو - غیاث مدرسی",
+  "telephone": "+989389561367",
+  "sameAs": [
+    "https://instagram.com/remyshops",
+    "https://eitaa.com/remyshop"
+  ]
+}
+</script>
 <style>
   :root{
     --bg:#ffffff;
@@ -17,6 +48,10 @@
     --drop-2:#0035a6;
     --gold:#0a4fdb;
     --line: rgba(10,79,219,0.16);
+    --green:#16a34a;
+    --green-2:#0e7a3b;
+    --orange:#f7931e;
+    --orange-2:#d9740a;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
@@ -514,7 +549,165 @@
     border-top:1px solid var(--line);
     color:var(--muted);
     font-size:12px;
+    padding-bottom:70px;
   }
+
+  /* ---------- hero headline + CTAs ---------- */
+  .hero-headline{
+    font-size:20px;
+    font-weight:800;
+    margin-top:22px;
+    line-height:1.6;
+  }
+  .hero-headline .highlight-blue{ color:var(--drop); }
+  .hero-sub{
+    color:var(--muted);
+    font-size:13.5px;
+    margin-top:8px;
+  }
+  .hero-ctas{
+    display:flex;
+    gap:10px;
+    justify-content:center;
+    flex-wrap:wrap;
+    margin-top:20px;
+  }
+  .btn-cta{
+    display:flex; align-items:center; gap:8px;
+    font-weight:700;
+    font-size:14px;
+    padding:13px 20px;
+    border-radius:12px;
+    text-decoration:none;
+    transition:transform .2s;
+  }
+  .btn-cta:hover{ transform:translateY(-2px); }
+  .btn-cta.blue{
+    background:linear-gradient(135deg, var(--drop), var(--drop-2));
+    color:#ffffff;
+  }
+  .btn-cta.green{
+    background:linear-gradient(135deg, var(--green), var(--green-2));
+    color:#ffffff;
+  }
+
+  /* ---------- trust box ---------- */
+  .trust-box{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:18px;
+    margin-top:36px;
+  }
+  @media(max-width:420px){ .trust-box{grid-template-columns:1fr;} }
+  .trust-item{
+    display:flex; align-items:center; gap:8px;
+    font-size:13px;
+  }
+  .trust-item .check{ color:var(--green); font-weight:800; }
+
+  /* ---------- catalog intro ---------- */
+  .catalog-intro{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:16px 18px;
+    margin-bottom:20px;
+    font-size:13.5px;
+  }
+  .catalog-intro strong{ display:block; margin-bottom:8px; font-size:14.5px; }
+  .catalog-intro ul{ list-style:none; }
+  .catalog-intro li{ padding:3px 0; }
+
+  /* ---------- catalog attention animation ---------- */
+  #catalogSection .drop{
+    animation: pulseDrop 1.8s ease-in-out infinite;
+  }
+  @keyframes pulseDrop{
+    0%{ box-shadow:0 0 0 0 rgba(10,79,219,0.55); }
+    70%{ box-shadow:0 0 0 12px rgba(10,79,219,0); }
+    100%{ box-shadow:0 0 0 0 rgba(10,79,219,0); }
+  }
+  #catalogSection h2{
+    background:linear-gradient(90deg, var(--drop), var(--drop-2), var(--drop), var(--drop-2));
+    background-size:300% auto;
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    -webkit-text-fill-color:transparent;
+    animation: shimmerText 4s linear infinite;
+  }
+  #catalogSection h2 span{
+    -webkit-text-fill-color:currentColor;
+  }
+  @keyframes shimmerText{
+    0%{ background-position:0% center; }
+    100%{ background-position:300% center; }
+  }
+  .catalog-hint{
+    text-align:center;
+    font-size:14px;
+    font-weight:700;
+    color:var(--drop);
+    margin-bottom:14px;
+    animation: hintBounce 1.5s ease-in-out infinite;
+  }
+  @keyframes hintBounce{
+    0%,100%{ transform:translateY(0); }
+    50%{ transform:translateY(7px); }
+  }
+
+  /* ---------- why test section ---------- */
+  .why-test{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:10px;
+  }
+  @media(max-width:520px){ .why-test{grid-template-columns:1fr;} }
+  .why-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:16px;
+    text-align:center;
+  }
+  .why-card .icon{ font-size:22px; display:block; margin-bottom:8px; }
+  .why-card .t{ font-weight:700; font-size:13.5px; }
+
+  /* ---------- end-of-page WhatsApp CTA ---------- */
+  .end-cta{
+    text-align:center;
+    background:linear-gradient(160deg, var(--surface), var(--surface-2));
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:28px 20px;
+    margin-top:46px;
+  }
+  .end-cta h3{ font-size:17px; margin-bottom:8px; }
+  .end-cta p{ color:var(--muted); font-size:13px; margin-bottom:16px; }
+  .end-cta .btn-cta{ display:inline-flex; }
+
+  /* ---------- floating WhatsApp button ---------- */
+  .floating-wa{
+    position:fixed;
+    left:18px; bottom:18px;
+    z-index:40;
+    display:flex; align-items:center; gap:8px;
+    background:linear-gradient(135deg, var(--green), var(--green-2));
+    color:#ffffff;
+    font-weight:700;
+    font-size:13.5px;
+    padding:13px 18px;
+    border-radius:100px;
+    text-decoration:none;
+    box-shadow:0 4px 16px rgba(22,163,74,0.4);
+    transition:transform .2s;
+  }
+  .floating-wa:hover{ transform:translateY(-2px); }
+  .floating-wa svg{ width:18px; height:18px; fill:#ffffff; }
 </style>
 </head>
 <body>
@@ -549,18 +742,52 @@
       </a>
     </div>
     <a class="save-contact" id="saveContact" href="#">+ ذخیره در مخاطبین</a>
+
+    <div class="hero-headline">قبل از خرید، <span class="highlight-blue">تست واقعی</span> محصولات نانو را ببینید</div>
+    <div class="hero-sub">بیش از ۱۰۰ ویدیوی تست واقعی محصولات G+Plus — بعد با خیال راحت سفارش دهید</div>
+    <div class="hero-ctas">
+      <a href="#catalogSection" class="btn-cta blue">🎥 مشاهده تست محصولات</a>
+      <a href="#orderSection" class="btn-cta green">🛒 ثبت سفارش</a>
+    </div>
   </header>
 
+  <!-- ================= TRUST BOX ================= -->
+  <div class="trust-box">
+    <div class="trust-item"><span class="check">✔</span> راهنمای انتخاب محصولات نانو</div>
+    <div class="trust-item"><span class="check">✔</span> ارسال به سراسر ایران</div>
+    <div class="trust-item"><span class="check">✔</span> امکان خرید عمده و تکی</div>
+    <div class="trust-item"><span class="check">✔</span> پاسخگویی سریع در ایتا</div>
+  </div>
+
+  <!-- ================= WHY TEST ================= -->
+  <div class="section-title"><span class="drop"></span><h2>چرا قبل از خرید باید تست محصولات را ببینید؟</h2><span class="line"></span></div>
+  <div class="why-test">
+    <div class="why-card"><span class="icon">🎥</span><div class="t">تست واقعی</div></div>
+    <div class="why-card"><span class="icon">🧪</span><div class="t">بدون ادعا</div></div>
+    <div class="why-card"><span class="icon">✅</span><div class="t">نتیجه قبل از خرید</div></div>
+  </div>
+
   <!-- ================= BEST SELLERS ================= -->
-  <div class="section-title"><span class="drop"></span><h2>پرفروش‌ترین‌ها</h2><span class="line"></span></div>
+  <div class="section-title" id="bestSellersSection"><span class="drop"></span><h2>پرفروش‌ترین‌ها</h2><span class="line"></span></div>
   <div class="section-sub">محبوب‌ترین محصولات بین مشتری‌ها — بزنید و ویدیوهای تست رو ببینید</div>
   <div class="best-scroll" id="bestSellersRow"></div>
 
   <!-- ================= CATALOG ================= -->
-  <div class="section-title"><span class="drop"></span><h2>کاتالوگ هوشمند <span class="gplus-logo"><span class="gplus-g">G<span class="gplus-plus-sign">+</span></span><span class="gplus-word">plus</span></span> | همراه با <span class="highlight-blue">ویدیو معرفی</span> و <span class="highlight-blue">تست محصولات</span></h2><span class="line"></span></div>
+  <div class="section-title" id="catalogSection"><span class="drop"></span><h2>کاتالوگ هوشمند <span class="gplus-logo"><span class="gplus-g">G<span class="gplus-plus-sign">+</span></span><span class="gplus-word">plus</span></span> | همراه با <span class="highlight-blue">ویدیو معرفی</span> و <span class="highlight-blue">تست محصولات</span></h2><span class="line"></span></div>
   <div class="section-sub">روی هر محصول بزنید تا ویدیوهای تست همون محصول رو ببینید</div>
 
+  <div class="catalog-intro">
+    <strong>این فقط یک کاتالوگ نیست:</strong>
+    <ul>
+      <li>✅ ویدیوی تست واقعی هر محصول را ببینید</li>
+      <li>✅ کاربردهای هر محصول را یاد بگیرید</li>
+      <li>✅ مستقیم از باسلام سفارش دهید</li>
+    </ul>
+  </div>
+
   <div class="cat-tabs" id="catTabs"></div>
+
+  <div class="catalog-hint">👇 محصولات رو ببین و روشون بزن 👇</div>
 
   <div class="search-box">
     <input type="text" id="searchInput" placeholder="جستجوی نام محصول...">
@@ -573,13 +800,20 @@
   <div id="simpleCatsWrap"></div>
 
   <!-- ================= ORDER ================= -->
-  <div class="section-title"><span class="drop"></span><h2>ثبت سفارش</h2><span class="line"></span></div>
+  <div class="section-title" id="orderSection"><span class="drop"></span><h2>ثبت سفارش</h2><span class="line"></span></div>
   <div class="section-sub">برای خرید و ثبت سفارش، به غرفه ما در باسلام مراجعه کنید</div>
 
-  <a href="https://basalam.com/editor" target="_blank" rel="noopener" class="basalam-box">
+  <a href="https://basalam.com/editor" target="_blank" rel="noopener" class="basalam-box" style="background:linear-gradient(135deg, var(--green), var(--green-2));">
     <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2z"/></svg>
     مشاهده غرفه و ثبت سفارش در باسلام
   </a>
+
+  <!-- ================= END CTA ================= -->
+  <div class="end-cta">
+    <h3>هنوز محصول مورد نظرت را پیدا نکردی؟</h3>
+    <p>در ایتا پیام بده و مشاوره رایگان دریافت کن</p>
+    <a href="https://eitaa.com/EZGAMETV" target="_blank" rel="noopener" class="btn-cta green" style="background:linear-gradient(135deg, var(--orange), var(--orange-2));">📱 پیام در ایتا</a>
+  </div>
 
   <footer>
     رمی شاپ · پخش محصولات نانو · غیاث مدرسی<br>
@@ -587,6 +821,12 @@
     فعال در یزد · ارسال به سراسر کشور
   </footer>
 </div>
+
+<!-- ================= FLOATING WHATSAPP ================= -->
+<a class="floating-wa" href="https://eitaa.com/EZGAMETV" target="_blank" rel="noopener">
+  <svg viewBox="0 0 24 24"><path d="M21.9 4.3 2.7 11.8c-.9.4-.9 1.6.1 1.9l4.6 1.5 1.8 5.7c.2.7 1.1.9 1.6.3l2.5-2.8 4.8 3.5c.7.5 1.7.1 1.9-.7l3.1-14.8c.2-1-.9-1.7-1.7-1.2zM8.7 14.6l9-6.2c.2-.1.4.1.2.3l-7.4 7.1c-.3.3-.5.7-.6 1.1l-.3 2.4-.9-4.7z"/></svg>
+  مشاوره رایگان
+</a>
 
 <!-- ================= MODAL ================= -->
 <div class="overlay" id="overlay">
@@ -986,6 +1226,53 @@ END:VCARD`;
 renderTabs();
 renderGrid();
 renderBestSellers();
+
+/* اسکرول آرام و خودکار به بخش کاتالوگ هوشمند بعد از باز شدن صفحه
+   (اسکرول دستی با کنترل سرعت، برای حس آروم و تدریجی) */
+function smoothScrollTo(targetY, duration, onDone){
+  const startY = window.scrollY;
+  const diff = targetY - startY;
+  let startTime = null;
+  function easeInOutQuad(t){
+    return t < 0.5 ? 2*t*t : 1 - Math.pow(-2*t+2, 2)/2;
+  }
+  function step(timestamp){
+    if (!startTime) startTime = timestamp;
+    const elapsed = timestamp - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    window.scrollTo(0, startY + diff * easeInOutQuad(progress));
+    if (progress < 1) requestAnimationFrame(step);
+    else if (typeof onDone === 'function') onDone();
+  }
+  requestAnimationFrame(step);
+}
+
+let userHasScrolled = false;
+function markUserScrolled(){ userHasScrolled = true; }
+window.addEventListener('scroll', markUserScrolled, { once:true, passive:true });
+
+window.addEventListener('load', ()=>{
+  setTimeout(()=>{
+    if (userHasScrolled) return;
+    window.removeEventListener('scroll', markUserScrolled);
+    const bestSellers = document.getElementById('bestSellersSection');
+    const catalog = document.getElementById('catalogSection');
+    if (bestSellers){
+      const bestSellersY = bestSellers.getBoundingClientRect().top + window.scrollY;
+      smoothScrollTo(bestSellersY, 4500, ()=>{
+        setTimeout(()=>{
+          if (catalog){
+            const catalogY = catalog.getBoundingClientRect().top + window.scrollY;
+            smoothScrollTo(catalogY, 3500);
+          }
+        }, 2000);
+      });
+    } else if (catalog){
+      const catalogY = catalog.getBoundingClientRect().top + window.scrollY;
+      smoothScrollTo(catalogY, 7500);
+    }
+  }, 15000);
+});
 </script>
 
 </body>

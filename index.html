@@ -6,7 +6,8 @@
 <title>رمی شاپ | تست واقعی محصولات نانو قبل از خرید</title>
 <meta name="description" content="رمی شاپ - پخش محصولات نانو، غیاث مدرسی. بیش از ۱۰۰ ویدیوی تست واقعی محصولات، قبل از خرید ببینید و مستقیم از واتساپ سفارش دهید.">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://remyshop.ir/">
+<!-- توجه: وقتی دامنه‌ی remyshop.ir رو خریدی و به این سایت وصل کردی، این آدرس‌ها رو به remyshop.ir برگردون -->
+<link rel="canonical" href="https://remyshops.github.io/index/">
 <meta name="theme-color" content="#0a4fdb">
 
 <!-- Open Graph -->
@@ -14,10 +15,10 @@
 <meta property="og:locale" content="fa_IR">
 <meta property="og:title" content="رمی شاپ | تست واقعی محصولات نانو قبل از خرید">
 <meta property="og:description" content="بیش از ۱۰۰ ویدیوی تست واقعی محصولات نانو G+Plus — قبل از خرید ببینید، بعد با خیال راحت سفارش دهید.">
-<meta property="og:url" content="https://remyshop.ir/">
+<meta property="og:url" content="https://remyshops.github.io/index/">
 <meta property="og:site_name" content="رمی شاپ">
 <!-- توجه: آدرس زیر رو با لینک واقعی یک تصویر (لوگو یا بنر) روی دامنه خودت جایگزین کن -->
-<meta property="og:image" content="https://remyshop.ir/assets/remyshop-share.jpg">
+<meta property="og:image" content="https://remyshops.github.io/assets/remyshop-share.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 
@@ -25,7 +26,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="رمی شاپ | تست واقعی محصولات نانو قبل از خرید">
 <meta name="twitter:description" content="بیش از ۱۰۰ ویدیوی تست واقعی محصولات نانو G+Plus — قبل از خرید ببینید، بعد با خیال راحت سفارش دهید.">
-<meta name="twitter:image" content="https://remyshop.ir/assets/remyshop-share.jpg">
+<meta name="twitter:image" content="https://remyshops.github.io/assets/remyshop-share.jpg">
 
 <!-- Schema.org: Organization -->
 <script type="application/ld+json">
@@ -926,7 +927,6 @@
     <div id="modalThumbWrap"></div>
     <div id="videoList"></div>
     <a href="https://basalam.com/editor" target="_blank" rel="noopener" class="order-here" id="orderLink">ثبت سفارش در باسلام</a>
-    <div class="modal-note">لینک ویدیوها نمونه هستند — کافیه در کد، آدرس واقعی ویدیوهای هر محصول رو جایگزین کنید.</div>
   </div>
 </div>
 
@@ -1333,52 +1333,6 @@ renderTabs();
 renderGrid();
 renderBestSellers();
 
-/* اسکرول آرام و خودکار به بخش کاتالوگ هوشمند بعد از باز شدن صفحه
-   (اسکرول دستی با کنترل سرعت، برای حس آروم و تدریجی) */
-function smoothScrollTo(targetY, duration, onDone){
-  const startY = window.scrollY;
-  const diff = targetY - startY;
-  let startTime = null;
-  function easeInOutQuad(t){
-    return t < 0.5 ? 2*t*t : 1 - Math.pow(-2*t+2, 2)/2;
-  }
-  function step(timestamp){
-    if (!startTime) startTime = timestamp;
-    const elapsed = timestamp - startTime;
-    const progress = Math.min(elapsed / duration, 1);
-    window.scrollTo(0, startY + diff * easeInOutQuad(progress));
-    if (progress < 1) requestAnimationFrame(step);
-    else if (typeof onDone === 'function') onDone();
-  }
-  requestAnimationFrame(step);
-}
-
-let userHasScrolled = false;
-function markUserScrolled(){ userHasScrolled = true; }
-window.addEventListener('scroll', markUserScrolled, { once:true, passive:true });
-
-window.addEventListener('load', ()=>{
-  setTimeout(()=>{
-    if (userHasScrolled) return;
-    window.removeEventListener('scroll', markUserScrolled);
-    const bestSellers = document.getElementById('bestSellersSection');
-    const catalog = document.getElementById('catalogSection');
-    if (bestSellers){
-      const bestSellersY = bestSellers.getBoundingClientRect().top + window.scrollY;
-      smoothScrollTo(bestSellersY, 4500, ()=>{
-        setTimeout(()=>{
-          if (catalog){
-            const catalogY = catalog.getBoundingClientRect().top + window.scrollY;
-            smoothScrollTo(catalogY, 3500);
-          }
-        }, 2000);
-      });
-    } else if (catalog){
-      const catalogY = catalog.getBoundingClientRect().top + window.scrollY;
-      smoothScrollTo(catalogY, 7500);
-    }
-  }, 15000);
-});
 </script>
 
 </body>

@@ -595,6 +595,107 @@
   .basalam-box:hover{ transform:translateY(-2px); }
   .basalam-box svg{width:18px; height:18px; fill:#ffffff;}
 
+  /* ---------- mode tabs: خرده‌فروشی / عمده ---------- */
+  .mode-tabs{
+    display:flex;
+    gap:10px;
+    margin:26px 0 8px;
+  }
+  .mode-tab{
+    flex:1;
+    background:var(--surface);
+    border:1px solid var(--line);
+    color:var(--muted);
+    padding:13px 10px;
+    border-radius:12px;
+    font-size:14px;
+    font-weight:700;
+    font-family:inherit;
+    cursor:pointer;
+    transition:border-color .2s, color .2s, background .2s, transform .2s;
+  }
+  .mode-tab:hover{ transform:translateY(-2px); border-color:var(--drop); }
+  .mode-tab.active{
+    background:linear-gradient(135deg, var(--drop), var(--drop-2));
+    border-color:var(--drop);
+    color:#ffffff;
+    box-shadow:0 4px 14px rgba(10,79,219,0.28);
+  }
+
+  /* ---------- wholesale (عمده) view ---------- */
+  .retail-view.hide{ display:none; }
+  .wholesale-view{ display:none; }
+  .wholesale-view.show{ display:block; }
+
+  .wholesale-disclaimer{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:12px 14px;
+    font-size:12.5px;
+    color:var(--muted);
+    line-height:1.9;
+    margin-bottom:16px;
+  }
+
+  .wholesale-block{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:16px 16px 14px;
+    margin-bottom:16px;
+  }
+  .wholesale-block h3{
+    font-size:15.5px;
+    font-weight:800;
+    margin-bottom:4px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .wholesale-block h3 .drop{width:9px; height:9px;}
+  .wholesale-note{
+    font-size:12px;
+    color:var(--gold);
+    margin-bottom:12px;
+  }
+  .wholesale-table-wrap{
+    overflow-x:auto;
+    border-radius:10px;
+    border:1px solid var(--line);
+  }
+  table.wholesale-table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:12.5px;
+    min-width:500px;
+  }
+  table.wholesale-table th{
+    background:linear-gradient(135deg, var(--drop), var(--drop-2));
+    color:#ffffff;
+    font-weight:700;
+    padding:10px 8px;
+    text-align:center;
+    white-space:nowrap;
+  }
+  table.wholesale-table td{
+    padding:9px 8px;
+    text-align:center;
+    border-bottom:1px solid var(--line);
+    white-space:nowrap;
+  }
+  table.wholesale-table tr:last-child td{ border-bottom:none; }
+  table.wholesale-table tr:nth-child(even) td{ background:var(--surface-2); }
+  table.wholesale-table td.pname-cell{
+    text-align:right;
+    white-space:normal;
+    font-weight:600;
+  }
+  table.wholesale-table td.buy-price{ color:var(--drop); font-weight:800; }
+  table.wholesale-table td.sell-price{ color:var(--green); font-weight:700; }
+
+  @media(max-width:420px){
+    .mode-tabs{ flex-direction:column; }
+  }
+
   footer{
     text-align:center;
     margin-top:50px;
@@ -855,6 +956,14 @@
     </div>
   </header>
 
+  <!-- ================= MODE TABS: خرده‌فروشی / عمده ================= -->
+  <div class="mode-tabs">
+    <button class="mode-tab active" id="modeRetailBtn" type="button">🛍 خرده‌فروشی (تکی)</button>
+    <button class="mode-tab" id="modeWholesaleBtn" type="button">📦 قیمت عمده</button>
+  </div>
+
+  <div class="retail-view" id="retailView">
+
   <!-- ================= TRUST BOX ================= -->
   <div class="trust-box">
     <div class="trust-item"><span class="check">✔</span> راهنمای انتخاب محصولات نانو <span class="gplus-logo"><span class="gplus-g">G<span class="gplus-plus-sign">+</span></span><span class="gplus-word">plus</span></span></div>
@@ -905,6 +1014,27 @@
   <!-- ================= SIMPLE LIST CATEGORIES ================= -->
   <div id="simpleCatsWrap"></div>
 
+  </div><!-- /retailView -->
+
+  <!-- ================= WHOLESALE (قیمت عمده) ================= -->
+  <div class="wholesale-view" id="wholesaleView">
+    <div class="section-title" id="wholesaleSection"><span class="drop"></span><h2>لیست قیمت عمده</h2><span class="line"></span></div>
+    <div class="section-sub">قیمت خرید عمده و حداقل قیمت مجاز فروش در بازار — سفارش بر اساس تعداد کارتن</div>
+
+    <div class="cat-tabs" id="wholesaleCatTabs"></div>
+
+    <div id="wholesaleTablesWrap"></div>
+
+    <div class="wholesale-disclaimer">
+      ⚠️ حداقل قیمت فروش درج‌شده در جدول، کمترین قیمت مجاز برای عرضه محصول در بازار است؛ فروش کمتر از این مبلغ مجاز نیست، اما فروش با قیمت بالاتر بلامانع است.
+    </div>
+
+    <a href="https://eitaa.com/EZGAMETV" target="_blank" rel="noopener" class="basalam-box" style="background:linear-gradient(135deg, var(--orange), var(--orange-2)); margin-bottom:8px;">
+      <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2z"/></svg>
+      برای سفارش عمده در ایتا پیام بدهید
+    </a>
+  </div>
+
   <!-- ================= ORDER ================= -->
   <div class="section-title" id="orderSection"><span class="drop"></span><h2>ثبت سفارش</h2><span class="line"></span></div>
   <div class="section-sub">برای خرید و ثبت سفارش، به غرفه ما در باسلام مراجعه کنید</div>
@@ -925,7 +1055,7 @@
     <div class="footer-links">
       <a href="tel:09389561367">📞 تماس مستقیم</a>
       <a href="https://eitaa.com/EZGAMETV" target="_blank" rel="noopener">💬 پیام در ایتا</a>
-      <a href="https://basalam.com/editor" target="_blank" rel="noopener">📦 خرید عمده</a>
+      <a href="#" id="footerWholesaleLink">📦 خرید عمده</a>
       <a href="#header">📍 درباره رمی شاپ</a>
     </div>
     رمی شاپ · پخش محصولات نانو · غیاث مدرسی<br>
@@ -1147,6 +1277,64 @@ const simpleCategories = [
 
 const categories = ["همه","خانگی","خودرویی","واکس","عطر","ادکلن","خوشبو کننده","واکس چرم"];
 
+/* =========================================================
+   قیمت عمده (Wholesale) — قیمت خرید عمده + حداقل کارتن هر دسته.
+   برای ویرایش قیمت‌ها یا افزودن محصول جدید، همین آرایه رو تغییر بدید.
+========================================================= */
+const wholesaleCategories = [
+  { key:"home", tab:"خانگی", title:"خانگی ۵۰۰ سی‌سی", note:"حداقل سفارش: ۱ کارتن = ۲۰ عدد", cartonQty:20, items:[
+    {name:"پاک کننده چند منظوره", en:"MULTI CLEANER", volume:500, buy:189700, sell:285000},
+    {name:"پاک کننده گاز", en:"STOVE CLEANER", volume:500, buy:184000, sell:280000},
+    {name:"پاک کننده سینک و شیر آلات", en:"SINK & FAUCET CLEANER", volume:500, buy:183000, sell:276500},
+    {name:"پاک کننده مبل، فرش و پارچه", en:"SOFA CLEANER", volume:500, buy:186500, sell:278000},
+    {name:"پاک کننده ال‌ای‌دی و صفحه نمایش", en:"SCREEN CLEANER", volume:500, buy:180000, sell:270000},
+    {name:"پاک کننده کاغذ دیواری", en:"WALLPAPER CLEANER", volume:500, buy:184000, sell:270000},
+    {name:"پاک کننده پارکت و سرامیک", en:"PARQUET & CERAMIC CLEANER", volume:500, buy:183000, sell:275000}
+  ]},
+  { key:"auto", tab:"خودرویی", title:"نانو خودرویی ۵۰۰ سی‌سی", note:"حداقل سفارش: ۱ کارتن = ۲۰ عدد", cartonQty:20, items:[
+    {name:"واکس مات کننده لاستیک", en:"TIRE MATTE", volume:500, buy:179500, sell:345000},
+    {name:"واکس براق کننده لاستیک", en:"TIRE SHINE", volume:500, buy:199500, sell:370000},
+    {name:"واکس داشبورد سیلیکونی", en:"SILICON DASHBOARD", volume:500, buy:211500, sell:300000},
+    {name:"واکس داشبورد غیر سیلیکونی", en:"DASHBOARD WAX", volume:500, buy:194500, sell:335000},
+    {name:"واکس سه‌کاره لاستیک داشبورد", en:"PRO WAX", volume:500, buy:208000, sell:359000},
+    {name:"صفر شوی", en:"ZERO CARWASH", volume:500, buy:179500, sell:275000},
+    {name:"موتور شوی", en:"ENGINE CLEANER", volume:500, buy:171500, sell:275000},
+    {name:"رینگ شوی", en:"RIM CLEANER", volume:500, buy:169000, sell:259000},
+    {name:"پاک کننده چند منظوره خودرو", en:"MULTI CLEANER", volume:500, buy:194500, sell:300000},
+    {name:"شیشه شوی", en:"WINDSHIELD CLEANER", volume:500, buy:164000, sell:275000},
+    {name:"شامپو بدنه", en:"CAR SHAMPOO", volume:500, buy:220000, sell:275000},
+    {name:"براق کننده بدنه", en:"BODY POLISH", volume:500, buy:182000, sell:300000},
+    {name:"براق کننده چراغ", en:"HEADLIGHT POLISH", volume:500, buy:182000, sell:300000},
+    {name:"براق شاین (بلک شاین)", en:"BLACK SHINE", volume:500, buy:241000, sell:345000},
+    {name:"براق مجیک (بلک مجیک)", en:"BLACK MAGIC", volume:500, buy:219000, sell:335000}
+  ]},
+  { key:"freshener", tab:"خوشبو کننده هوا", title:"اسپری خوشبوکننده هوا ۱۲۵ سی‌سی", note:"حداقل سفارش: ۱ کارتن = ۲۵ عدد", cartonQty:25, items:[
+    {name:"اسپری خوشبوکننده هوا رایحه باس من", volume:125, buy:194000, sell:254000},
+    {name:"اسپری خوشبوکننده هوا رایحه مادام بیوتی", volume:125, buy:194000, sell:254000},
+    {name:"اسپری خوشبوکننده هوا رایحه لاوندر", volume:125, buy:194000, sell:254000},
+    {name:"اسپری خوشبوکننده هوا رایحه کول فرش", volume:125, buy:194000, sell:254000}
+  ]},
+  { key:"cologne", tab:"ادکلن", title:"ادکلن ۵۰ سی‌سی", note:"حداقل سفارش: ۱ کارتن = ۶ عدد (همراز و کایرا به دلخواه)", cartonQty:6, items:[
+    {name:"ادکلن زنانه همراز", volume:50, buy:414500, sell:561000},
+    {name:"ادکلن مردانه کایرا", volume:50, buy:414500, sell:561000}
+  ]},
+  { key:"leatherwax", tab:"واکس (نانو چرم)", title:"نانو چرم کیف و کفش", note:"تعداد در کارتن بسته به مدل: ۲۵ عددی (بدون جعبه) یا ۱۲ عددی (با جعبه)", items:[
+    {name:"نانو چرم کیف و کفش بدون جعبه", volume:125, buy:200000, sell:250000, cartonQty:25},
+    {name:"نانو چرم کیف و کفش با جعبه", volume:125, buy:222000, sell:272000, cartonQty:12}
+  ]},
+  { key:"perfume", tab:"عطر", title:"عطر جی‌پلاس ۳۰ سی‌سی", note:"حداقل سفارش: ۱ کارتن = ۲۴ عدد", cartonQty:24, items:[
+    {name:"عطر با رایحه دانهیل", en:"DUNHILL", volume:30, buy:236000, sell:286000},
+    {name:"عطر با رایحه ایفوریا", en:"EUPHORIA", volume:30, buy:236000, sell:286000},
+    {name:"عطر با رایحه باس من", en:"BOSS MAN", volume:30, buy:236000, sell:286000},
+    {name:"عطر با رایحه مادام بیوتی", en:"MADAM BEAUTY", volume:30, buy:236000, sell:286000},
+    {name:"عطر با رایحه لاوندر", en:"LAVENDER", volume:30, buy:236000, sell:286000},
+    {name:"عطر با رایحه کول فرش", en:"COOL FRESH", volume:30, buy:236000, sell:286000}
+  ]}
+];
+
+const wholesaleTabList = ["همه", ...wholesaleCategories.map(c=>c.tab)];
+let activeWholesaleTab = "همه";
+
 /* پرفروش‌ترین‌ها — دقیقاً باید با name محصول در آرایه products بالا یکی باشه.
    اگه اسم محصولی رو عوض کردید، اینجا رو هم به‌روز کنید. */
 const bestSellerNames = [
@@ -1192,6 +1380,83 @@ function renderStats(){
     <div class="stat-box"><span class="num">مداوم</span><span class="lbl">📅 بروزرسانی</span></div>
   `;
 }
+
+/* ---------- قیمت عمده: DOM refs + render ---------- */
+const wholesaleCatTabsEl = document.getElementById('wholesaleCatTabs');
+const wholesaleTablesWrap = document.getElementById('wholesaleTablesWrap');
+const retailViewEl = document.getElementById('retailView');
+const wholesaleViewEl = document.getElementById('wholesaleView');
+const modeRetailBtn = document.getElementById('modeRetailBtn');
+const modeWholesaleBtn = document.getElementById('modeWholesaleBtn');
+
+function renderWholesaleTabs(){
+  wholesaleCatTabsEl.innerHTML = "";
+  wholesaleTabList.forEach(t=>{
+    const btn = document.createElement('button');
+    btn.className = "cat-tab" + (t === activeWholesaleTab ? " active" : "");
+    btn.textContent = t;
+    btn.addEventListener('click', ()=>{
+      activeWholesaleTab = t;
+      renderWholesaleTabs();
+      renderWholesaleTables();
+    });
+    wholesaleCatTabsEl.appendChild(btn);
+  });
+}
+
+function renderWholesaleTables(){
+  wholesaleTablesWrap.innerHTML = "";
+  wholesaleCategories
+    .filter(cat => activeWholesaleTab === "همه" || cat.tab === activeWholesaleTab)
+    .forEach(cat=>{
+      const block = document.createElement('div');
+      block.className = "wholesale-block";
+      const rows = cat.items.map(it=>{
+        const cq = it.cartonQty || cat.cartonQty || "-";
+        const enLine = it.en ? `<br><span style="color:var(--muted);font-size:11px">${it.en}</span>` : "";
+        return `<tr>
+          <td class="pname-cell">${it.name}${enLine}</td>
+          <td>${it.volume}</td>
+          <td>${cq}</td>
+          <td class="buy-price">${formatPrice(it.buy)}</td>
+          <td class="sell-price">${formatPrice(it.sell)}</td>
+        </tr>`;
+      }).join("");
+      const sellHeader = (cat.key === "home" || cat.key === "auto") ? "قیمت فروش" : "حداقل قیمت فروش";
+      block.innerHTML = `
+        <h3><span class="drop"></span>${cat.title}</h3>
+        <div class="wholesale-note">${cat.note}</div>
+        <div class="wholesale-table-wrap">
+          <table class="wholesale-table">
+            <thead><tr>
+              <th>نام محصول</th><th>حجم (cc)</th><th>تعداد/کارتن</th><th>قیمت خرید</th><th>${sellHeader}</th>
+            </tr></thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </div>`;
+      wholesaleTablesWrap.appendChild(block);
+    });
+}
+
+function wholesaleSectionOffset(){
+  const el = document.getElementById('wholesaleSection');
+  return el ? el.getBoundingClientRect().top + window.scrollY - 16 : 0;
+}
+
+modeRetailBtn.addEventListener('click', ()=>{
+  modeRetailBtn.classList.add('active');
+  modeWholesaleBtn.classList.remove('active');
+  retailViewEl.classList.remove('hide');
+  wholesaleViewEl.classList.remove('show');
+  window.scrollTo({top:0, behavior:'smooth'});
+});
+modeWholesaleBtn.addEventListener('click', ()=>{
+  modeWholesaleBtn.classList.add('active');
+  modeRetailBtn.classList.remove('active');
+  wholesaleViewEl.classList.add('show');
+  retailViewEl.classList.add('hide');
+  window.scrollTo({top: wholesaleSectionOffset(), behavior:'smooth'});
+});
 
 function renderTabs(){
   catTabs.innerHTML = "";
@@ -1382,6 +1647,16 @@ renderStats();
 renderTabs();
 renderGrid();
 renderBestSellers();
+renderWholesaleTabs();
+renderWholesaleTables();
+
+const footerWholesaleLink = document.getElementById('footerWholesaleLink');
+if(footerWholesaleLink){
+  footerWholesaleLink.addEventListener('click', (e)=>{
+    e.preventDefault();
+    modeWholesaleBtn.click();
+  });
+}
 
 /* ---------- اشتراک‌گذاری محصول ----------
    برای هر محصول یه لینک اختصاصی می‌سازه (?p=نام محصول) که وقتی باز بشه

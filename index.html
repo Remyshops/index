@@ -466,6 +466,32 @@
     border:0;
   }
 
+  /* ---------- hero preview video (shown immediately, before scrolling) ---------- */
+  .hero-video{
+    margin-top:22px;
+    max-width:360px;
+    margin-inline:auto;
+  }
+  .hero-video-frame{
+    position:relative;
+    width:100%;
+    padding-top:56.25%;
+    background:#000;
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:0 6px 20px rgba(10,79,219,0.25);
+  }
+  .hero-video-frame iframe{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    border:0;
+  }
+  .hero-video-label{
+    font-size:12px;
+    color:var(--muted);
+    margin-top:8px;
+  }
+
   /* ---------- simple list categories (no per-product buttons) ---------- */
   .simple-block{
     background:var(--surface);
@@ -664,36 +690,61 @@
   }
   table.wholesale-table{
     width:100%;
+    table-layout:fixed;
     border-collapse:collapse;
     font-size:12.5px;
-    min-width:500px;
   }
   table.wholesale-table th{
     background:linear-gradient(135deg, var(--drop), var(--drop-2));
     color:#ffffff;
     font-weight:700;
-    padding:10px 8px;
+    padding:10px 6px;
     text-align:center;
-    white-space:nowrap;
   }
+  table.wholesale-table th:first-child{ text-align:right; padding-right:10px; }
   table.wholesale-table td{
-    padding:9px 8px;
+    padding:9px 6px;
     text-align:center;
     border-bottom:1px solid var(--line);
-    white-space:nowrap;
+    white-space:normal;
+    word-break:break-word;
   }
   table.wholesale-table tr:last-child td{ border-bottom:none; }
   table.wholesale-table tr:nth-child(even) td{ background:var(--surface-2); }
   table.wholesale-table td.pname-cell{
     text-align:right;
-    white-space:normal;
     font-weight:600;
+    width:46%;
   }
   table.wholesale-table td.buy-price{ color:var(--drop); font-weight:800; }
   table.wholesale-table td.sell-price{ color:var(--green); font-weight:700; }
 
+  /* نام محصول + آیکون پخش ویدیوی تست */
+  .pname-inner{
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  .wtest-icon{
+    flex:none;
+    width:20px; height:20px;
+    border-radius:50%;
+    background:linear-gradient(135deg, var(--drop), var(--drop-2));
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    box-shadow:0 0 6px rgba(10,79,219,0.4);
+    transition:transform .2s;
+  }
+  .wtest-icon:hover{ transform:scale(1.12); }
+  .wtest-icon svg{ width:9px; height:9px; fill:#ffffff; margin-right:-1px; }
+  .pname-text{ flex:1; min-width:0; }
+
   @media(max-width:420px){
     .mode-tabs{ flex-direction:column; }
+    table.wholesale-table{ font-size:11.5px; }
+    table.wholesale-table td, table.wholesale-table th{ padding:7px 4px; }
+    table.wholesale-table td.pname-cell{ width:44%; }
+    .wtest-icon{ width:18px; height:18px; }
   }
 
   footer{
@@ -950,8 +1001,17 @@
 
     <div class="hero-headline">قبل از خرید، <span class="highlight-blue">تست واقعی</span> محصولات نانو را ببینید</div>
     <div class="hero-sub">بیش از ۱۰۰ ویدیوی تست واقعی محصولات G+Plus — بعد با خیال راحت سفارش دهید</div>
+
+    <!-- پیش‌نمایش ویدیو همین بالای صفحه، بدون نیاز به اسکرول یا کلیک -->
+    <div class="hero-video">
+      <div class="hero-video-frame">
+        <iframe src="https://www.aparat.com/video/video/embed/videohash/sva419y/vt/frame" allow="autoplay; fullscreen" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe>
+      </div>
+      <div class="hero-video-label">🎥 نمونه تست واقعی «نانو چند منظوره خانگی» — همین الان ببینید</div>
+    </div>
+
     <div class="hero-ctas">
-      <a href="#catalogSection" class="btn-cta blue">🎥 مشاهده تست محصولات</a>
+      <a href="#catalogSection" class="btn-cta blue">🎥 مشاهده همه تست‌ها</a>
       <a href="#orderSection" class="btn-cta green">🛒 ثبت سفارش</a>
     </div>
   </header>
@@ -966,10 +1026,21 @@
 
   <!-- ================= TRUST BOX ================= -->
   <div class="trust-box">
-    <div class="trust-item"><span class="check">✔</span> راهنمای انتخاب محصولات نانو <span class="gplus-logo"><span class="gplus-g">G<span class="gplus-plus-sign">+</span></span><span class="gplus-word">plus</span></span></div>
     <div class="trust-item"><span class="check">✔</span> ارسال به سراسر ایران</div>
+    <div class="trust-item"><span class="check">✔</span> قیمت همکاری ویژه فروشگاه‌ها</div>
     <div class="trust-item"><span class="check">✔</span> امکان خرید عمده و تکی</div>
-    <div class="trust-item"><span class="check">✔</span> پاسخگویی سریع در ایتا</div>
+    <div class="trust-item"><span class="check">✔</span> پشتیبانی پس از فروش</div>
+  </div>
+
+  <!-- ================= WHY US ================= -->
+  <div class="section-title"><span class="drop"></span><h2>چرا <span class="gplus-logo"><span class="gplus-g">G<span class="gplus-plus-sign">+</span></span><span class="gplus-word">plus</span></span>؟</h2><span class="line"></span></div>
+  <div class="why-test">
+    <div class="why-card"><span class="icon">💰</span><div class="t">سود مناسب فروشگاه</div></div>
+    <div class="why-card"><span class="icon">🏆</span><div class="t">کیفیت بالا</div></div>
+    <div class="why-card"><span class="icon">🎬</span><div class="t">تست واقعی در کاتالوگ</div></div>
+    <div class="why-card"><span class="icon">📦</span><div class="t">تنوع کامل محصولات</div></div>
+    <div class="why-card"><span class="icon">🚚</span><div class="t">ارسال سریع</div></div>
+    <div class="why-card"><span class="icon">🎧</span><div class="t">پشتیبانی پس از فروش</div></div>
   </div>
 
   <!-- ================= WHY TEST ================= -->
@@ -1019,7 +1090,7 @@
   <!-- ================= WHOLESALE (قیمت عمده) ================= -->
   <div class="wholesale-view" id="wholesaleView">
     <div class="section-title" id="wholesaleSection"><span class="drop"></span><h2>لیست قیمت عمده</h2><span class="line"></span></div>
-    <div class="section-sub">قیمت خرید عمده و حداقل قیمت مجاز فروش در بازار — سفارش بر اساس تعداد کارتن</div>
+    <div class="section-sub">قیمت خرید عمده و حداقل قیمت مجاز فروش در بازار — 🟢 اختلاف این دو ستون، سود شماست. سفارش بر اساس تعداد کارتن</div>
 
     <div class="cat-tabs" id="wholesaleCatTabs"></div>
 
@@ -1404,6 +1475,59 @@ function renderWholesaleTabs(){
   });
 }
 
+/* ---------- تطبیق نام محصول عمده با محصولی که ویدیوی تست داره ---------- */
+function normalizeProductName(s){
+  return (s || "")
+    .replace(/\(.*?\)/g, "")   // حذف پرانتز و متن داخلش
+    .replace(/[\u200c]/g, " ") // نیم‌فاصله -> فاصله معمولی
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+/* چند اسم که تو لیست عمده کوتاه‌تر نوشته شده ولی همون محصول خرده‌فروشیه */
+const wholesaleNameAliases = {
+  "پاک کننده چند منظوره": "نانو چند منظوره خانگی"
+};
+
+function findRetailMatch(itemName){
+  const alias = wholesaleNameAliases[itemName];
+  const target = normalizeProductName(alias || itemName);
+
+  const product = products.find(p => normalizeProductName(p.name) === target);
+  if(product) return { type:"product", data:product };
+
+  for(const cat of simpleCategories){
+    const hit = cat.items.some(it => normalizeProductName(typeof it === "string" ? it : it.name) === target);
+    if(hit) return { type:"category", data:cat };
+  }
+  return null;
+}
+
+function openWholesaleTest(itemName){
+  const match = findRetailMatch(itemName);
+  if(match && match.type === "product"){
+    openModal(match.data);
+    return;
+  }
+  if(match && match.type === "category"){
+    const label = match.data.introLabel || "ویدیوی تست";
+    openVideo(match.data.videoUrls[0], label);
+    return;
+  }
+  /* اگه محصول با ویدیوی جداگانه پیدا نشد، بریم بخش خرده‌فروشی و با اسمش سرچ کنیم */
+  modeRetailBtn.click();
+  const input = document.getElementById('searchInput');
+  input.value = itemName;
+  renderGrid(itemName);
+  input.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+wholesaleTablesWrap.addEventListener('click', (e)=>{
+  const icon = e.target.closest('.wtest-icon');
+  if(!icon) return;
+  openWholesaleTest(icon.dataset.name);
+});
+
 function renderWholesaleTables(){
   wholesaleTablesWrap.innerHTML = "";
   wholesaleCategories
@@ -1412,24 +1536,27 @@ function renderWholesaleTables(){
       const block = document.createElement('div');
       block.className = "wholesale-block";
       const rows = cat.items.map(it=>{
-        const cq = it.cartonQty || cat.cartonQty || "-";
-        const enLine = it.en ? `<br><span style="color:var(--muted);font-size:11px">${it.en}</span>` : "";
+        const enLine = it.en ? `<br><span style="color:var(--muted);font-size:10.5px">${it.en}</span>` : "";
+        const playIcon = `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
         return `<tr>
-          <td class="pname-cell">${it.name}${enLine}</td>
-          <td>${it.volume}</td>
-          <td>${cq}</td>
+          <td class="pname-cell">
+            <div class="pname-inner">
+              <span class="wtest-icon" data-name="${it.name.replace(/"/g,'&quot;')}" title="مشاهده ویدیوی تست">${playIcon}</span>
+              <span class="pname-text">${it.name}${enLine}</span>
+            </div>
+          </td>
           <td class="buy-price">${formatPrice(it.buy)}</td>
           <td class="sell-price">${formatPrice(it.sell)}</td>
         </tr>`;
       }).join("");
-      const sellHeader = (cat.key === "home" || cat.key === "auto") ? "قیمت فروش" : "حداقل قیمت فروش";
+      const sellHeader = (cat.key === "home" || cat.key === "auto") ? "قیمت فروش" : "حداقل فروش";
       block.innerHTML = `
         <h3><span class="drop"></span>${cat.title}</h3>
         <div class="wholesale-note">${cat.note}</div>
         <div class="wholesale-table-wrap">
           <table class="wholesale-table">
             <thead><tr>
-              <th>نام محصول</th><th>حجم (cc)</th><th>تعداد/کارتن</th><th>قیمت خرید</th><th>${sellHeader}</th>
+              <th>نام محصول</th><th>قیمت خرید</th><th>${sellHeader}</th>
             </tr></thead>
             <tbody>${rows}</tbody>
           </table>

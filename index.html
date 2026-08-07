@@ -2704,6 +2704,15 @@ function convertInvoiceInputsToText(root){
     const span = document.createElement('span');
     span.textContent = text;
     span.className = 'capture-text-swap';
+    /* رشته‌های عددی جداشده با فاصله (مثل شماره کارت) اگه جهت صریح نداشته باشن،
+       داخل صفحه‌ی راست‌به‌چپ توسط الگوریتم bidi برعکس نمایش داده می‌شن؛
+       برای همین جهت و چینش واقعی خود input رو روی span کپی می‌کنیم. */
+    const computed = window.getComputedStyle(inp);
+    span.style.direction = computed.direction;
+    span.style.unicodeBidi = 'isolate';
+    span.style.textAlign = computed.textAlign;
+    span.style.display = 'inline-block';
+    if(computed.direction === 'ltr') span.style.width = '100%';
     inp.style.display = 'none';
     inp.insertAdjacentElement('afterend', span);
     replacements.push({input: inp, span});

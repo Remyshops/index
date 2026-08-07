@@ -9,6 +9,9 @@
 <!-- توجه: وقتی دامنه‌ی remyshop.ir رو خریدی و به این سایت وصل کردی، این آدرس‌ها رو به remyshop.ir برگردون -->
 <link rel="canonical" href="https://remyshops.github.io/index/">
 <meta name="theme-color" content="#0a4fdb">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
@@ -62,7 +65,7 @@
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
   body{
-    font-family:'Vazir','IRANSans','Tahoma','Segoe UI',sans-serif;
+    font-family:'Vazirmatn','Vazir','IRANSans','Tahoma','Segoe UI',sans-serif;
     background:
       radial-gradient(circle at 15% 0%, rgba(10,79,219,0.07), transparent 45%),
       radial-gradient(circle at 90% 10%, rgba(0,53,166,0.05), transparent 40%),
@@ -719,6 +722,394 @@
   table.wholesale-table td.buy-price{ color:var(--drop); font-weight:800; }
   table.wholesale-table td.sell-price{ color:var(--green); font-weight:700; }
 
+  /* ---------- invoice (فاکتور) view ---------- */
+  .invoice-view{ display:none; }
+  .invoice-view.show{ display:block; }
+
+  .invoice-box{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:22px;
+    box-shadow:0 4px 18px rgba(10,79,219,0.10);
+  }
+
+  /* top bar: invoice number (right) + date (left) */
+  .invoice-topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size:12.5px;
+    color:var(--muted);
+    margin-bottom:14px;
+  }
+  .invoice-topbar-item{ display:flex; align-items:center; gap:6px; }
+  .invoice-field-inline{
+    border:1px solid var(--line);
+    background:var(--surface);
+    color:var(--text);
+    font-family:inherit;
+    font-size:12.5px;
+    font-weight:700;
+    border-radius:8px;
+    padding:5px 8px;
+    width:120px;
+    outline:none;
+    text-align:center;
+  }
+  .invoice-field-inline:focus{ border-color:var(--drop); }
+
+  /* centered title block, like a real پیش‌چاپ‌شده invoice header */
+  .invoice-title-block{
+    text-align:center;
+    padding-bottom:16px;
+    margin-bottom:18px;
+    border-bottom:2px solid var(--drop);
+  }
+  .invoice-title{
+    font-size:14px;
+    font-weight:700;
+    color:var(--muted);
+  }
+  .invoice-company{
+    font-size:24px;
+    font-weight:800;
+    margin-top:4px;
+  }
+  .invoice-company span{ color:var(--drop); }
+  .invoice-company-sub{
+    font-size:12.5px;
+    color:var(--muted);
+    margin-top:4px;
+  }
+
+  /* labeled boxes: فروشنده / مشتری / اطلاعات حساب */
+  .invoice-party-box{
+    position:relative;
+    border:1px solid var(--line);
+    background:var(--surface);
+    border-radius:12px;
+    padding:16px 14px 12px;
+    margin-bottom:12px;
+  }
+  .invoice-party-tab{
+    position:absolute;
+    top:-11px;
+    right:14px;
+    background:linear-gradient(135deg, var(--drop), var(--drop-2));
+    color:#fff;
+    font-size:12px;
+    font-weight:700;
+    padding:4px 14px;
+    border-radius:100px;
+    box-shadow:0 2px 6px rgba(10,79,219,0.35);
+  }
+  .invoice-party-content{
+    font-size:13px;
+    color:var(--text);
+    line-height:1.9;
+  }
+  .invoice-customer{ display:flex; flex-direction:column; gap:10px; }
+  .invoice-customer .lead-field{ margin-bottom:0; }
+  .invoice-info-row{ display:flex; align-items:center; gap:6px; margin-bottom:8px; }
+  .invoice-info-row:last-child{ margin-bottom:0; }
+  .invoice-info-label{ font-size:13px; color:var(--muted); white-space:nowrap; }
+  .invoice-info-input{
+    flex:1 1 auto;
+    min-width:0;
+    background:transparent;
+    border:1px dashed var(--line);
+    border-radius:8px;
+    font-family:inherit;
+    font-size:13px;
+    color:var(--text);
+    padding:5px 8px;
+    outline:none;
+  }
+  .invoice-info-input:focus{ border-color:var(--drop); border-style:solid; }
+
+  .price-mode-tabs{ display:flex; gap:8px; margin-bottom:16px; }
+  .price-mode-tab{
+    flex:1;
+    background:var(--surface);
+    border:1px solid var(--line);
+    color:var(--muted);
+    padding:10px 8px;
+    border-radius:10px;
+    font-size:13px;
+    font-weight:700;
+    font-family:inherit;
+    cursor:pointer;
+    transition:all .2s;
+  }
+  .price-mode-tab.active{
+    background:linear-gradient(135deg, var(--green), var(--green-2));
+    border-color:var(--green);
+    color:#fff;
+  }
+
+  .invoice-add-row{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-bottom:16px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:12px;
+  }
+  .invoice-select{
+    flex:2 1 160px;
+    background:#fff;
+    border:1px solid var(--line);
+    color:var(--text);
+    padding:10px;
+    border-radius:10px;
+    font-family:inherit;
+    font-size:13px;
+    outline:none;
+  }
+  .invoice-qty, .invoice-unit-price{
+    flex:1 1 80px;
+    min-width:70px;
+    background:#fff;
+    border:1px solid var(--line);
+    color:var(--text);
+    padding:10px 8px;
+    border-radius:10px;
+    font-family:inherit;
+    font-size:13px;
+    outline:none;
+    text-align:center;
+  }
+  .invoice-add-btn{
+    flex:1 1 100%;
+    background:linear-gradient(135deg, var(--drop), var(--drop-2));
+    color:#fff;
+    border:none;
+    padding:11px;
+    border-radius:10px;
+    font-weight:700;
+    font-size:13.5px;
+    font-family:inherit;
+    cursor:pointer;
+    transition:transform .2s;
+  }
+  .invoice-add-btn:hover{ transform:translateY(-2px); }
+
+  .invoice-table-wrap{
+    overflow-x:auto;
+    border-radius:12px;
+    border:1px solid var(--line);
+    margin-bottom:10px;
+  }
+  table.invoice-table{ width:100%; border-collapse:collapse; font-size:12.5px; }
+  table.invoice-table th{
+    background:linear-gradient(135deg, var(--drop), var(--drop-2));
+    color:#ffffff;
+    font-weight:700;
+    padding:11px 6px;
+    text-align:center;
+  }
+  table.invoice-table th:nth-child(2){ text-align:right; padding-right:12px; }
+  table.invoice-table td{
+    padding:10px 6px;
+    text-align:center;
+    border-bottom:1px solid var(--line);
+  }
+  table.invoice-table tr:last-child td{ border-bottom:none; }
+  table.invoice-table tr:nth-child(even) td{ background:var(--surface-2); }
+  .invoice-item-name{ text-align:right; font-weight:600; padding-right:12px !important; }
+  .invoice-cell-input{
+    width:58px;
+    background:#fff;
+    border:1px solid var(--line);
+    color:var(--text);
+    padding:5px 4px;
+    border-radius:6px;
+    font-family:inherit;
+    font-size:12.5px;
+    text-align:center;
+    outline:none;
+  }
+  .invoice-cell-input:focus{ border-color:var(--drop); }
+  .invoice-row-del{
+    background:none;
+    border:1px solid var(--line);
+    color:#c0392b;
+    width:24px; height:24px;
+    border-radius:50%;
+    cursor:pointer;
+    font-size:12px;
+    line-height:1;
+  }
+  .invoice-row-del:hover{ border-color:#c0392b; }
+  .invoice-empty{ text-align:center; color:var(--muted); font-size:13px; padding:16px 0; }
+
+  .invoice-bottom-row{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+    align-items:stretch;
+    margin-top:8px;
+  }
+  .invoice-totals{
+    flex:1 1 220px;
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:14px;
+    background:var(--surface);
+  }
+  .invoice-total-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size:13.5px;
+    padding:6px 0;
+    color:var(--muted);
+  }
+  .invoice-total-row.grand{
+    font-size:16px;
+    font-weight:800;
+    color:#fff;
+    background:linear-gradient(135deg, var(--drop), var(--drop-2));
+    border-radius:10px;
+    margin-top:8px;
+    padding:10px 12px;
+  }
+  .invoice-total-words{
+    margin-top:10px;
+    font-size:12px;
+    color:var(--muted);
+    text-align:center;
+    line-height:1.7;
+  }
+  .invoice-discount-input{
+    width:90px;
+    background:#fff;
+    border:1px solid var(--line);
+    color:var(--text);
+    padding:5px 8px;
+    border-radius:8px;
+    font-family:inherit;
+    font-size:13px;
+    text-align:center;
+    outline:none;
+  }
+  .invoice-bank-box{
+    flex:1 1 220px;
+    margin-bottom:0;
+  }
+  .invoice-bank-content{ text-align:center; }
+  .invoice-bank-label{ font-size:11.5px; color:var(--muted); }
+  .invoice-bank-card-input{
+    display:block;
+    width:100%;
+    background:transparent;
+    border:1px dashed var(--line);
+    border-radius:8px;
+    font-family:inherit;
+    font-size:16px;
+    font-weight:800;
+    letter-spacing:1px;
+    color:var(--drop-2);
+    direction:ltr;
+    text-align:center;
+    margin:4px 0 6px;
+    padding:4px 2px;
+    outline:none;
+  }
+  .invoice-bank-card-input:focus{ border-color:var(--drop); border-style:solid; }
+  .invoice-bank-name-row{ font-size:12.5px; font-weight:600; display:flex; align-items:center; justify-content:center; gap:4px; }
+  .invoice-bank-name-input{
+    background:transparent;
+    border:1px dashed var(--line);
+    border-radius:8px;
+    font-family:inherit;
+    font-size:12.5px;
+    font-weight:600;
+    color:var(--text);
+    text-align:center;
+    padding:3px 6px;
+    outline:none;
+    flex:1 1 auto;
+    min-width:0;
+  }
+  .invoice-bank-name-input:focus{ border-color:var(--drop); border-style:solid; }
+  .invoice-disclaimer{
+    margin-top:14px;
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:10px 12px;
+    font-size:11.5px;
+    color:var(--muted);
+    line-height:1.8;
+    text-align:center;
+  }
+  .print-only{ display:none; }
+  .invoice-note-print{ display:none; }
+
+  .invoice-actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:18px; }
+  .invoice-action-btn{
+    flex:1 1 150px;
+    padding:13px 10px;
+    border-radius:12px;
+    border:none;
+    font-weight:700;
+    font-size:13.5px;
+    font-family:inherit;
+    cursor:pointer;
+    color:#fff;
+    transition:transform .2s;
+  }
+  .invoice-action-btn:hover{ transform:translateY(-2px); }
+  .invoice-action-btn.print{ background:linear-gradient(135deg, var(--drop), var(--drop-2)); }
+  .invoice-action-btn.image{ background:linear-gradient(135deg, #6d28d9, #4c1d95); }
+  .invoice-action-btn.copy{ background:linear-gradient(135deg, var(--green), var(--green-2)); }
+  .invoice-action-btn.reset{ background:linear-gradient(135deg, var(--orange), var(--orange-2)); }
+  .invoice-action-btn:disabled{ opacity:.6; cursor:default; transform:none; }
+
+  /* حالتِ گرفتنِ خروجی عکس: مثل حالت چاپ، ورودی‌های بدون خروجی رو مخفی می‌کنه */
+  .capturing-image .no-print{ display:none !important; }
+  .capturing-image .print-only{ display:inline !important; }
+  .capturing-image .invoice-note-print{ display:block !important; text-align:center; margin-top:20px; font-size:12px; color:#555; }
+  .capturing-image input{
+    border-color:transparent !important;
+    background:transparent !important;
+    padding-left:2px !important;
+    padding-right:2px !important;
+  }
+  .invoice-copy-msg{ text-align:center; font-size:13px; color:var(--green-2); margin-top:10px; min-height:16px; }
+
+  @media(max-width:600px){
+    .mode-tab{ font-size:12.5px; padding:11px 6px; }
+  }
+  @media(max-width:420px){
+    .invoice-select, .invoice-qty, .invoice-unit-price{ flex:1 1 100%; }
+    .invoice-topbar{ flex-direction:column; align-items:flex-end; gap:6px; }
+  }
+
+  @media print{
+    body *{ visibility:hidden; }
+    #invoicePrintArea, #invoicePrintArea *{ visibility:visible; }
+    #invoicePrintArea{
+      position:absolute; top:0; right:0; left:0;
+      width:100%;
+      box-shadow:none;
+      border:none;
+      padding:0;
+    }
+    .no-print{ display:none !important; }
+    .print-only{ display:inline !important; }
+    .invoice-note-print{ display:block !important; text-align:center; margin-top:20px; font-size:12px; color:#555; }
+    #invoicePrintArea input{
+      border-color:transparent !important;
+      background:transparent !important;
+      padding-left:2px !important;
+      padding-right:2px !important;
+    }
+  }
+
   /* نام محصول + آیکون پخش ویدیوی تست */
   .pname-inner{
     display:flex;
@@ -814,6 +1205,55 @@
     background:linear-gradient(135deg, var(--green), var(--green-2));
     color:#ffffff;
   }
+
+  /* ---------- lead form ---------- */
+  .lead-box{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:18px;
+    text-align:right;
+    box-shadow:0 2px 8px rgba(10,79,219,0.08);
+  }
+  .lead-box .lead-field{
+    width:100%;
+    background:#fff;
+    border:1px solid var(--line);
+    color:var(--text);
+    padding:13px 16px;
+    border-radius:12px;
+    font-family:inherit;
+    font-size:14px;
+    outline:none;
+    margin-bottom:12px;
+  }
+  .lead-box .lead-field:focus{ border-color:var(--drop); }
+  .lead-box .lead-field::placeholder{ color:var(--muted); }
+  .lead-submit{
+    width:100%;
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    font-weight:700;
+    font-size:14px;
+    padding:13px 20px;
+    border:none;
+    border-radius:12px;
+    color:#fff;
+    background:linear-gradient(135deg, var(--drop), var(--drop-2));
+    cursor:pointer;
+    transition:transform .2s, opacity .2s;
+    font-family:inherit;
+  }
+  .lead-submit:hover{ transform:translateY(-2px); }
+  .lead-submit:disabled{ opacity:.6; cursor:default; transform:none; }
+  .lead-msg{
+    text-align:center;
+    font-size:13px;
+    margin-top:10px;
+    display:none;
+  }
+  .lead-msg.show{ display:block; }
+  .lead-msg.ok{ color:var(--green-2); }
+  .lead-msg.err{ color:#c0392b; }
 
   /* ---------- trust box ---------- */
   .trust-box{
@@ -965,6 +1405,8 @@
   .floating-wa:hover{ transform:translateY(-2px); animation-play-state:paused; }
   .floating-wa svg{ width:18px; height:18px; fill:#ffffff; }
 </style>
+<!-- برای خروجی عکس از فاکتور -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
 
@@ -1020,6 +1462,7 @@
   <div class="mode-tabs">
     <button class="mode-tab active" id="modeRetailBtn" type="button">🛍 خرده‌فروشی (تکی)</button>
     <button class="mode-tab" id="modeWholesaleBtn" type="button">📦 قیمت عمده</button>
+    <button class="mode-tab" id="modeInvoiceBtn" type="button">🧾 صدور فاکتور</button>
   </div>
 
   <div class="retail-view" id="retailView">
@@ -1106,6 +1549,110 @@
     </a>
   </div>
 
+  <!-- ================= INVOICE (صدور فاکتور) ================= -->
+  <div class="invoice-view" id="invoiceView">
+    <div class="section-title" id="invoiceSection"><span class="drop"></span><h2>صدور فاکتور</h2><span class="line"></span></div>
+    <div class="section-sub">اسم مشتری رو وارد کن، کالاها رو با قیمت خرده یا عمده اضافه کن، بعد چاپ یا کپی بگیر</div>
+
+    <div class="invoice-box" id="invoicePrintArea">
+      <div class="invoice-topbar">
+        <div class="invoice-topbar-item">
+          <span>شماره فاکتور:</span>
+          <input type="text" id="invoiceNumber" class="invoice-field-inline">
+        </div>
+        <div class="invoice-topbar-item">
+          <span>تاریخ:</span>
+          <input type="text" id="invoiceDate" class="invoice-field-inline">
+        </div>
+      </div>
+
+      <div class="invoice-title-block">
+        <div class="invoice-title">فاکتور فروش</div>
+        <div class="invoice-company">رمی <span>شاپ</span></div>
+        <div class="invoice-company-sub">پخش محصولات نانو — غیاث مدرسی</div>
+      </div>
+
+      <div class="invoice-party-box">
+        <span class="invoice-party-tab">فروشنده</span>
+        <div class="invoice-party-content">
+          <div class="invoice-info-row"><input type="text" id="sellerName" class="invoice-info-input" value="غیاث مدرسی — پخش محصولات نانو" autocomplete="off"></div>
+          <div class="invoice-info-row"><span class="invoice-info-label">موبایل:</span><input type="text" id="sellerPhone" class="invoice-info-input" value="09389561367" autocomplete="off"></div>
+          <div class="invoice-info-row"><span class="invoice-info-label">آدرس:</span><input type="text" id="sellerAddress" class="invoice-info-input" value="یزد" autocomplete="off"></div>
+        </div>
+      </div>
+
+      <div class="invoice-party-box">
+        <span class="invoice-party-tab">مشتری</span>
+        <div class="invoice-party-content invoice-customer">
+          <input type="text" id="customerName" class="lead-field" placeholder="نام مشتری" autocomplete="off">
+          <input type="text" id="customerPhone" class="lead-field" placeholder="شماره تماس مشتری (اختیاری)" autocomplete="off">
+          <input type="text" id="customerAddress" class="lead-field" placeholder="آدرس مشتری (اختیاری)" autocomplete="off">
+        </div>
+      </div>
+
+      <div class="price-mode-tabs no-print" id="priceModeTabs">
+        <button type="button" class="price-mode-tab active" data-mode="retail">🛍 قیمت خرده</button>
+        <button type="button" class="price-mode-tab" data-mode="wholesale">📦 قیمت عمده</button>
+      </div>
+
+      <div class="invoice-add-row no-print">
+        <select id="invoiceProductSelect" class="invoice-select"></select>
+        <input type="text" id="invoiceCustomName" class="invoice-select" placeholder="نام کالای دلخواه" style="display:none;">
+        <input type="number" id="invoiceQty" class="invoice-qty" min="1" value="1" placeholder="تعداد">
+        <input type="number" id="invoiceUnitPrice" class="invoice-unit-price" min="0" placeholder="قیمت واحد">
+        <button type="button" id="invoiceAddBtn" class="invoice-add-btn">+ افزودن به فاکتور</button>
+      </div>
+
+      <div class="invoice-table-wrap">
+        <table class="invoice-table" id="invoiceTable">
+          <thead><tr><th>#</th><th>شرح کالا</th><th>تعداد</th><th>قیمت واحد</th><th>جمع کل</th><th class="no-print"></th></tr></thead>
+          <tbody id="invoiceTableBody"></tbody>
+        </table>
+      </div>
+      <div class="invoice-empty" id="invoiceEmpty">هنوز کالایی به فاکتور اضافه نشده</div>
+
+      <div class="invoice-bottom-row">
+        <div class="invoice-totals">
+          <div class="invoice-total-row"><span>جمع کل</span><span id="invoiceSubtotal">۰ تومان</span></div>
+          <div class="invoice-total-row discount-row">
+            <span>تخفیف</span>
+            <span>
+              <input type="number" id="invoiceDiscount" class="invoice-discount-input no-print" min="0" value="0">
+              <span class="print-only" id="invoiceDiscountPrint"></span>
+            </span>
+          </div>
+          <div class="invoice-total-row grand"><span>مبلغ قابل پرداخت</span><span id="invoiceGrandTotal">۰ تومان</span></div>
+          <div class="invoice-total-words" id="invoiceTotalWords"></div>
+        </div>
+
+        <div class="invoice-party-box invoice-bank-box">
+          <span class="invoice-party-tab">💳 اطلاعات حساب</span>
+          <div class="invoice-party-content invoice-bank-content">
+            <div class="invoice-bank-label">شماره کارت</div>
+            <input type="text" id="invoiceBankCard" class="invoice-bank-card-input" value="6219 8619 1044 6441" inputmode="numeric" autocomplete="off">
+            <div class="invoice-bank-name-row">به نام:
+              <input type="text" id="invoiceBankName" class="invoice-bank-name-input" value="سید علی محمد مدرسی" autocomplete="off">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="invoice-disclaimer">
+        * لطفاً قبل از واریز وجه، کالاها و تعداد ثبت‌شده در فاکتور را بررسی کنید.
+      </div>
+
+      <div class="invoice-note-print">با تشکر از خرید شما — رمی شاپ</div>
+    </div>
+
+    <div class="invoice-actions no-print">
+      <button type="button" id="invoicePrintBtn" class="invoice-action-btn print">🖨 چاپ / ذخیره PDF</button>
+      <button type="button" id="invoiceImageBtn" class="invoice-action-btn image">📷 خروجی عکس</button>
+      <button type="button" id="invoiceCopyBtn" class="invoice-action-btn copy">📋 کپی متن فاکتور</button>
+      <button type="button" id="invoiceResetBtn" class="invoice-action-btn reset">🗑 فاکتور جدید</button>
+    </div>
+    <div class="invoice-copy-msg no-print" id="invoiceCopyMsg"></div>
+  </div>
+
   <!-- ================= ORDER ================= -->
   <div class="section-title" id="orderSection"><span class="drop"></span><h2>ثبت سفارش</h2><span class="line"></span></div>
   <div class="section-sub">برای خرید و ثبت سفارش، به غرفه ما در باسلام مراجعه کنید</div>
@@ -1116,9 +1663,20 @@
   </a>
 
   <!-- ================= END CTA ================= -->
-  <div class="end-cta">
+  <div class="end-cta" id="freeConsult">
     <h3>هنوز محصول مورد نظرت را پیدا نکردی؟</h3>
-    <p>در ایتا پیام بده و مشاوره رایگان دریافت کن</p>
+    <p>نام و شماره‌ات رو بذار تا خودمون باهات تماس بگیریم و مشاوره رایگان بدیم</p>
+
+    <div class="lead-box">
+      <form id="leadForm">
+        <input class="lead-field" type="text" id="leadName" name="name" placeholder="نام و نام خانوادگی" required autocomplete="name">
+        <input class="lead-field" type="tel" id="leadPhone" name="phone" placeholder="شماره موبایل (مثلاً 09123456789)" required inputmode="numeric" pattern="^09[0-9]{9}$" autocomplete="tel">
+        <button type="submit" class="lead-submit" id="leadSubmitBtn">تماس با من بگیرید</button>
+        <div class="lead-msg" id="leadMsg"></div>
+      </form>
+    </div>
+
+    <p style="margin:16px 0 10px;">یا اگه عجله داری، مستقیم پیام بده:</p>
     <a href="https://eitaa.com/EZGAMETV" target="_blank" rel="noopener" class="btn-cta green" style="background:linear-gradient(135deg, var(--orange), var(--orange-2));">📱 پیام در ایتا</a>
   </div>
 
@@ -1136,7 +1694,7 @@
 </div>
 
 <!-- ================= FLOATING WHATSAPP ================= -->
-<a class="floating-wa" href="https://eitaa.com/EZGAMETV" target="_blank" rel="noopener">
+<a class="floating-wa" href="#freeConsult">
   <svg viewBox="0 0 24 24"><path d="M21.9 4.3 2.7 11.8c-.9.4-.9 1.6.1 1.9l4.6 1.5 1.8 5.7c.2.7 1.1.9 1.6.3l2.5-2.8 4.8 3.5c.7.5 1.7.1 1.9-.7l3.1-14.8c.2-1-.9-1.7-1.7-1.2zM8.7 14.6l9-6.2c.2-.1.4.1.2.3l-7.4 7.1c-.3.3-.5.7-.6 1.1l-.3 2.4-.9-4.7z"/></svg>
   مشاوره رایگان
 </a>
@@ -1170,6 +1728,20 @@
     <div class="video-frame-wrap">
       <iframe id="videoFrame" src="" allow="autoplay; fullscreen" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe>
     </div>
+  </div>
+</div>
+
+<!-- ================= INVOICE PASSWORD MODAL ================= -->
+<div class="overlay" id="invoicePassOverlay">
+  <div class="modal" style="max-width:300px; text-align:center;">
+    <div class="modal-head">
+      <h3>🔒 ورود به بخش فاکتور</h3>
+      <button class="close-btn" id="closeInvoicePassModal">×</button>
+    </div>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:14px;">برای دسترسی به صدور فاکتور، رمز رو وارد کن</p>
+    <input type="password" id="invoicePassInput" class="lead-field" placeholder="رمز عبور" inputmode="numeric" style="text-align:center; letter-spacing:6px; font-size:18px;">
+    <div class="lead-msg" id="invoicePassMsg"></div>
+    <button type="button" id="invoicePassSubmit" class="lead-submit" style="margin-top:10px;">ورود</button>
   </div>
 </div>
 
@@ -1457,8 +2029,10 @@ const wholesaleCatTabsEl = document.getElementById('wholesaleCatTabs');
 const wholesaleTablesWrap = document.getElementById('wholesaleTablesWrap');
 const retailViewEl = document.getElementById('retailView');
 const wholesaleViewEl = document.getElementById('wholesaleView');
+const invoiceViewEl = document.getElementById('invoiceView');
 const modeRetailBtn = document.getElementById('modeRetailBtn');
 const modeWholesaleBtn = document.getElementById('modeWholesaleBtn');
+const modeInvoiceBtn = document.getElementById('modeInvoiceBtn');
 
 function renderWholesaleTabs(){
   wholesaleCatTabsEl.innerHTML = "";
@@ -1570,20 +2144,74 @@ function wholesaleSectionOffset(){
   return el ? el.getBoundingClientRect().top + window.scrollY - 16 : 0;
 }
 
+function invoiceSectionOffset(){
+  const el = document.getElementById('invoiceSection');
+  return el ? el.getBoundingClientRect().top + window.scrollY - 16 : 0;
+}
+
+function setActiveMode(mode){
+  modeRetailBtn.classList.toggle('active', mode === 'retail');
+  modeWholesaleBtn.classList.toggle('active', mode === 'wholesale');
+  modeInvoiceBtn.classList.toggle('active', mode === 'invoice');
+  retailViewEl.classList.toggle('hide', mode !== 'retail');
+  wholesaleViewEl.classList.toggle('show', mode === 'wholesale');
+  invoiceViewEl.classList.toggle('show', mode === 'invoice');
+}
+
 modeRetailBtn.addEventListener('click', ()=>{
-  modeRetailBtn.classList.add('active');
-  modeWholesaleBtn.classList.remove('active');
-  retailViewEl.classList.remove('hide');
-  wholesaleViewEl.classList.remove('show');
+  setActiveMode('retail');
   window.scrollTo({top:0, behavior:'smooth'});
 });
 modeWholesaleBtn.addEventListener('click', ()=>{
-  modeWholesaleBtn.classList.add('active');
-  modeRetailBtn.classList.remove('active');
-  wholesaleViewEl.classList.add('show');
-  retailViewEl.classList.add('hide');
+  setActiveMode('wholesale');
   window.scrollTo({top: wholesaleSectionOffset(), behavior:'smooth'});
 });
+modeInvoiceBtn.addEventListener('click', ()=>{
+  if(invoiceUnlocked){
+    setActiveMode('invoice');
+    window.scrollTo({top: invoiceSectionOffset(), behavior:'smooth'});
+  } else {
+    openInvoicePassModal();
+  }
+});
+
+/* ---------- رمز عبور بخش فاکتور ---------- */
+const INVOICE_PASSWORD = "5566";
+const invoicePassOverlay = document.getElementById('invoicePassOverlay');
+const invoicePassInput = document.getElementById('invoicePassInput');
+const invoicePassMsg = document.getElementById('invoicePassMsg');
+const invoicePassSubmit = document.getElementById('invoicePassSubmit');
+let invoiceUnlocked = false;
+try{ invoiceUnlocked = sessionStorage.getItem('remyInvoiceUnlocked') === '1'; }catch(e){ /* بی‌خیال */ }
+
+function openInvoicePassModal(){
+  invoicePassInput.value = "";
+  invoicePassMsg.classList.remove('show');
+  invoicePassOverlay.classList.add('show');
+  setTimeout(()=> invoicePassInput.focus(), 150);
+}
+function closeInvoicePassModal(){
+  invoicePassOverlay.classList.remove('show');
+}
+document.getElementById('closeInvoicePassModal').addEventListener('click', closeInvoicePassModal);
+invoicePassOverlay.addEventListener('click', (e)=>{ if(e.target === invoicePassOverlay) closeInvoicePassModal(); });
+
+function trySubmitInvoicePass(){
+  if(invoicePassInput.value.trim() === INVOICE_PASSWORD){
+    invoiceUnlocked = true;
+    try{ sessionStorage.setItem('remyInvoiceUnlocked', '1'); }catch(e){ /* بی‌خیال */ }
+    closeInvoicePassModal();
+    setActiveMode('invoice');
+    window.scrollTo({top: invoiceSectionOffset(), behavior:'smooth'});
+  } else {
+    invoicePassMsg.textContent = "❌ رمز اشتباهه";
+    invoicePassMsg.className = "lead-msg show err";
+    invoicePassInput.value = "";
+    invoicePassInput.focus();
+  }
+}
+invoicePassSubmit.addEventListener('click', trySubmitInvoicePass);
+invoicePassInput.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') trySubmitInvoicePass(); });
 
 function renderTabs(){
   catTabs.innerHTML = "";
@@ -1770,6 +2398,412 @@ END:VCARD`;
   link.click();
 });
 
+/* ================= INVOICE (صدور فاکتور) ================= */
+
+/* کاتالوگ فاکتور: ترکیب محصولات خرده + عمده، بر اساس نام. اگه قیمت عمده
+   موجود نباشه، از قیمت خرده به‌عنوان جایگزین استفاده می‌شه. */
+const invoiceCatalog = (function(){
+  const map = {};
+  function ensure(name){
+    if(!map[name]) map[name] = {name, retail:null, wholesale:null};
+    return map[name];
+  }
+  products.forEach(p=>{ ensure(p.name).retail = p.price; });
+  simpleCategories.forEach(c=> c.items.forEach(it=>{
+    if(typeof it === "object" && it && it.price != null) ensure(it.name).retail = it.price;
+  }));
+  wholesaleCategories.forEach(c=> c.items.forEach(it=>{
+    const e = ensure(it.name);
+    e.wholesale = it.buy;
+    if(e.retail == null) e.retail = it.sell;
+  }));
+  return Object.values(map).sort((a,b)=> a.name.localeCompare(b.name, "fa"));
+})();
+
+const invoiceProductSelect = document.getElementById('invoiceProductSelect');
+const invoiceCustomNameInput = document.getElementById('invoiceCustomName');
+const invoiceQtyInput = document.getElementById('invoiceQty');
+const invoiceUnitPriceInput = document.getElementById('invoiceUnitPrice');
+const invoiceAddBtn = document.getElementById('invoiceAddBtn');
+const invoiceTableBody = document.getElementById('invoiceTableBody');
+const invoiceEmpty = document.getElementById('invoiceEmpty');
+const invoiceSubtotalEl = document.getElementById('invoiceSubtotal');
+const invoiceGrandTotalEl = document.getElementById('invoiceGrandTotal');
+const invoiceDiscountInput = document.getElementById('invoiceDiscount');
+const invoiceDiscountPrint = document.getElementById('invoiceDiscountPrint');
+const customerNameInput = document.getElementById('customerName');
+const customerPhoneInput = document.getElementById('customerPhone');
+const customerAddressInput = document.getElementById('customerAddress');
+const invoiceNumberInput = document.getElementById('invoiceNumber');
+const invoiceDateInput = document.getElementById('invoiceDate');
+const priceModeTabsEl = document.getElementById('priceModeTabs');
+const invoiceCopyMsg = document.getElementById('invoiceCopyMsg');
+
+let invoicePriceMode = "retail"; // یا "wholesale"
+let invoiceItems = []; // {name, qty, unitPrice}
+
+/* تبدیل تاریخ میلادی به شمسی (الگوریتم استاندارد، بدون نیاز به کتابخانه) */
+function toJalali(gy, gm, gd){
+  const g_d_m = [0,31,59,90,120,151,181,212,243,273,304,334];
+  let jy = (gy <= 1600) ? 0 : 979;
+  gy -= (gy <= 1600) ? 621 : 1600;
+  const gy2 = (gm > 2) ? (gy + 1) : gy;
+  let days = (365 * gy) + (Math.floor((gy2 + 3) / 4)) - (Math.floor((gy2 + 99) / 100)) + (Math.floor((gy2 + 399) / 400)) - 80 + gd + g_d_m[gm - 1];
+  jy += 33 * Math.floor(days / 12053);
+  days %= 12053;
+  jy += 4 * Math.floor(days / 1461);
+  days %= 1461;
+  if (days > 365){
+    jy += Math.floor((days - 1) / 365);
+    days = (days - 1) % 365;
+  }
+  let jm, jd;
+  if (days < 186){
+    jm = 1 + Math.floor(days / 31);
+    jd = 1 + (days % 31);
+  } else {
+    jm = 7 + Math.floor((days - 186) / 30);
+    jd = 1 + ((days - 186) % 30);
+  }
+  return [jy, jm, jd];
+}
+
+function todayJalaliString(){
+  const d = new Date();
+  const [jy, jm, jd] = toJalali(d.getFullYear(), d.getMonth()+1, d.getDate());
+  const months = ["فروردین","اردیبهشت","خرداد","تیر","مرداد","شهریور","مهر","آبان","آذر","دی","بهمن","اسفند"];
+  return `${jd} ${months[jm-1]} ${jy}`;
+}
+
+function generateInvoiceNumber(){
+  let seq = 1;
+  try{
+    seq = parseInt(localStorage.getItem('remyInvoiceSeq') || '0', 10) + 1;
+    localStorage.setItem('remyInvoiceSeq', String(seq));
+  }catch(e){ /* localStorage در دسترس نیست، مشکلی نیست */ }
+  const d = new Date();
+  const [jy] = toJalali(d.getFullYear(), d.getMonth()+1, d.getDate());
+  return `RS-${jy}-${String(seq).padStart(4,'0')}`;
+}
+
+function populateInvoiceProductSelect(){
+  if(!invoiceProductSelect) return;
+  const customOption = `<option value="__custom__">➕ کالای دلخواه (تایپ کنید)</option>`;
+  invoiceProductSelect.innerHTML = customOption + invoiceCatalog.map(p=>
+    `<option value="${p.name.replace(/"/g,'&quot;')}">${p.name}</option>`
+  ).join("");
+}
+
+function priceForCurrentMode(name){
+  const p = invoiceCatalog.find(x=> x.name === name);
+  if(!p) return "";
+  const val = invoicePriceMode === "wholesale" ? p.wholesale : p.retail;
+  if(val != null) return val;
+  return p.retail != null ? p.retail : (p.wholesale != null ? p.wholesale : "");
+}
+
+function syncInvoiceUnitPriceField(){
+  if(!invoiceProductSelect) return;
+  if(invoiceProductSelect.value === "__custom__") return;
+  const price = priceForCurrentMode(invoiceProductSelect.value);
+  invoiceUnitPriceInput.value = (price !== "" && price != null) ? price : "";
+}
+
+function syncInvoiceCustomFieldVisibility(focusIt){
+  if(!invoiceProductSelect) return;
+  const isCustom = invoiceProductSelect.value === "__custom__";
+  invoiceCustomNameInput.style.display = isCustom ? "block" : "none";
+  if(isCustom){
+    invoiceUnitPriceInput.value = "";
+    if(focusIt) invoiceCustomNameInput.focus();
+  } else {
+    invoiceCustomNameInput.value = "";
+    syncInvoiceUnitPriceField();
+  }
+}
+
+if(invoiceProductSelect){
+  invoiceProductSelect.addEventListener('change', ()=> syncInvoiceCustomFieldVisibility(true));
+}
+
+if(priceModeTabsEl){
+  priceModeTabsEl.addEventListener('click', (e)=>{
+    const btn = e.target.closest('.price-mode-tab');
+    if(!btn) return;
+    invoicePriceMode = btn.dataset.mode;
+    priceModeTabsEl.querySelectorAll('.price-mode-tab').forEach(b=> b.classList.toggle('active', b === btn));
+    syncInvoiceUnitPriceField();
+  });
+}
+
+if(invoiceAddBtn){
+  invoiceAddBtn.addEventListener('click', ()=>{
+    let name;
+    if(invoiceProductSelect.value === "__custom__"){
+      name = invoiceCustomNameInput.value.trim();
+      if(!name){ alert('اسم کالا رو وارد کن'); invoiceCustomNameInput.focus(); return; }
+    } else {
+      name = invoiceProductSelect.value;
+    }
+    if(!name) return;
+    const qty = Math.max(1, parseInt(invoiceQtyInput.value, 10) || 1);
+    const unitPrice = Math.max(0, parseFloat(invoiceUnitPriceInput.value) || 0);
+    const existing = invoiceItems.find(it=> it.name === name && it.unitPrice === unitPrice);
+    if(existing){
+      existing.qty += qty;
+    } else {
+      invoiceItems.push({name, qty, unitPrice});
+    }
+    invoiceQtyInput.value = 1;
+    if(invoiceProductSelect.value === "__custom__"){
+      invoiceCustomNameInput.value = "";
+      invoiceUnitPriceInput.value = "";
+    }
+    renderInvoiceTable();
+  });
+}
+
+function removeInvoiceItem(idx){
+  invoiceItems.splice(idx, 1);
+  renderInvoiceTable();
+}
+
+const PW_ONES = ['','یک','دو','سه','چهار','پنج','شش','هفت','هشت','نه'];
+const PW_TEENS = ['ده','یازده','دوازده','سیزده','چهارده','پانزده','شانزده','هفده','هجده','نوزده'];
+const PW_TENS = ['','ده','بیست','سی','چهل','پنجاه','شصت','هفتاد','هشتاد','نود'];
+const PW_HUNDREDS = ['','صد','دویست','سیصد','چهارصد','پانصد','ششصد','هفتصد','هشتصد','نهصد'];
+const PW_SCALES = ['','هزار','میلیون','میلیارد'];
+
+function threeDigitToPersianWords(n){
+  const parts = [];
+  const h = Math.floor(n/100), r = n%100;
+  if(h) parts.push(PW_HUNDREDS[h]);
+  if(r){
+    if(r < 10) parts.push(PW_ONES[r]);
+    else if(r < 20) parts.push(PW_TEENS[r-10]);
+    else {
+      const t = Math.floor(r/10), o = r%10;
+      parts.push(o ? (PW_TENS[t] + ' و ' + PW_ONES[o]) : PW_TENS[t]);
+    }
+  }
+  return parts.join(' و ');
+}
+
+function numberToPersianWords(num){
+  num = Math.round(Math.max(0, num));
+  if(num === 0) return 'صفر';
+  const groups = [];
+  let scaleIdx = 0;
+  while(num > 0 && scaleIdx < PW_SCALES.length){
+    const g = num % 1000;
+    if(g) groups.unshift(threeDigitToPersianWords(g) + (PW_SCALES[scaleIdx] ? ' ' + PW_SCALES[scaleIdx] : ''));
+    num = Math.floor(num/1000);
+    scaleIdx++;
+  }
+  return groups.join(' و ');
+}
+
+function updateInvoiceTotals(){
+  const subtotal = invoiceItems.reduce((s, it)=> s + it.qty * it.unitPrice, 0);
+  const discount = Math.max(0, parseFloat(invoiceDiscountInput.value) || 0);
+  const grand = Math.max(0, subtotal - discount);
+  invoiceSubtotalEl.textContent = formatPrice(subtotal);
+  invoiceGrandTotalEl.textContent = formatPrice(grand);
+  if(invoiceDiscountPrint) invoiceDiscountPrint.textContent = formatPrice(discount);
+  const wordsEl = document.getElementById('invoiceTotalWords');
+  if(wordsEl){
+    wordsEl.textContent = grand > 0 ? (numberToPersianWords(grand) + ' تومان') : '';
+  }
+}
+
+function renderInvoiceTable(){
+  if(!invoiceTableBody) return;
+  if(!invoiceItems.length){
+    invoiceTableBody.innerHTML = "";
+    invoiceEmpty.style.display = "block";
+  } else {
+    invoiceEmpty.style.display = "none";
+    invoiceTableBody.innerHTML = invoiceItems.map((it, idx)=>{
+      const lineTotal = it.qty * it.unitPrice;
+      return `<tr>
+        <td>${idx+1}</td>
+        <td class="invoice-item-name">${it.name}</td>
+        <td><input type="number" class="invoice-cell-input" data-idx="${idx}" data-field="qty" min="1" value="${it.qty}"></td>
+        <td><input type="number" class="invoice-cell-input" data-idx="${idx}" data-field="unitPrice" min="0" value="${it.unitPrice}"></td>
+        <td class="invoice-line-total">${formatPrice(lineTotal)}</td>
+        <td class="no-print"><button type="button" class="invoice-row-del" data-idx="${idx}">✕</button></td>
+      </tr>`;
+    }).join("");
+  }
+  updateInvoiceTotals();
+}
+
+if(invoiceTableBody){
+  invoiceTableBody.addEventListener('input', (e)=>{
+    const inp = e.target.closest('.invoice-cell-input');
+    if(!inp) return;
+    const idx = parseInt(inp.dataset.idx, 10);
+    const field = inp.dataset.field;
+    const item = invoiceItems[idx];
+    if(!item) return;
+    let val = parseFloat(inp.value);
+    if(isNaN(val) || val < 0) val = 0;
+    if(field === 'qty') val = Math.max(1, Math.round(val));
+    item[field] = val;
+    const row = inp.closest('tr');
+    const totalCell = row.querySelector('.invoice-line-total');
+    if(totalCell) totalCell.textContent = formatPrice(item.qty * item.unitPrice);
+    updateInvoiceTotals();
+  });
+}
+
+if(invoiceTableBody){
+  invoiceTableBody.addEventListener('click', (e)=>{
+    const btn = e.target.closest('.invoice-row-del');
+    if(!btn) return;
+    removeInvoiceItem(parseInt(btn.dataset.idx, 10));
+  });
+}
+
+if(invoiceDiscountInput){
+  invoiceDiscountInput.addEventListener('input', updateInvoiceTotals);
+}
+
+function resetInvoiceForm(full){
+  invoiceItems = [];
+  invoiceDiscountInput.value = 0;
+  if(full){
+    customerNameInput.value = "";
+    customerPhoneInput.value = "";
+    if(customerAddressInput) customerAddressInput.value = "";
+  }
+  invoiceNumberInput.value = generateInvoiceNumber();
+  invoiceDateInput.value = todayJalaliString();
+  renderInvoiceTable();
+}
+
+const invoiceResetBtn = document.getElementById('invoiceResetBtn');
+if(invoiceResetBtn){
+  invoiceResetBtn.addEventListener('click', ()=>{
+    if(invoiceItems.length && !confirm('فاکتور فعلی پاک بشه و یه فاکتور جدید شروع بشه؟')) return;
+    resetInvoiceForm(true);
+  });
+}
+
+/* هنگام گرفتن خروجی عکس، input هایی که هنوز دیده می‌شن (شماره فاکتور، تاریخ،
+   نام/تلفن مشتری، تعداد و قیمت واحد هر ردیف) رو موقتاً به متن ساده تبدیل می‌کنیم؛
+   چون html2canvas فونت داخل input ها رو درست رندر نمی‌کنه و باعث به‌هم‌ریختگی می‌شه. */
+function convertInvoiceInputsToText(root){
+  const replacements = [];
+  root.querySelectorAll('input').forEach(inp=>{
+    if(inp.closest('.no-print')) return; // این‌ها به‌هرحال حین گرفتن عکس مخفی‌ان
+    let text = inp.value || "";
+    if(inp.classList.contains('invoice-cell-input') && inp.dataset.field === 'unitPrice'){
+      text = formatPrice(parseFloat(inp.value) || 0);
+    }
+    const span = document.createElement('span');
+    span.textContent = text;
+    span.className = 'capture-text-swap';
+    inp.style.display = 'none';
+    inp.insertAdjacentElement('afterend', span);
+    replacements.push({input: inp, span});
+  });
+  return replacements;
+}
+function restoreInvoiceInputs(replacements){
+  replacements.forEach(({input, span})=>{
+    input.style.display = "";
+    if(span && span.parentNode) span.parentNode.removeChild(span);
+  });
+}
+
+const invoicePrintBtn = document.getElementById('invoicePrintBtn');
+if(invoicePrintBtn){
+  invoicePrintBtn.addEventListener('click', ()=>{
+    if(!invoiceItems.length){ alert('اول حداقل یک کالا به فاکتور اضافه کن'); return; }
+    window.print();
+  });
+}
+
+const invoiceImageBtn = document.getElementById('invoiceImageBtn');
+if(invoiceImageBtn){
+  invoiceImageBtn.addEventListener('click', async ()=>{
+    if(!invoiceItems.length){ alert('اول حداقل یک کالا به فاکتور اضافه کن'); return; }
+    if(typeof html2canvas === 'undefined'){
+      alert('امکان ساخت عکس در دسترس نیست — اتصال اینترنت رو چک کن و دوباره تلاش کن');
+      return;
+    }
+    const target = document.getElementById('invoicePrintArea');
+    const originalLabel = invoiceImageBtn.textContent;
+    invoiceImageBtn.disabled = true;
+    invoiceImageBtn.textContent = "⏳ در حال ساخت عکس...";
+    target.classList.add('capturing-image');
+    const replacements = convertInvoiceInputsToText(target);
+    try{
+      if(document.fonts && document.fonts.ready){
+        try{
+          await document.fonts.load('700 16px Vazirmatn');
+          await document.fonts.load('800 16px Vazirmatn');
+          await document.fonts.load('400 16px Vazirmatn');
+          await document.fonts.ready;
+        }catch(fontErr){ /* اگه لود فونت خطا داد، با فونت پیش‌فرض ادامه بده */ }
+      }
+      const canvas = await html2canvas(target, {backgroundColor:'#ffffff', scale:2, useCORS:true});
+      const link = document.createElement('a');
+      const safeNumber = (invoiceNumberInput.value || 'remyshop').replace(/[^\w-]/g, '');
+      link.download = `factor-${safeNumber}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }catch(err){
+      alert('ساخت عکس فاکتور با خطا مواجه شد، دوباره تلاش کن');
+    }finally{
+      restoreInvoiceInputs(replacements);
+      target.classList.remove('capturing-image');
+      invoiceImageBtn.disabled = false;
+      invoiceImageBtn.textContent = originalLabel;
+    }
+  });
+}
+
+const invoiceCopyBtn = document.getElementById('invoiceCopyBtn');
+if(invoiceCopyBtn){
+  invoiceCopyBtn.addEventListener('click', async ()=>{
+    if(!invoiceItems.length){ alert('اول حداقل یک کالا به فاکتور اضافه کن'); return; }
+    const lines = [];
+    lines.push(`🧾 فاکتور فروش — رمی شاپ`);
+    lines.push(`شماره: ${invoiceNumberInput.value}   تاریخ: ${invoiceDateInput.value}`);
+    if(customerNameInput.value.trim()) lines.push(`مشتری: ${customerNameInput.value.trim()}`);
+    if(customerPhoneInput.value.trim()) lines.push(`تماس: ${customerPhoneInput.value.trim()}`);
+    if(customerAddressInput && customerAddressInput.value.trim()) lines.push(`آدرس: ${customerAddressInput.value.trim()}`);
+    lines.push('—————————————');
+    invoiceItems.forEach((it, idx)=>{
+      lines.push(`${idx+1}. ${it.name} × ${it.qty} = ${formatPrice(it.qty*it.unitPrice)}`);
+    });
+    lines.push('—————————————');
+    const subtotal = invoiceItems.reduce((s, it)=> s + it.qty*it.unitPrice, 0);
+    const discount = Math.max(0, parseFloat(invoiceDiscountInput.value) || 0);
+    lines.push(`جمع کل: ${formatPrice(subtotal)}`);
+    if(discount > 0) lines.push(`تخفیف: ${formatPrice(discount)}`);
+    lines.push(`مبلغ قابل پرداخت: ${formatPrice(Math.max(0, subtotal-discount))}`);
+    lines.push('رمی شاپ — 09389561367');
+    const text = lines.join('\n');
+    try{
+      await navigator.clipboard.writeText(text);
+      invoiceCopyMsg.textContent = "✅ متن فاکتور کپی شد";
+    }catch(e){
+      window.prompt('این متن رو کپی کن:', text);
+      invoiceCopyMsg.textContent = "";
+      return;
+    }
+    setTimeout(()=>{ invoiceCopyMsg.textContent = ""; }, 2500);
+  });
+}
+
+populateInvoiceProductSelect();
+syncInvoiceCustomFieldVisibility(false);
+syncInvoiceUnitPriceField();
+resetInvoiceForm(false);
+
 renderStats();
 renderTabs();
 renderGrid();
@@ -1826,6 +2860,68 @@ shareBtn.addEventListener('click', async ()=>{
   const product = findProductByName(pName);
   if (product) openModal(product);
 })();
+
+/* ================= LEAD FORM -> GOOGLE SHEETS ================= */
+/* آدرس Web App که از Google Apps Script می‌گیری رو اینجا جایگزین کن */
+const LEAD_FORM_ENDPOINT = "AKfycbyrm1pzZ3lUDqRMrt2ADFNX3wMx7_-9c28sQj9e_j8";
+
+const leadForm = document.getElementById('leadForm');
+const leadMsg = document.getElementById('leadMsg');
+const leadSubmitBtn = document.getElementById('leadSubmitBtn');
+
+/* وقتی از دکمه شناور "مشاوره رایگان" میاد، فوکوس رو ببر رو فیلد نام */
+document.querySelectorAll('a[href="#freeConsult"]').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    setTimeout(function(){
+      const nameField = document.getElementById('leadName');
+      if (nameField) nameField.focus({ preventScroll: true });
+    }, 500);
+  });
+});
+
+if (leadForm) {
+  leadForm.addEventListener('submit', function(e){
+    e.preventDefault();
+
+    const name = document.getElementById('leadName').value.trim();
+    const phone = document.getElementById('leadPhone').value.trim();
+
+    if (!name || !/^09[0-9]{9}$/.test(phone)) {
+      leadMsg.textContent = "لطفاً نام و شماره موبایل معتبر (مثلاً 09123456789) وارد کنید";
+      leadMsg.className = "lead-msg show err";
+      return;
+    }
+
+    if (LEAD_FORM_ENDPOINT.indexOf("PASTE_YOUR") === 0) {
+      leadMsg.textContent = "فرم هنوز به گوگل‌شیت وصل نشده — راهنمای پایین صفحه رو دنبال کن";
+      leadMsg.className = "lead-msg show err";
+      return;
+    }
+
+    leadSubmitBtn.disabled = true;
+    leadSubmitBtn.textContent = "در حال ارسال...";
+
+    fetch(LEAD_FORM_ENDPOINT, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ name: name, phone: phone })
+    })
+    .then(function(){
+      leadMsg.textContent = "✅ اطلاعات شما با موفقیت ثبت شد، به‌زودی باهاتون تماس می‌گیریم";
+      leadMsg.className = "lead-msg show ok";
+      leadForm.reset();
+    })
+    .catch(function(){
+      leadMsg.textContent = "خطا در ارسال اطلاعات، لطفاً دوباره تلاش کنید";
+      leadMsg.className = "lead-msg show err";
+    })
+    .finally(function(){
+      leadSubmitBtn.disabled = false;
+      leadSubmitBtn.textContent = "ثبت اطلاعات";
+    });
+  });
+}
 
 </script>
 

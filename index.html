@@ -2256,11 +2256,13 @@ try{ invoiceUnlocked = sessionStorage.getItem('remyInvoiceUnlocked') === '1'; }c
 const sellerProfiles = {
   own: {
     sellerName: "سید علی محمد مدرسی",
+    sellerPhone: "09389561367",
     bankCard: "6219 8619 1044 6441",
     bankName: "سید علی محمد مدرسی"
   },
   sister: {
     sellerName: "مریم السادات مدرسی",
+    sellerPhone: "09162594776",
     bankCard: "6219 8619 0082 1520",
     bankName: "مریم السادات مدرسی"
   }
@@ -2268,9 +2270,11 @@ const sellerProfiles = {
 
 function applySellerProfile(profile){
   const sellerNameEl = document.getElementById('sellerName');
+  const sellerPhoneEl = document.getElementById('sellerPhone');
   const bankCardEl = document.getElementById('invoiceBankCard');
   const bankNameEl = document.getElementById('invoiceBankName');
   if(sellerNameEl) sellerNameEl.value = profile.sellerName;
+  if(sellerPhoneEl) sellerPhoneEl.value = profile.sellerPhone;
   if(bankCardEl) bankCardEl.value = profile.bankCard;
   if(bankNameEl) bankNameEl.value = profile.bankName;
 }

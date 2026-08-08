@@ -8,7 +8,7 @@
 <meta name="robots" content="index, follow">
 <!-- توجه: وقتی دامنه‌ی remyshop.ir رو خریدی و به این سایت وصل کردی، این آدرس‌ها رو به remyshop.ir برگردون -->
 <link rel="canonical" href="https://remyshops.github.io/index/">
-<meta name="theme-color" content="#0a4fdb">
+<meta name="theme-color" content="#0a4fdb" id="metaThemeColor">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -55,8 +55,10 @@
     --muted:#5b6472;
     --drop:#0a4fdb;
     --drop-2:#0035a6;
+    --drop-rgb:10,79,219;
+    --drop-2-rgb:0,53,166;
     --gold:#0a4fdb;
-    --line: rgba(10,79,219,0.16);
+    --line: rgba(var(--drop-rgb),0.16);
     --green:#16a34a;
     --green-2:#0e7a3b;
     --orange:#f7931e;
@@ -67,8 +69,8 @@
   body{
     font-family:'Vazirmatn','Vazir','IRANSans','Tahoma','Segoe UI',sans-serif;
     background:
-      radial-gradient(circle at 15% 0%, rgba(10,79,219,0.07), transparent 45%),
-      radial-gradient(circle at 90% 10%, rgba(0,53,166,0.05), transparent 40%),
+      radial-gradient(circle at 15% 0%, rgba(var(--drop-rgb),0.07), transparent 45%),
+      radial-gradient(circle at 90% 10%, rgba(var(--drop-2-rgb),0.05), transparent 40%),
       var(--bg);
     color:var(--text);
     min-height:100vh;
@@ -83,7 +85,7 @@
     border-radius:50% 50% 50% 0;
     transform:rotate(-135deg);
     display:inline-block;
-    box-shadow:0 0 10px rgba(10,79,219,0.5);
+    box-shadow:0 0 10px rgba(var(--drop-rgb),0.5);
   }
   .drop.lg{width:54px; height:54px; border-radius:60% 60% 60% 4%;}
 
@@ -103,7 +105,7 @@
     width:100%; height:100%;
     border-radius:50%;
     object-fit:cover;
-    box-shadow:0 0 20px rgba(10,79,219,0.3);
+    box-shadow:0 0 20px rgba(var(--drop-rgb),0.3);
     animation: logoFloat 4.5s ease-in-out infinite;
   }
   @keyframes logoFloat{
@@ -243,7 +245,7 @@
     cursor:pointer;
     position:relative;
     overflow:hidden;
-    box-shadow:0 2px 8px rgba(10,79,219,0.08);
+    box-shadow:0 2px 8px rgba(var(--drop-rgb),0.08);
     transition:border-color .25s, transform .2s, box-shadow .25s;
   }
   .card::after{
@@ -251,7 +253,7 @@
     position:absolute;
     top:0; right:-60%;
     width:50%; height:100%;
-    background:linear-gradient(115deg, transparent, rgba(10,79,219,0.14), transparent);
+    background:linear-gradient(115deg, transparent, rgba(var(--drop-rgb),0.14), transparent);
     transform:skewX(-20deg);
     transition:right 0.6s ease;
   }
@@ -275,9 +277,9 @@
     left:6px; bottom:6px;
     width:26px; height:26px;
     border-radius:50%;
-    background:rgba(10,79,219,0.82);
+    background:rgba(var(--drop-rgb),0.82);
     display:flex; align-items:center; justify-content:center;
-    box-shadow:0 2px 6px rgba(10,79,219,0.35);
+    box-shadow:0 2px 6px rgba(var(--drop-rgb),0.35);
     pointer-events:none;
   }
   .play-badge svg{ width:12px; height:12px; fill:#ffffff; margin-left:1px; }
@@ -319,7 +321,7 @@
     padding:16px 14px 14px;
     cursor:pointer;
     scroll-snap-align:start;
-    box-shadow:0 3px 10px rgba(10,79,219,0.1);
+    box-shadow:0 3px 10px rgba(var(--drop-rgb),0.1);
     transition:border-color .25s, transform .2s, box-shadow .25s;
   }
   .best-card:hover{ border-color:var(--drop); transform:translateY(-3px); }
@@ -341,7 +343,7 @@
     font-weight:700;
     padding:3px 9px;
     border-radius:100px;
-    box-shadow:0 2px 6px rgba(10,79,219,0.35);
+    box-shadow:0 2px 6px rgba(var(--drop-rgb),0.35);
   }
   .best-card .pname{
     font-size:13.5px;
@@ -482,7 +484,7 @@
     background:#000;
     border-radius:14px;
     overflow:hidden;
-    box-shadow:0 6px 20px rgba(10,79,219,0.25);
+    box-shadow:0 6px 20px rgba(var(--drop-rgb),0.25);
   }
   .hero-video-frame iframe{
     position:absolute; inset:0;
@@ -648,7 +650,7 @@
     background:linear-gradient(135deg, var(--drop), var(--drop-2));
     border-color:var(--drop);
     color:#ffffff;
-    box-shadow:0 4px 14px rgba(10,79,219,0.28);
+    box-shadow:0 4px 14px rgba(var(--drop-rgb),0.28);
   }
 
   /* ---------- wholesale (عمده) view ---------- */
@@ -731,7 +733,15 @@
     border:1px solid var(--line);
     border-radius:18px;
     padding:22px;
-    box-shadow:0 4px 18px rgba(10,79,219,0.10);
+    box-shadow:0 4px 18px rgba(var(--drop-rgb),0.10);
+  }
+  .invoice-bismillah{
+    text-align:center;
+    font-size:13px;
+    font-weight:700;
+    color:var(--muted);
+    margin-bottom:10px;
+    line-height:1.9;
   }
 
   /* top bar: invoice number (right) + date (left) */
@@ -782,6 +792,28 @@
     color:var(--muted);
     margin-top:4px;
   }
+  .invoice-company-input{
+    display:block;
+    width:100%;
+    text-align:center;
+    background:transparent;
+    border:1px dashed var(--line);
+    border-radius:8px;
+    font-family:inherit;
+    outline:none;
+    padding:4px 8px;
+  }
+  .invoice-company-input:focus{ border-color:var(--drop); border-style:solid; }
+  #invoiceCompanyName{
+    font-size:24px;
+    font-weight:800;
+    color:var(--drop);
+  }
+  #invoiceCompanySub{
+    font-size:12.5px;
+    color:var(--muted);
+    margin-top:4px;
+  }
 
   /* labeled boxes: فروشنده / مشتری / اطلاعات حساب */
   .invoice-party-box{
@@ -802,7 +834,7 @@
     font-weight:700;
     padding:4px 14px;
     border-radius:100px;
-    box-shadow:0 2px 6px rgba(10,79,219,0.35);
+    box-shadow:0 2px 6px rgba(var(--drop-rgb),0.35);
   }
   .invoice-party-content{
     font-size:13px;
@@ -1123,7 +1155,7 @@
     background:linear-gradient(135deg, var(--drop), var(--drop-2));
     display:flex; align-items:center; justify-content:center;
     cursor:pointer;
-    box-shadow:0 0 6px rgba(10,79,219,0.4);
+    box-shadow:0 0 6px rgba(var(--drop-rgb),0.4);
     transition:transform .2s;
   }
   .wtest-icon:hover{ transform:scale(1.12); }
@@ -1207,28 +1239,6 @@
   }
 
   /* ---------- lead form ---------- */
-  .lead-box{
-    background:#fff;
-    border:1px solid var(--line);
-    border-radius:16px;
-    padding:18px;
-    text-align:right;
-    box-shadow:0 2px 8px rgba(10,79,219,0.08);
-  }
-  .lead-box .lead-field{
-    width:100%;
-    background:#fff;
-    border:1px solid var(--line);
-    color:var(--text);
-    padding:13px 16px;
-    border-radius:12px;
-    font-family:inherit;
-    font-size:14px;
-    outline:none;
-    margin-bottom:12px;
-  }
-  .lead-box .lead-field:focus{ border-color:var(--drop); }
-  .lead-box .lead-field::placeholder{ color:var(--muted); }
   .lead-submit{
     width:100%;
     display:flex; align-items:center; justify-content:center; gap:8px;
@@ -1318,9 +1328,9 @@
     animation: pulseDrop 1.8s ease-in-out infinite;
   }
   @keyframes pulseDrop{
-    0%{ box-shadow:0 0 0 0 rgba(10,79,219,0.55); }
-    70%{ box-shadow:0 0 0 12px rgba(10,79,219,0); }
-    100%{ box-shadow:0 0 0 0 rgba(10,79,219,0); }
+    0%{ box-shadow:0 0 0 0 rgba(var(--drop-rgb),0.55); }
+    70%{ box-shadow:0 0 0 12px rgba(var(--drop-rgb),0); }
+    100%{ box-shadow:0 0 0 0 rgba(var(--drop-rgb),0); }
   }
   #catalogSection h2{
     background:linear-gradient(90deg, var(--drop), var(--drop-2), var(--drop), var(--drop-2));
@@ -1404,6 +1414,41 @@
   }
   .floating-wa:hover{ transform:translateY(-2px); animation-play-state:paused; }
   .floating-wa svg{ width:18px; height:18px; fill:#ffffff; }
+
+  /* ---------- invoice color picker ---------- */
+  .invoice-color-picker{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+    justify-content:center;
+    margin-bottom:14px;
+    padding:10px 12px;
+    border:1px solid var(--line);
+    border-radius:12px;
+    background:var(--surface);
+  }
+  .invoice-color-label{
+    font-size:12.5px;
+    color:var(--muted);
+    white-space:nowrap;
+  }
+  .invoice-color-swatches{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  .invoice-color-swatch{
+    width:26px; height:26px;
+    border-radius:50%;
+    border:2px solid #ffffff;
+    outline:1px solid var(--line);
+    cursor:pointer;
+    padding:0;
+    transition:transform .15s;
+  }
+  .invoice-color-swatch:hover{ transform:scale(1.12); }
+  .invoice-color-swatch.active{ outline:2px solid var(--text); }
 </style>
 <!-- برای خروجی عکس از فاکتور -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -1555,6 +1600,11 @@
     <div class="section-sub">اسم مشتری رو وارد کن، کالاها رو با قیمت خرده یا عمده اضافه کن، بعد چاپ یا کپی بگیر</div>
 
     <div class="invoice-box" id="invoicePrintArea">
+      <div class="invoice-bismillah">
+        <div>بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِیمِ</div>
+        <div>هُوَ الرَّزّاق</div>
+      </div>
+
       <div class="invoice-topbar">
         <div class="invoice-topbar-item">
           <span>شماره فاکتور:</span>
@@ -1568,14 +1618,14 @@
 
       <div class="invoice-title-block">
         <div class="invoice-title">فاکتور فروش</div>
-        <div class="invoice-company">رمی <span>شاپ</span></div>
-        <div class="invoice-company-sub">پخش محصولات نانو — غیاث مدرسی</div>
+        <input type="text" id="invoiceCompanyName" class="invoice-company-input" value="پخش مدرسی" autocomplete="off">
+        <input type="text" id="invoiceCompanySub" class="invoice-company-input" value="پخش محصولات نانو غیاث - مدرسی" autocomplete="off">
       </div>
 
       <div class="invoice-party-box">
         <span class="invoice-party-tab">فروشنده</span>
         <div class="invoice-party-content">
-          <div class="invoice-info-row"><input type="text" id="sellerName" class="invoice-info-input" value="غیاث مدرسی — پخش محصولات نانو" autocomplete="off"></div>
+          <div class="invoice-info-row"><input type="text" id="sellerName" class="invoice-info-input" value="سید علی محمد مدرسی" autocomplete="off"></div>
           <div class="invoice-info-row"><span class="invoice-info-label">موبایل:</span><input type="text" id="sellerPhone" class="invoice-info-input" value="09389561367" autocomplete="off"></div>
           <div class="invoice-info-row"><span class="invoice-info-label">آدرس:</span><input type="text" id="sellerAddress" class="invoice-info-input" value="یزد" autocomplete="off"></div>
         </div>
@@ -1612,6 +1662,17 @@
       <div class="invoice-empty" id="invoiceEmpty">هنوز کالایی به فاکتور اضافه نشده</div>
 
       <div class="invoice-bottom-row">
+        <div class="invoice-party-box invoice-bank-box">
+          <span class="invoice-party-tab">💳 اطلاعات حساب</span>
+          <div class="invoice-party-content invoice-bank-content">
+            <div class="invoice-bank-label">شماره کارت</div>
+            <input type="text" id="invoiceBankCard" class="invoice-bank-card-input" value="6219 8619 1044 6441" inputmode="numeric" autocomplete="off">
+            <div class="invoice-bank-name-row">به نام:
+              <input type="text" id="invoiceBankName" class="invoice-bank-name-input" value="سید علی محمد مدرسی" autocomplete="off">
+            </div>
+          </div>
+        </div>
+
         <div class="invoice-totals">
           <div class="invoice-total-row"><span>جمع کل</span><span id="invoiceSubtotal">۰ تومان</span></div>
           <div class="invoice-total-row discount-row">
@@ -1624,24 +1685,18 @@
           <div class="invoice-total-row grand"><span>مبلغ قابل پرداخت</span><span id="invoiceGrandTotal">۰ تومان</span></div>
           <div class="invoice-total-words" id="invoiceTotalWords"></div>
         </div>
-
-        <div class="invoice-party-box invoice-bank-box">
-          <span class="invoice-party-tab">💳 اطلاعات حساب</span>
-          <div class="invoice-party-content invoice-bank-content">
-            <div class="invoice-bank-label">شماره کارت</div>
-            <input type="text" id="invoiceBankCard" class="invoice-bank-card-input" value="6219 8619 1044 6441" inputmode="numeric" autocomplete="off">
-            <div class="invoice-bank-name-row">به نام:
-              <input type="text" id="invoiceBankName" class="invoice-bank-name-input" value="سید علی محمد مدرسی" autocomplete="off">
-            </div>
-          </div>
-        </div>
       </div>
 
       <div class="invoice-disclaimer">
         * لطفاً قبل از واریز وجه، کالاها و تعداد ثبت‌شده در فاکتور را بررسی کنید.
       </div>
 
-      <div class="invoice-note-print">با تشکر از خرید شما — رمی شاپ</div>
+      <div class="invoice-note-print" id="invoiceNotePrint">با تشکر از خرید شما — رمی شاپ</div>
+    </div>
+
+    <div class="invoice-color-picker no-print">
+      <span class="invoice-color-label">رنگ فاکتور:</span>
+      <div class="invoice-color-swatches" id="invoiceColorSwatches"></div>
     </div>
 
     <div class="invoice-actions no-print">
@@ -1665,18 +1720,8 @@
   <!-- ================= END CTA ================= -->
   <div class="end-cta" id="freeConsult">
     <h3>هنوز محصول مورد نظرت را پیدا نکردی؟</h3>
-    <p>نام و شماره‌ات رو بذار تا خودمون باهات تماس بگیریم و مشاوره رایگان بدیم</p>
+    <p>برای مشاوره رایگان مستقیم برامون پیام بذار، سریع جوابت رو می‌دیم</p>
 
-    <div class="lead-box">
-      <form id="leadForm">
-        <input class="lead-field" type="text" id="leadName" name="name" placeholder="نام و نام خانوادگی" required autocomplete="name">
-        <input class="lead-field" type="tel" id="leadPhone" name="phone" placeholder="شماره موبایل (مثلاً 09123456789)" required inputmode="numeric" pattern="^09[0-9]{9}$" autocomplete="tel">
-        <button type="submit" class="lead-submit" id="leadSubmitBtn">تماس با من بگیرید</button>
-        <div class="lead-msg" id="leadMsg"></div>
-      </form>
-    </div>
-
-    <p style="margin:16px 0 10px;">یا اگه عجله داری، مستقیم پیام بده:</p>
     <a href="https://eitaa.com/EZGAMETV" target="_blank" rel="noopener" class="btn-cta green" style="background:linear-gradient(135deg, var(--orange), var(--orange-2));">📱 پیام در ایتا</a>
   </div>
 
@@ -2669,6 +2714,35 @@ if(invoiceDiscountInput){
   invoiceDiscountInput.addEventListener('input', updateInvoiceTotals);
 }
 
+const invoiceClosingNotes = [
+  "«از اینکه ما را انتخاب کردید سپاسگزاریم. مشتاق دیدار دوباره شما هستیم.»",
+  "«اعتماد شما دلیل ادامه مسیر ماست؛ منتظر حضور دوباره شما هستیم.»",
+  "«هر بار که به ما بازمی‌گردید، انگیزه ما برای بهتر شدن بیشتر می‌شود.»",
+  "«خوشحالیم که بخشی از انتخاب شما هستیم؛ امیدواریم دوباره در خدمتتان باشیم.»",
+  "«تجربه خوب امروز، شروع یک همکاری ماندگار است.»",
+  "«از انتخاب شما ممنونیم؛ رضایت شما همیشه اولویت ماست.»",
+  "«ما به دنبال یک خرید نیستیم؛ به دنبال ساختن یک رابطه طولانی هستیم.»",
+  "«ممنون که به ما اعتماد کردید؛ دفعه بعد هم کنار شما هستیم.»",
+  "«یک بار انتخاب ما، آغاز یک اعتماد ماندگار است.»",
+  "«به جمع مشتریان ارزشمند ما خوش آمدید؛ خوشحال می‌شویم دوباره شما را ببینیم.»",
+  "«کیفیت را تجربه کنید، تفاوت را احساس کنید.»",
+  "«انتخاب شما برای ما ارزشمند است؛ تلاش می‌کنیم همیشه شایسته این انتخاب باشیم.»",
+  "«ممنون که اجازه دادید بخشی از تجربه خوب شما باشیم.»",
+  "«ما هر روز بهتر می‌شویم تا انتخاب بعدی شما، انتخابی مطمئن‌تر باشد.»",
+  "«اعتماد ساختنی است؛ ما هر روز برای حفظ اعتماد شما تلاش می‌کنیم.»",
+  "«خوشحالیم که امروز انتخاب شما بودیم؛ امیدواریم همیشه انتخاب شما بمانیم.»",
+  "«پشت هر خرید موفق، یک اعتماد ارزشمند وجود دارد. سپاس از اعتماد شما.»",
+  "«شما فقط مشتری نیستید؛ بخشی از داستان رشد ما هستید.»",
+  "«تجربه‌ای که ارزش تکرار دارد، با کیفیت ساخته می‌شود.»",
+  "«از همراهی شما سپاسگزاریم؛ منتظر فرصت بعدی برای خدمت‌رسانی هستیم.»"
+];
+function randomizeInvoiceClosingNote(){
+  const el = document.getElementById('invoiceNotePrint');
+  if(!el) return;
+  const pick = invoiceClosingNotes[Math.floor(Math.random() * invoiceClosingNotes.length)];
+  el.textContent = pick;
+}
+
 function resetInvoiceForm(full){
   invoiceItems = [];
   invoiceDiscountInput.value = 0;
@@ -2679,6 +2753,7 @@ function resetInvoiceForm(full){
   }
   invoiceNumberInput.value = generateInvoiceNumber();
   invoiceDateInput.value = todayJalaliString();
+  randomizeInvoiceClosingNote();
   renderInvoiceTable();
 }
 
@@ -2730,6 +2805,7 @@ const invoicePrintBtn = document.getElementById('invoicePrintBtn');
 if(invoicePrintBtn){
   invoicePrintBtn.addEventListener('click', ()=>{
     if(!invoiceItems.length){ alert('اول حداقل یک کالا به فاکتور اضافه کن'); return; }
+    randomizeInvoiceClosingNote();
     window.print();
   });
 }
@@ -2742,6 +2818,7 @@ if(invoiceImageBtn){
       alert('امکان ساخت عکس در دسترس نیست — اتصال اینترنت رو چک کن و دوباره تلاش کن');
       return;
     }
+    randomizeInvoiceClosingNote();
     const target = document.getElementById('invoicePrintArea');
     const originalLabel = invoiceImageBtn.textContent;
     invoiceImageBtn.disabled = true;
@@ -2808,7 +2885,68 @@ if(invoiceCopyBtn){
   });
 }
 
+/* ================= INVOICE COLOR PICKER ================= */
+(function(){
+  const themes = [
+    { key:'blue',   name:'آبی',    drop:'#0a4fdb', drop2:'#0035a6' },
+    { key:'green',  name:'سبز',    drop:'#16a34a', drop2:'#0e7a3b' },
+    { key:'purple', name:'بنفش',   drop:'#7c3aed', drop2:'#4c1d95' },
+    { key:'black',  name:'مشکی',   drop:'#3f3f46', drop2:'#18181b' },
+    { key:'orange', name:'نارنجی', drop:'#f7931e', drop2:'#d9740a' },
+    { key:'pink',   name:'صورتی',  drop:'#ec4899', drop2:'#be185d' }
+  ];
+
+  function hexToRgb(hex){
+    const h = hex.replace('#','');
+    const r = parseInt(h.substring(0,2),16);
+    const g = parseInt(h.substring(2,4),16);
+    const b = parseInt(h.substring(4,6),16);
+    return r+','+g+','+b;
+  }
+
+  const printArea = document.getElementById('invoicePrintArea');
+
+  function applyInvoiceTheme(t){
+    if(!printArea) return;
+    const style = printArea.style;
+    if(t.key === 'blue'){
+      /* پیش‌فرض همون آبیه — پاک کردن override یعنی از رنگ اصلی سایت استفاده کنه */
+      style.removeProperty('--drop');
+      style.removeProperty('--drop-2');
+      style.removeProperty('--drop-rgb');
+      style.removeProperty('--drop-2-rgb');
+      style.removeProperty('--gold');
+    }else{
+      style.setProperty('--drop', t.drop);
+      style.setProperty('--drop-2', t.drop2);
+      style.setProperty('--drop-rgb', hexToRgb(t.drop));
+      style.setProperty('--drop-2-rgb', hexToRgb(t.drop2));
+      style.setProperty('--gold', t.drop);
+    }
+    document.querySelectorAll('.invoice-color-swatch').forEach(sw=>{
+      sw.classList.toggle('active', sw.dataset.key === t.key);
+    });
+  }
+
+  const swatchWrap = document.getElementById('invoiceColorSwatches');
+  if(swatchWrap){
+    themes.forEach(t=>{
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'invoice-color-swatch';
+      btn.dataset.key = t.key;
+      btn.title = t.name;
+      btn.style.background = `linear-gradient(135deg, ${t.drop}, ${t.drop2})`;
+      btn.addEventListener('click', ()=> applyInvoiceTheme(t));
+      swatchWrap.appendChild(btn);
+    });
+  }
+
+  applyInvoiceTheme(themes[0]); /* پیش‌فرض: آبی */
+})();
+
 populateInvoiceProductSelect();
+
 syncInvoiceCustomFieldVisibility(false);
 syncInvoiceUnitPriceField();
 resetInvoiceForm(false);
@@ -2869,68 +3007,6 @@ shareBtn.addEventListener('click', async ()=>{
   const product = findProductByName(pName);
   if (product) openModal(product);
 })();
-
-/* ================= LEAD FORM -> GOOGLE SHEETS ================= */
-/* آدرس Web App که از Google Apps Script می‌گیری رو اینجا جایگزین کن */
-const LEAD_FORM_ENDPOINT = "AKfycbyrm1pzZ3lUDqRMrt2ADFNX3wMx7_-9c28sQj9e_j8";
-
-const leadForm = document.getElementById('leadForm');
-const leadMsg = document.getElementById('leadMsg');
-const leadSubmitBtn = document.getElementById('leadSubmitBtn');
-
-/* وقتی از دکمه شناور "مشاوره رایگان" میاد، فوکوس رو ببر رو فیلد نام */
-document.querySelectorAll('a[href="#freeConsult"]').forEach(function(btn){
-  btn.addEventListener('click', function(){
-    setTimeout(function(){
-      const nameField = document.getElementById('leadName');
-      if (nameField) nameField.focus({ preventScroll: true });
-    }, 500);
-  });
-});
-
-if (leadForm) {
-  leadForm.addEventListener('submit', function(e){
-    e.preventDefault();
-
-    const name = document.getElementById('leadName').value.trim();
-    const phone = document.getElementById('leadPhone').value.trim();
-
-    if (!name || !/^09[0-9]{9}$/.test(phone)) {
-      leadMsg.textContent = "لطفاً نام و شماره موبایل معتبر (مثلاً 09123456789) وارد کنید";
-      leadMsg.className = "lead-msg show err";
-      return;
-    }
-
-    if (LEAD_FORM_ENDPOINT.indexOf("PASTE_YOUR") === 0) {
-      leadMsg.textContent = "فرم هنوز به گوگل‌شیت وصل نشده — راهنمای پایین صفحه رو دنبال کن";
-      leadMsg.className = "lead-msg show err";
-      return;
-    }
-
-    leadSubmitBtn.disabled = true;
-    leadSubmitBtn.textContent = "در حال ارسال...";
-
-    fetch(LEAD_FORM_ENDPOINT, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify({ name: name, phone: phone })
-    })
-    .then(function(){
-      leadMsg.textContent = "✅ اطلاعات شما با موفقیت ثبت شد، به‌زودی باهاتون تماس می‌گیریم";
-      leadMsg.className = "lead-msg show ok";
-      leadForm.reset();
-    })
-    .catch(function(){
-      leadMsg.textContent = "خطا در ارسال اطلاعات، لطفاً دوباره تلاش کنید";
-      leadMsg.className = "lead-msg show err";
-    })
-    .finally(function(){
-      leadSubmitBtn.disabled = false;
-      leadSubmitBtn.textContent = "ثبت اطلاعات";
-    });
-  });
-}
 
 </script>
 

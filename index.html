@@ -1872,7 +1872,7 @@ const products = [
     {label:"ویدیوی تست ۴", url:"https://aparat.com/v/cops4l1"},
     {label:"ویدیوی تست ۵", url:"https://www.aparat.com/v/merqvd1"}
   ]},
-  { name:"صفر شوی", price:275000, cat:"خودرویی", buyUrl:"https://basalam.com/editor", img:"zero-car-wash.webp", videos:[
+  { name:"صفر شوی", price:300000, cat:"خودرویی", buyUrl:"https://basalam.com/editor", img:"zero-car-wash.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://www.aparat.com/v/hbj049k"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/uee58ek"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/txol3r7"},
@@ -1883,7 +1883,7 @@ const products = [
     {label:"ویدیوی تست ۸", url:"https://aparat.com/v/ewm1o5w"},
     {label:"ویدیوی تست ۹", url:"https://aparat.com/v/cnog75c"}
   ]},
-  { name:"موتور شوی", price:275000, cat:"خودرویی", buyUrl:"https://basalam.com/editor", img:"engine-cleaner.webp", videos:[
+  { name:"موتور شوی", price:300000, cat:"خودرویی", buyUrl:"https://basalam.com/editor", img:"engine-cleaner.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://www.aparat.com/v/whc79m4"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/zzjjg65"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/wyz8k3k"},
@@ -1984,10 +1984,10 @@ const wholesaleCategories = [
     {name:"واکس داشبورد سیلیکونی", en:"SILICON DASHBOARD", volume:500, buy:211500, sell:300000},
     {name:"واکس داشبورد غیر سیلیکونی", en:"DASHBOARD WAX", volume:500, buy:194500, sell:335000},
     {name:"واکس سه‌کاره لاستیک داشبورد", en:"PRO WAX", volume:500, buy:208000, sell:359000},
-    {name:"صفر شوی", en:"ZERO CARWASH", volume:500, buy:179500, sell:275000},
-    {name:"موتور شوی", en:"ENGINE CLEANER", volume:500, buy:171500, sell:275000},
+    {name:"صفر شوی", en:"ZERO CARWASH", volume:500, buy:194500, sell:300000},
+    {name:"موتور شوی", en:"ENGINE CLEANER", volume:500, buy:186500, sell:300000},
     {name:"رینگ شوی", en:"RIM CLEANER", volume:500, buy:169000, sell:259000},
-    {name:"پاک کننده چند منظوره خودرو", en:"MULTI CLEANER", volume:500, buy:194500, sell:300000},
+    {name:"پاک کننده چند منظوره خودرو", en:"MULTI CLEANER", volume:500, buy:209500, sell:300000},
     {name:"شیشه شوی", en:"WINDSHIELD CLEANER", volume:500, buy:164000, sell:275000},
     {name:"شامپو بدنه", en:"CAR SHAMPOO", volume:500, buy:220000, sell:275000},
     {name:"براق کننده بدنه", en:"BODY POLISH", volume:500, buy:182000, sell:300000},
@@ -2589,8 +2589,11 @@ function generateInvoiceNumber(){
 
 function populateInvoiceProductSelect(){
   if(!invoiceProductSelect) return;
+  const filtered = invoiceCatalog.filter(p=>
+    invoicePriceMode === "wholesale" ? p.wholesale != null : p.retail != null
+  );
   const customOption = `<option value="__custom__">➕ کالای دلخواه (تایپ کنید)</option>`;
-  invoiceProductSelect.innerHTML = customOption + invoiceCatalog.map(p=>
+  invoiceProductSelect.innerHTML = customOption + filtered.map(p=>
     `<option value="${p.name.replace(/"/g,'&quot;')}">${p.name}</option>`
   ).join("");
 }
@@ -2633,7 +2636,8 @@ if(priceModeTabsEl){
     if(!btn) return;
     invoicePriceMode = btn.dataset.mode;
     priceModeTabsEl.querySelectorAll('.price-mode-tab').forEach(b=> b.classList.toggle('active', b === btn));
-    syncInvoiceUnitPriceField();
+    populateInvoiceProductSelect();
+    syncInvoiceCustomFieldVisibility(false);
   });
 }
 

@@ -1052,6 +1052,24 @@
     outline:none;
   }
   .invoice-bank-card-input:focus{ border-color:var(--drop); border-style:solid; }
+  .invoice-bank-iban-input{
+    display:block;
+    width:100%;
+    background:transparent;
+    border:1px dashed var(--line);
+    border-radius:8px;
+    font-family:inherit;
+    font-size:12.5px;
+    font-weight:700;
+    letter-spacing:0.5px;
+    color:var(--drop-2);
+    direction:ltr;
+    text-align:center;
+    margin:0 0 6px;
+    padding:3px 2px;
+    outline:none;
+  }
+  .invoice-bank-iban-input:focus{ border-color:var(--drop); border-style:solid; }
   .invoice-bank-name-row{ font-size:12.5px; font-weight:600; display:flex; align-items:center; justify-content:center; gap:4px; }
   .invoice-bank-name-input{
     background:transparent;
@@ -1666,6 +1684,8 @@
           <div class="invoice-party-content invoice-bank-content">
             <div class="invoice-bank-label">شماره کارت</div>
             <input type="text" id="invoiceBankCard" class="invoice-bank-card-input" value="6219 8619 1044 6441" inputmode="numeric" autocomplete="off">
+            <div class="invoice-bank-label">شماره شبا</div>
+            <input type="text" id="invoiceBankIban" class="invoice-bank-iban-input" value="IR170560611828005137184201" autocomplete="off">
             <div class="invoice-bank-name-row">به نام:
               <input type="text" id="invoiceBankName" class="invoice-bank-name-input" value="سید علی محمد مدرسی" autocomplete="off">
             </div>
@@ -2258,12 +2278,14 @@ const sellerProfiles = {
     sellerName: "سید علی محمد مدرسی",
     sellerPhone: "09389561367",
     bankCard: "6219 8619 1044 6441",
+    bankIban: "IR170560611828005137184201",
     bankName: "سید علی محمد مدرسی"
   },
   sister: {
     sellerName: "مریم السادات مدرسی",
     sellerPhone: "09162594776",
     bankCard: "6219 8619 0082 1520",
+    bankIban: "",
     bankName: "مریم السادات مدرسی"
   }
 };
@@ -2272,10 +2294,12 @@ function applySellerProfile(profile){
   const sellerNameEl = document.getElementById('sellerName');
   const sellerPhoneEl = document.getElementById('sellerPhone');
   const bankCardEl = document.getElementById('invoiceBankCard');
+  const bankIbanEl = document.getElementById('invoiceBankIban');
   const bankNameEl = document.getElementById('invoiceBankName');
   if(sellerNameEl) sellerNameEl.value = profile.sellerName;
   if(sellerPhoneEl) sellerPhoneEl.value = profile.sellerPhone;
   if(bankCardEl) bankCardEl.value = profile.bankCard;
+  if(bankIbanEl) bankIbanEl.value = profile.bankIban || "";
   if(bankNameEl) bankNameEl.value = profile.bankName;
 }
 

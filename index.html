@@ -1967,7 +1967,7 @@ const simpleCategories = [
   { title:"ادکلن", buyUrl:"https://basalam.com/editor", introLabel:"معرفی ادکلن", catImg:"cologne-set.webp", videoUrls:[
     "https://aparat.com/v/myx2f11","https://aparat.com/v/negc5ae"
   ], items:[
-    {name:"ادکلن زنانه همراز", price:930000},{name:"ادکلن مردانه کایرا", price:930000}
+    {name:"ادکلن زنانه همراز", price:481500},{name:"ادکلن مردانه کایرا", price:481500}
   ]},
   { title:"خوشبو کننده", buyUrl:"https://basalam.com/editor", introLabel:"معرفی خوشبو کننده", catImg:"air-freshener-set.webp", videoUrls:[
     "https://aparat.com/v/ejelu90","https://aparat.com/v/ezjv82d","https://aparat.com/v/phaxsff"
@@ -2022,8 +2022,8 @@ const wholesaleCategories = [
     {name:"اسپری خوشبوکننده هوا رایحه کول فرش", volume:125, buy:194000, sell:254000}
   ]},
   { key:"cologne", tab:"ادکلن", title:"ادکلن ۵۰ سی‌سی", note:"حداقل سفارش: ۱ کارتن = ۶ عدد (همراز و کایرا به دلخواه)", cartonQty:6, items:[
-    {name:"ادکلن زنانه همراز", volume:50, buy:481500, sell:560000, invoiceWholesale:481500},
-    {name:"ادکلن مردانه کایرا", volume:50, buy:481500, sell:560000, invoiceWholesale:481500}
+    {name:"ادکلن زنانه همراز", volume:50, buy:414500, sell:561000},
+    {name:"ادکلن مردانه کایرا", volume:50, buy:414500, sell:561000}
   ]},
   { key:"leatherwax", tab:"واکس (نانو چرم)", title:"نانو چرم کیف و کفش", note:"تعداد در کارتن بسته به مدل: ۲۵ عددی (بدون جعبه) یا ۱۲ عددی (با جعبه)", items:[
     {name:"نانو چرم کیف و کفش بدون جعبه", volume:125, buy:200000, sell:250000, cartonQty:25},
@@ -2539,8 +2539,7 @@ const invoiceCatalog = (function(){
   }));
   wholesaleCategories.forEach(c=> c.items.forEach(it=>{
     const e = ensure(it.name);
-    // قیمت عمده فاکتور = قیمت اختصاصی فاکتور؛ در صورت نبود، قیمت فروش عمده
-    e.wholesale = it.invoiceWholesale != null ? it.invoiceWholesale : it.sell;
+    e.wholesale = it.buy;
     if(e.retail == null) e.retail = it.sell;
   }));
   return Object.values(map).sort((a,b)=> a.name.localeCompare(b.name, "fa"));

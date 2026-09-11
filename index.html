@@ -1526,6 +1526,7 @@
     <button class="mode-tab active" id="modeRetailBtn" type="button">🛍 خرده‌فروشی (تکی)</button>
     <button class="mode-tab" id="modeWholesaleBtn" type="button">📦 قیمت عمده</button>
     <button class="mode-tab" id="modeInvoiceBtn" type="button" style="display:none;">🧾 صدور فاکتور</button>
+    <button class="mode-tab" id="modeProfitBtn" type="button" style="display:none;">📊 محاسبه سود</button>
   </div>
 
   <div class="retail-view" id="retailView">
@@ -2097,6 +2098,7 @@ const invoiceViewEl = document.getElementById('invoiceView');
 const modeRetailBtn = document.getElementById('modeRetailBtn');
 const modeWholesaleBtn = document.getElementById('modeWholesaleBtn');
 const modeInvoiceBtn = document.getElementById('modeInvoiceBtn');
+const modeProfitBtn = document.getElementById('modeProfitBtn');
 
 /* ---------- دکمه فاکتور مخفیه؛ با ۵ بار ضربه روی لوگو ظرف ۳ ثانیه آشکار میشه ---------- */
 (function(){
@@ -2112,6 +2114,7 @@ const modeInvoiceBtn = document.getElementById('modeInvoiceBtn');
     if(tapCount >= 5){
       tapCount = 0;
       modeInvoiceBtn.style.display = '';
+      modeProfitBtn.style.display = '';
       modeInvoiceBtn.scrollIntoView({behavior:'smooth', block:'center'});
     }
   });
@@ -2249,6 +2252,15 @@ modeWholesaleBtn.addEventListener('click', ()=>{
   setActiveMode('wholesale');
   window.scrollTo({top: wholesaleSectionOffset(), behavior:'smooth'});
 });
+let pendingInvoiceAction = 'invoice';
+modeProfitBtn.addEventListener('click', ()=>{
+  if(invoiceUnlocked){
+    window.open('https://remyshops.github.io/Mohasebe_sood/', '_blank', 'noopener');
+  } else {
+    pendingInvoiceAction = 'profit';
+    openInvoicePassModal();
+  }
+});
 modeInvoiceBtn.addEventListener('click', ()=>{
   if(invoiceUnlocked){
     try{
@@ -2259,6 +2271,7 @@ modeInvoiceBtn.addEventListener('click', ()=>{
     setActiveMode('invoice');
     window.scrollTo({top: invoiceSectionOffset(), behavior:'smooth'});
   } else {
+    pendingInvoiceAction = 'invoice';
     openInvoicePassModal();
   }
 });
@@ -2324,9 +2337,14 @@ function trySubmitInvoicePass(){
       sessionStorage.setItem('remyInvoiceProfile', entered === INVOICE_PASSWORD_SISTER ? 'sister' : 'own');
     }catch(e){ /* بی‌خیال */ }
     applySellerProfile(entered === INVOICE_PASSWORD_SISTER ? sellerProfiles.sister : sellerProfiles.own);
+    modeProfitBtn.style.display = '';
     closeInvoicePassModal();
-    setActiveMode('invoice');
-    window.scrollTo({top: invoiceSectionOffset(), behavior:'smooth'});
+    if(pendingInvoiceAction === 'profit'){
+      window.open('https://remyshops.github.io/Mohasebe_sood/', '_blank', 'noopener');
+    } else {
+      setActiveMode('invoice');
+      window.scrollTo({top: invoiceSectionOffset(), behavior:'smooth'});
+    }
   } else {
     invoicePassMsg.textContent = "❌ رمز اشتباهه";
     invoicePassMsg.className = "lead-msg show err";

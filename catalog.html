@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مشاهده آنلاین کاتالوگ | رمی شاپ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --drop:#0a4fdb;
+    --drop-2:#0035a6;
+    --bg:#ffffff;
+    --surface:#f2f6fd;
+    --text:#141a24;
+    --muted:#5b6472;
+    --line: rgba(10,79,219,0.16);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:'Vazirmatn','Tahoma',sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+  }
+  header{
+    padding:20px 16px;
+    text-align:center;
+    background:linear-gradient(135deg, var(--drop), var(--drop-2));
+    color:#fff;
+    position:sticky;
+    top:0;
+    z-index:10;
+  }
+  header h1{ font-size:18px; font-weight:800; margin-bottom:4px; }
+  header p{ font-size:13px; opacity:.9; }
+  .back-link{
+    display:inline-block;
+    margin-top:10px;
+    font-size:13px;
+    color:#fff;
+    text-decoration:none;
+    border-bottom:1px dashed rgba(255,255,255,.7);
+    padding-bottom:2px;
+  }
+  .wrap{ max-width:900px; margin:0 auto; padding:20px 16px 50px; }
+  .catalog-block{ margin-bottom:34px; }
+  .catalog-block h2{
+    font-size:15px;
+    font-weight:700;
+    margin-bottom:10px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .catalog-block h2 .badge{
+    background:var(--surface);
+    border:1px solid var(--line);
+    color:var(--drop);
+    font-size:12px;
+    padding:3px 10px;
+    border-radius:100px;
+  }
+  .pdf-frame{
+    width:100%;
+    height:80vh;
+    border:1px solid var(--line);
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:0 4px 18px rgba(10,79,219,0.08);
+  }
+  .pdf-frame iframe{
+    width:100%; height:100%; border:0; display:block;
+  }
+  .dl-link{
+    display:inline-block;
+    margin-top:10px;
+    font-size:13px;
+    color:var(--drop);
+    text-decoration:none;
+    border-bottom:1px dashed var(--drop);
+    padding-bottom:2px;
+  }
+  @media (max-width:600px){
+    .pdf-frame{ height:65vh; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📖 کاتالوگ محصولات G+plus</h1>
+  <p>مشاهده آنلاین هر دو بخش کاتالوگ</p>
+  <a href="index.html" class="back-link">↩ بازگشت به سایت</a>
+</header>
+
+<div class="wrap">
+
+  <div class="catalog-block">
+    <h2>بخش ۱ <span class="badge">صفحه اول</span></h2>
+    <div class="pdf-frame">
+      <iframe src="catalog-1.pdf" title="کاتالوگ بخش ۱"></iframe>
+    </div>
+    <a href="catalog-1.pdf" download class="dl-link">⬇ دانلود این بخش</a>
+  </div>
+
+  <div class="catalog-block">
+    <h2>بخش ۲ <span class="badge">صفحه دوم</span></h2>
+    <div class="pdf-frame">
+      <iframe src="catalog-2.pdf" title="کاتالوگ بخش ۲"></iframe>
+    </div>
+    <a href="catalog-2.pdf" download class="dl-link">⬇ دانلود این بخش</a>
+  </div>
+
+</div>
+
+</body>
+</html>

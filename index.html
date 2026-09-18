@@ -728,6 +728,38 @@
   .invoice-view{ display:none; }
   .invoice-view.show{ display:block; }
 
+  /* ---------- CRM / پیگیری مشتری ---------- */
+  .crm-view{ display:none; }
+  .crm-view.show{ display:block; }
+  .crm-filter-tabs{ display:flex; gap:8px; margin-bottom:16px; }
+  .crm-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:14px 16px;
+    margin-bottom:12px;
+  }
+  .crm-card.due-over{ border-color:#dc2626; background:rgba(220,38,38,0.06); }
+  .crm-card.due-soon{ border-color:var(--orange); background:rgba(247,147,30,0.08); }
+  .crm-card-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
+  .crm-card-name{ font-weight:700; font-size:15px; }
+  .crm-card-phone{ color:var(--muted); font-size:12.5px; margin-top:2px; }
+  .crm-card-badge{
+    font-size:11.5px; font-weight:700; padding:4px 10px; border-radius:100px;
+    background:var(--surface-2); color:var(--muted); white-space:nowrap;
+  }
+  .crm-card.due-over .crm-card-badge{ background:#dc2626; color:#fff; }
+  .crm-card.due-soon .crm-card-badge{ background:var(--orange); color:#fff; }
+  .crm-card-items{ color:var(--muted); font-size:12.5px; margin-top:8px; line-height:1.8; }
+  .crm-card-actions{ display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; }
+  .crm-card-actions a, .crm-card-actions button{
+    font-size:12.5px; padding:7px 12px; border-radius:8px; border:1px solid var(--line);
+    background:var(--bg); color:var(--text); text-decoration:none; cursor:pointer; font-family:inherit;
+  }
+  .crm-card-actions .crm-done-btn{ border-color:var(--green); color:var(--green-2); }
+  .crm-card-actions .crm-del-btn{ border-color:#dc2626; color:#dc2626; margin-right:auto; }
+  .crm-empty{ text-align:center; color:var(--muted); padding:30px 0; font-size:13.5px; }
+
   .invoice-box{
     background:#fff;
     border:1px solid var(--line);
@@ -1493,6 +1525,7 @@
 </style>
 <!-- برای خروجی عکس از فاکتور -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
 
@@ -1550,6 +1583,7 @@
     <button class="mode-tab" id="modeWholesaleBtn" type="button">📦 قیمت عمده</button>
     <button class="mode-tab" id="modeInvoiceBtn" type="button" style="display:none;">🧾 صدور فاکتور</button>
     <button class="mode-tab" id="modeProfitBtn" type="button" style="display:none;">📊 محاسبه سود</button>
+    <button class="mode-tab" id="modeCRMBtn" type="button" style="display:none;">🧑‍🤝‍🧑 پیگیری مشتری</button>
   </div>
 
   <div class="retail-view" id="retailView">
@@ -1752,9 +1786,25 @@
       <button type="button" id="invoicePrintBtn" class="invoice-action-btn print">🖨 چاپ / ذخیره PDF</button>
       <button type="button" id="invoiceImageBtn" class="invoice-action-btn image">📷 خروجی عکس</button>
       <button type="button" id="invoiceCopyBtn" class="invoice-action-btn copy">📋 کپی متن فاکتور</button>
+      <button type="button" id="invoiceCRMBtn" class="invoice-action-btn copy">📇 ثبت در CRM</button>
       <button type="button" id="invoiceResetBtn" class="invoice-action-btn reset">🗑 فاکتور جدید</button>
     </div>
     <div class="invoice-copy-msg no-print" id="invoiceCopyMsg"></div>
+  </div>
+
+  <!-- ================= CRM / پیگیری مشتری ================= -->
+  <div class="crm-view" id="crmView">
+    <div class="section-title" id="crmSection"><span class="drop"></span><h2>پیگیری مشتری‌ها</h2><span class="line"></span></div>
+    <div class="section-sub">۳۱ روز بعد از هر فروش، این‌جا یادت می‌ندازه دوباره پیگیری کنی</div>
+
+    <div class="crm-filter-tabs">
+      <button type="button" class="cat-tab crm-filter active" data-filter="due">سررسیده (<span id="crmDueCount">0</span>)</button>
+      <button type="button" class="cat-tab crm-filter" data-filter="all">همه مشتری‌ها</button>
+      <button type="button" id="crmExportBtn" class="cat-tab" style="margin-inline-start:auto;">📊 خروجی اکسل</button>
+    </div>
+
+    <div class="crm-list" id="crmList"></div>
+    <div class="crm-empty" id="crmEmpty" style="display:none;"></div>
   </div>
 
   <!-- ================= ORDER ================= -->
@@ -1822,6 +1872,21 @@
     <div class="video-frame-wrap">
       <iframe id="videoFrame" src="" allow="autoplay; fullscreen" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe>
     </div>
+  </div>
+</div>
+
+<!-- ================= CRM RECEIPT IMAGE MODAL ================= -->
+<div id="crmReceiptTemplate" style="position:fixed; left:-9999px; top:0; width:360px; z-index:-1;"></div>
+<div class="overlay" id="crmImageOverlay">
+  <div class="modal" style="max-width:400px; text-align:center;">
+    <div class="modal-head">
+      <h3 id="crmImageTitle">خرید مشتری</h3>
+      <button class="close-btn" id="closeCrmImageModal">×</button>
+    </div>
+    <div style="max-height:65vh; overflow:auto; margin:10px 0; border-radius:10px;">
+      <img id="crmImagePreview" style="width:100%; display:block; border-radius:10px;" alt="عکس خرید مشتری">
+    </div>
+    <button type="button" id="crmImageDownloadBtn" class="invoice-action-btn image" style="width:100%;">📥 ذخیره عکس</button>
   </div>
 </div>
 
@@ -2124,10 +2189,12 @@ const wholesaleTablesWrap = document.getElementById('wholesaleTablesWrap');
 const retailViewEl = document.getElementById('retailView');
 const wholesaleViewEl = document.getElementById('wholesaleView');
 const invoiceViewEl = document.getElementById('invoiceView');
+const crmViewEl = document.getElementById('crmView');
 const modeRetailBtn = document.getElementById('modeRetailBtn');
 const modeWholesaleBtn = document.getElementById('modeWholesaleBtn');
 const modeInvoiceBtn = document.getElementById('modeInvoiceBtn');
 const modeProfitBtn = document.getElementById('modeProfitBtn');
+const modeCRMBtn = document.getElementById('modeCRMBtn');
 
 /* ---------- دکمه فاکتور مخفیه؛ با ۵ بار ضربه روی لوگو ظرف ۳ ثانیه آشکار میشه ---------- */
 (function(){
@@ -2144,6 +2211,7 @@ const modeProfitBtn = document.getElementById('modeProfitBtn');
       tapCount = 0;
       modeInvoiceBtn.style.display = '';
       modeProfitBtn.style.display = '';
+      modeCRMBtn.style.display = '';
       modeInvoiceBtn.scrollIntoView({behavior:'smooth', block:'center'});
     }
   });
@@ -2264,13 +2332,20 @@ function invoiceSectionOffset(){
   return el ? el.getBoundingClientRect().top + window.scrollY - 16 : 0;
 }
 
+function crmSectionOffset(){
+  const el = document.getElementById('crmSection');
+  return el ? el.getBoundingClientRect().top + window.scrollY - 16 : 0;
+}
+
 function setActiveMode(mode){
   modeRetailBtn.classList.toggle('active', mode === 'retail');
   modeWholesaleBtn.classList.toggle('active', mode === 'wholesale');
   modeInvoiceBtn.classList.toggle('active', mode === 'invoice');
+  modeCRMBtn.classList.toggle('active', mode === 'crm');
   retailViewEl.classList.toggle('hide', mode !== 'retail');
   wholesaleViewEl.classList.toggle('show', mode === 'wholesale');
   invoiceViewEl.classList.toggle('show', mode === 'invoice');
+  crmViewEl.classList.toggle('show', mode === 'crm');
 }
 
 modeRetailBtn.addEventListener('click', ()=>{
@@ -2301,6 +2376,16 @@ modeInvoiceBtn.addEventListener('click', ()=>{
     window.scrollTo({top: invoiceSectionOffset(), behavior:'smooth'});
   } else {
     pendingInvoiceAction = 'invoice';
+    openInvoicePassModal();
+  }
+});
+modeCRMBtn.addEventListener('click', ()=>{
+  if(invoiceUnlocked){
+    setActiveMode('crm');
+    renderCRM();
+    window.scrollTo({top: crmSectionOffset(), behavior:'smooth'});
+  } else {
+    pendingInvoiceAction = 'crm';
     openInvoicePassModal();
   }
 });
@@ -2367,9 +2452,14 @@ function trySubmitInvoicePass(){
     }catch(e){ /* بی‌خیال */ }
     applySellerProfile(entered === INVOICE_PASSWORD_SISTER ? sellerProfiles.sister : sellerProfiles.own);
     modeProfitBtn.style.display = '';
+    modeCRMBtn.style.display = '';
     closeInvoicePassModal();
     if(pendingInvoiceAction === 'profit'){
       window.open('https://remyshops.github.io/Mohasebe_sood/', '_blank', 'noopener');
+    } else if(pendingInvoiceAction === 'crm'){
+      setActiveMode('crm');
+      renderCRM();
+      window.scrollTo({top: crmSectionOffset(), behavior:'smooth'});
     } else {
       setActiveMode('invoice');
       window.scrollTo({top: invoiceSectionOffset(), behavior:'smooth'});
@@ -3022,6 +3112,300 @@ if(invoiceCopyBtn){
   });
 }
 
+/* ================= CRM / پیگیری مشتری ================= */
+const CRM_STORAGE_KEY = 'remyCRM';
+const CRM_FOLLOWUP_DAYS = 31;
+
+function loadCRM(){
+  try{ return JSON.parse(localStorage.getItem(CRM_STORAGE_KEY) || '[]'); }
+  catch(e){ return []; }
+}
+function saveCRM(list){
+  try{ localStorage.setItem(CRM_STORAGE_KEY, JSON.stringify(list)); }catch(e){ /* بی‌خیال */ }
+}
+function toWhatsappNumber(phone){
+  const digits = (phone || '').replace(/\D/g, '');
+  if(!digits) return '';
+  return digits.startsWith('0') ? '98' + digits.slice(1) : digits;
+}
+
+const invoiceCRMBtn = document.getElementById('invoiceCRMBtn');
+if(invoiceCRMBtn){
+  invoiceCRMBtn.addEventListener('click', ()=>{
+    if(!invoiceItems.length){ alert('اول حداقل یک کالا به فاکتور اضافه کن'); return; }
+    const name = customerNameInput.value.trim();
+    if(!name){ alert('برای ثبت در CRM، اول اسم مشتری رو بنویس'); customerNameInput.focus(); return; }
+    const subtotal = invoiceItems.reduce((s, it)=> s + it.qty*it.unitPrice, 0);
+    const now = Date.now();
+    const record = {
+      id: 'c' + now + Math.floor(Math.random()*1000),
+      name,
+      phone: customerPhoneInput.value.trim(),
+      address: (customerAddressInput && customerAddressInput.value.trim()) || '',
+      invoiceNumber: invoiceNumberInput.value,
+      items: invoiceItems.map(it=> ({name: it.name, qty: it.qty, unitPrice: it.unitPrice})),
+      subtotal,
+      purchaseAt: now,
+      purchaseJalali: invoiceDateInput.value,
+      followUpAt: now + CRM_FOLLOWUP_DAYS*24*60*60*1000,
+      followedUp: false
+    };
+    const list = loadCRM();
+    list.push(record);
+    saveCRM(list);
+    renderCRM();
+    if(invoiceCopyMsg){
+      invoiceCopyMsg.textContent = "✅ مشتری در CRM ثبت شد — ۳۱ روز دیگه یادت می‌ندازیم پیگیری کنی";
+      setTimeout(()=>{ invoiceCopyMsg.textContent = ""; }, 3500);
+    }
+  });
+}
+
+let crmFilter = 'due';
+
+function renderCRM(){
+  const listEl = document.getElementById('crmList');
+  const emptyEl = document.getElementById('crmEmpty');
+  const dueCountEl = document.getElementById('crmDueCount');
+  if(!listEl) return;
+
+  const all = loadCRM();
+  const now = Date.now();
+  const dueCount = all.filter(r=> !r.followedUp && r.followUpAt <= now).length;
+  if(dueCountEl) dueCountEl.textContent = String(dueCount);
+
+  let items = all.filter(r=> !r.followedUp);
+  if(crmFilter === 'due'){
+    items = items.filter(r=> r.followUpAt <= now);
+  }
+  items.sort((a,b)=> a.followUpAt - b.followUpAt);
+
+  if(!items.length){
+    listEl.innerHTML = '';
+    emptyEl.style.display = 'block';
+    emptyEl.textContent = crmFilter === 'due' ? 'فعلاً کسی برای پیگیری نیست 🎉' : 'هنوز مشتری‌ای در CRM ثبت نشده';
+    return;
+  }
+  emptyEl.style.display = 'none';
+
+  listEl.innerHTML = items.map(r=>{
+    const daysLeft = Math.ceil((r.followUpAt - now) / (24*60*60*1000));
+    let statusClass = '';
+    let badge = `${daysLeft} روز تا موعد پیگیری`;
+    if(daysLeft <= 0){ statusClass = 'due-over'; badge = `${Math.abs(daysLeft)} روز از موعد گذشته 🔴`; }
+    else if(daysLeft <= 5){ statusClass = 'due-soon'; badge = `${daysLeft} روز تا موعد 🟠`; }
+
+    const itemsText = r.items.map(it=> `${it.name} ×${it.qty}`).join('، ');
+    const wa = toWhatsappNumber(r.phone);
+    const phoneLine = r.phone ? `<div class="crm-card-phone">📞 ${r.phone}</div>` : '';
+    const contactBtns = r.phone ? `
+      <a href="tel:${r.phone}">📞 تماس</a>
+      <a href="https://wa.me/${wa}?text=${encodeURIComponent('سلام '+r.name+' عزیز، وقت بخیر 🌿')}" target="_blank" rel="noopener">💬 واتساپ</a>
+    ` : '';
+
+    return `<div class="crm-card ${statusClass}" data-id="${r.id}">
+      <div class="crm-card-top">
+        <div>
+          <div class="crm-card-name">${r.name}</div>
+          ${phoneLine}
+        </div>
+        <span class="crm-card-badge">${badge}</span>
+      </div>
+      <div class="crm-card-items">🧾 خرید قبلی (${r.purchaseJalali}): ${itemsText}</div>
+      <div class="crm-card-actions">
+        ${contactBtns}
+        <button type="button" class="crm-view-btn" data-action="view">🖼 نمایش خرید</button>
+        <button type="button" class="crm-copy-btn" data-action="copytext">📋 کپی پیام پیگیری</button>
+        <button type="button" class="crm-done-btn" data-action="done">✅ پیگیری شد</button>
+        <button type="button" class="crm-del-btn" data-action="del">🗑 حذف</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function buildCrmReceiptHTML(r){
+  const itemsRows = r.items.map(it=> `
+    <tr>
+      <td style="padding:6px 4px; border-bottom:1px solid rgba(0,0,0,0.08); text-align:right;">${it.name}</td>
+      <td style="padding:6px 4px; border-bottom:1px solid rgba(0,0,0,0.08); text-align:center;">${it.qty}</td>
+      <td style="padding:6px 4px; border-bottom:1px solid rgba(0,0,0,0.08); text-align:left;">${formatPrice(it.qty*it.unitPrice)}</td>
+    </tr>`).join('');
+  return `
+    <div style="font-family:'Vazirmatn','Tahoma',sans-serif; direction:rtl; background:#ffffff; color:#141a24; padding:22px; border-radius:14px; border:1px solid #e6eefb;">
+      <div style="text-align:center; margin-bottom:14px;">
+        <div style="font-weight:800; font-size:18px; color:#0a4fdb;">رمی شاپ</div>
+        <div style="font-size:12px; color:#5b6472; margin-top:2px;">فاکتور فروش${r.invoiceNumber ? ' — '+r.invoiceNumber : ''}</div>
+      </div>
+      <div style="font-size:13px; margin-bottom:10px; line-height:1.9;">
+        <div>مشتری: ${r.name}</div>
+        ${r.phone ? `<div>تماس: ${r.phone}</div>` : ''}
+        <div>تاریخ خرید: ${r.purchaseJalali || ''}</div>
+      </div>
+      <table style="width:100%; border-collapse:collapse; font-size:12.5px; margin-top:8px;">
+        <thead>
+          <tr>
+            <th style="text-align:right; padding:6px 4px; border-bottom:2px solid #0a4fdb; color:#5b6472;">کالا</th>
+            <th style="text-align:center; padding:6px 4px; border-bottom:2px solid #0a4fdb; color:#5b6472;">تعداد</th>
+            <th style="text-align:left; padding:6px 4px; border-bottom:2px solid #0a4fdb; color:#5b6472;">قیمت</th>
+          </tr>
+        </thead>
+        <tbody>${itemsRows}</tbody>
+      </table>
+      <div style="display:flex; justify-content:space-between; margin-top:14px; padding-top:10px; border-top:1px dashed #d3e0f5; font-weight:700; font-size:14px;">
+        <span>جمع کل</span><span>${formatPrice(r.subtotal)}</span>
+      </div>
+      <div style="text-align:center; margin-top:16px; font-size:11.5px; color:#5b6472;">رمی شاپ — 09389561367</div>
+    </div>`;
+}
+
+async function showCrmReceiptImage(r){
+  const template = document.getElementById('crmReceiptTemplate');
+  const overlay = document.getElementById('crmImageOverlay');
+  const img = document.getElementById('crmImagePreview');
+  const title = document.getElementById('crmImageTitle');
+  const downloadBtn = document.getElementById('crmImageDownloadBtn');
+  if(!template || !overlay || typeof html2canvas === 'undefined'){
+    alert('امکان ساخت عکس در دسترس نیست — اتصال اینترنت رو چک کن و دوباره تلاش کن');
+    return;
+  }
+  template.innerHTML = buildCrmReceiptHTML(r);
+  try{
+    if(document.fonts && document.fonts.ready){
+      try{
+        await document.fonts.load('700 16px Vazirmatn');
+        await document.fonts.load('800 16px Vazirmatn');
+        await document.fonts.ready;
+      }catch(fontErr){ /* بی‌خیال */ }
+    }
+    const canvas = await html2canvas(template.firstElementChild, {backgroundColor:'#ffffff', scale:3, useCORS:true});
+    const dataUrl = canvas.toDataURL('image/png', 1.0);
+    img.src = dataUrl;
+    title.textContent = `خرید ${r.name}`;
+    downloadBtn.onclick = ()=>{
+      const link = document.createElement('a');
+      const safeName = (r.name || 'moshtari').replace(/[^\w\u0600-\u06FF-]/g, '_');
+      link.download = `kharid-${safeName}.png`;
+      link.href = dataUrl;
+      link.click();
+    };
+    overlay.classList.add('show');
+  }catch(err){
+    alert('ساخت عکس با خطا مواجه شد، دوباره تلاش کن');
+  }finally{
+    template.innerHTML = '';
+  }
+}
+
+const closeCrmImageModalBtn = document.getElementById('closeCrmImageModal');
+if(closeCrmImageModalBtn){
+  closeCrmImageModalBtn.addEventListener('click', ()=> document.getElementById('crmImageOverlay').classList.remove('show'));
+}
+const crmImageOverlayEl = document.getElementById('crmImageOverlay');
+if(crmImageOverlayEl){
+  crmImageOverlayEl.addEventListener('click', (e)=>{ if(e.target === crmImageOverlayEl) crmImageOverlayEl.classList.remove('show'); });
+}
+
+function buildCrmFollowUpMessage(r){
+  const itemsList = r.items.map(it=> `🟢 ${it.name}`).join('\n');
+  return `سلام ${r.name} عزیز
+وقتتون بخیر 🌹
+از پخش نانو G+Plus مدرسی هستم.
+حدود یک ماه از خرید قبلی‌تون گذشته. با توجه به محصولاتی که دفعه قبل از ما تهیه کردید، احتمالاً بعضی از اقلامتون به شارژ مجدد نیاز داشته باشه.
+اگر موجودی‌تون رو بفرمایید، می‌تونم لیست شارژ پیشنهادی رو بر اساس خرید قبلی‌تون براتون آماده کنم تا فقط موارد موردنیاز رو انتخاب کنید. ✅
+${itemsList}
+اگر نیاز دارید، همینجا فقط بنویسید «شارژ» تا براتون هماهنگ کنم. ✅
+پخش نانو G+Plus مدرسی
+📞 09389561367`;
+}
+
+const crmListEl = document.getElementById('crmList');
+if(crmListEl){
+  crmListEl.addEventListener('click', (e)=>{
+    const btn = e.target.closest('button[data-action]');
+    const action = btn ? btn.dataset.action : null;
+    if(!action) return;
+    const card = e.target.closest('.crm-card');
+    if(!card) return;
+    const id = card.dataset.id;
+    let list = loadCRM();
+    if(action === 'view'){
+      const rec = list.find(r=> r.id === id);
+      if(rec) showCrmReceiptImage(rec);
+      return;
+    }
+    if(action === 'copytext'){
+      const rec = list.find(r=> r.id === id);
+      if(!rec) return;
+      const text = buildCrmFollowUpMessage(rec);
+      const originalLabel = btn.textContent;
+      navigator.clipboard.writeText(text).then(()=>{
+        btn.textContent = "✅ کپی شد";
+        setTimeout(()=>{ btn.textContent = originalLabel; }, 2000);
+      }).catch(()=>{
+        window.prompt('این متن رو کپی کن:', text);
+      });
+      return;
+    }
+    if(action === 'done'){
+      const rec = list.find(r=> r.id === id);
+      if(rec){
+        if(!confirm(`ثبت شه که "${rec.name}" رو دوباره پیگیری کردی؟`)) return;
+        rec.followedUp = true;
+      }
+    } else if(action === 'del'){
+      const rec = list.find(r=> r.id === id);
+      if(!confirm(`مشتری "${rec ? rec.name : ''}" از CRM حذف بشه؟`)) return;
+      list = list.filter(r=> r.id !== id);
+    }
+    saveCRM(list);
+    renderCRM();
+  });
+}
+
+document.querySelectorAll('.crm-filter').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.crm-filter').forEach(b=> b.classList.remove('active'));
+    btn.classList.add('active');
+    crmFilter = btn.dataset.filter;
+    renderCRM();
+  });
+});
+
+const crmExportBtn = document.getElementById('crmExportBtn');
+if(crmExportBtn){
+  crmExportBtn.addEventListener('click', ()=>{
+    const all = loadCRM();
+    if(!all.length){ alert('هنوز مشتری‌ای در CRM ثبت نشده'); return; }
+    if(typeof XLSX === 'undefined'){
+      alert('امکان ساخت اکسل در دسترس نیست — اتصال اینترنت رو چک کن و دوباره تلاش کن');
+      return;
+    }
+    const now = Date.now();
+    const rows = all.map(r=>{
+      const daysLeft = Math.ceil((r.followUpAt - now) / (24*60*60*1000));
+      let status;
+      if(r.followedUp) status = 'پیگیری شده';
+      else if(daysLeft <= 0) status = `${Math.abs(daysLeft)} روز از موعد گذشته`;
+      else status = `${daysLeft} روز تا موعد`;
+      return {
+        'نام مشتری': r.name,
+        'تلفن': r.phone || '',
+        'آدرس': r.address || '',
+        'شماره فاکتور': r.invoiceNumber || '',
+        'تاریخ خرید': r.purchaseJalali || '',
+        'کالاهای خریداری‌شده': r.items.map(it=> `${it.name} ×${it.qty}`).join('، '),
+        'جمع کل (تومان)': r.subtotal,
+        'وضعیت پیگیری': status
+      };
+    });
+    const ws = XLSX.utils.json_to_sheet(rows);
+    ws['!cols'] = [{wch:18},{wch:14},{wch:22},{wch:14},{wch:16},{wch:40},{wch:14},{wch:20}];
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'مشتریان');
+    XLSX.writeFile(wb, `crm-remyshop-${todayJalaliString().replace(/\s+/g,'-')}.xlsx`);
+  });
+}
+
 /* ================= INVOICE COLOR PICKER ================= */
 (function(){
   const themes = [
@@ -3094,6 +3478,7 @@ renderGrid();
 renderBestSellers();
 renderWholesaleTabs();
 renderWholesaleTables();
+renderCRM();
 
 const footerWholesaleLink = document.getElementById('footerWholesaleLink');
 if(footerWholesaleLink){

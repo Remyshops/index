@@ -2429,6 +2429,7 @@ const sellerProfiles = {
     bankIban: "IR170560611828005137184201",
     bankName: "سید علی محمد مدرسی",
     companyName: "پخش محصولات نانو غیاث - مدرسی",
+    sellerAddress: "یزد",
     /* own و sister دسترسی کامل دارن، بقیه فقط صدور فاکتور */
     permissions: { profit: true, crm: true }
   },
@@ -2442,6 +2443,7 @@ const sellerProfiles = {
     bankIban: "IR480560611828005137553601",
     bankName: "مریم السادات مدرسی",
     companyName: "پخش محصولات نانو غیاث - مدرسی",
+    sellerAddress: "یزد",
     permissions: { profit: true, crm: true }
   },
   akram: {
@@ -2454,6 +2456,7 @@ const sellerProfiles = {
     bankIban: "IR170120020000009645866973",
     bankName: "اکرم حسن زاده",
     companyName: "پخش نانو جی پلاس",
+    sellerAddress: "مشهد",
     /* دسترسی به پیگیری مشتری (CRM) داره، ولی به محاسبه سود نه */
     permissions: { profit: false, crm: true }
   }
@@ -2488,12 +2491,14 @@ function getCurrentSellerProfile(){
 function applySellerProfile(profile){
   const sellerNameEl = document.getElementById('sellerName');
   const sellerPhoneEl = document.getElementById('sellerPhone');
+  const sellerAddressEl = document.getElementById('sellerAddress');
   const bankCardEl = document.getElementById('invoiceBankCard');
   const bankIbanEl = document.getElementById('invoiceBankIban');
   const bankNameEl = document.getElementById('invoiceBankName');
   const companyNameEl = document.getElementById('invoiceCompanyName');
   if(sellerNameEl) sellerNameEl.value = profile.sellerName;
   if(sellerPhoneEl) sellerPhoneEl.value = profile.sellerPhone;
+  if(sellerAddressEl && profile.sellerAddress) sellerAddressEl.value = profile.sellerAddress;
   if(bankCardEl) bankCardEl.value = profile.bankCard || "";
   if(bankIbanEl) bankIbanEl.value = profile.bankIban || "";
   if(bankNameEl) bankNameEl.value = profile.bankName;

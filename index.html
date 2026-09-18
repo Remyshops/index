@@ -2424,6 +2424,7 @@ const sellerProfiles = {
     password: "killer",
     sellerName: "سید علی محمد مدرسی",
     sellerPhone: "09389561367",
+    familyName: "مدرسی",
     bankCard: "6219 8619 1044 6441",
     bankIban: "IR170560611828005137184201",
     bankName: "سید علی محمد مدرسی",
@@ -2436,6 +2437,7 @@ const sellerProfiles = {
     password: "1396",
     sellerName: "مریم السادات مدرسی",
     sellerPhone: "09162594776",
+    familyName: "مدرسی",
     bankCard: "6219 8619 0082 1520",
     bankIban: "IR480560611828005137553601",
     bankName: "مریم السادات مدرسی",
@@ -2447,9 +2449,9 @@ const sellerProfiles = {
     password: "1361",
     sellerName: "اکرم حسن زاده",
     sellerPhone: "09059587897",
-    /* شماره کارت و شبا بعداً که فرستاد اینجا پر می‌شه */
-    bankCard: "",
-    bankIban: "",
+    familyName: "حسن زاده",
+    bankCard: "6104 3389 5716 8558",
+    bankIban: "IR170120020000009645866973",
     bankName: "اکرم حسن زاده",
     companyName: "پخش نانو جی پلاس",
     /* دسترسی به پیگیری مشتری (CRM) داره، ولی به محاسبه سود نه */
@@ -2472,6 +2474,15 @@ function applyModeButtonPermissions(profile){
   const perms = (profile && profile.permissions) || {};
   modeProfitBtn.style.display = perms.profit ? '' : 'none';
   modeCRMBtn.style.display = perms.crm ? '' : 'none';
+}
+
+/* پروفایل کاربری که الان لاگینه رو برمی‌گردونه (برای پیام پیگیری و امثالش) */
+function getCurrentSellerProfile(){
+  try{
+    const savedProfileId = sessionStorage.getItem('remyInvoiceProfile');
+    if(savedProfileId && sellerProfiles[savedProfileId]) return sellerProfiles[savedProfileId];
+  }catch(e){ /* بی‌خیال */ }
+  return sellerProfiles.own;
 }
 
 function applySellerProfile(profile){
@@ -3379,16 +3390,17 @@ if(crmImageOverlayEl){
 }
 
 function buildCrmFollowUpMessage(r){
+  const profile = getCurrentSellerProfile();
   const itemsList = r.items.map(it=> `🟢 ${it.name}`).join('\n');
   return `سلام ${r.name} عزیز
 وقتتون بخیر 🌹
-از پخش نانو G+Plus مدرسی هستم.
+از پخش نانو G+Plus ${profile.familyName} هستم.
 حدود یک ماه از خرید قبلی‌تون گذشته. با توجه به محصولاتی که دفعه قبل از ما تهیه کردید، احتمالاً بعضی از اقلامتون به شارژ مجدد نیاز داشته باشه.
 اگر موجودی‌تون رو بفرمایید، می‌تونم لیست شارژ پیشنهادی رو بر اساس خرید قبلی‌تون براتون آماده کنم تا فقط موارد موردنیاز رو انتخاب کنید. ✅
 ${itemsList}
 اگر نیاز دارید، همینجا فقط بنویسید «شارژ» تا براتون هماهنگ کنم. ✅
-پخش نانو G+Plus مدرسی
-📞 09389561367`;
+پخش نانو G+Plus ${profile.familyName}
+📞 ${profile.sellerPhone}`;
 }
 
 const crmListEl = document.getElementById('crmList');

@@ -1897,7 +1897,8 @@
       <h3>🔒 ورود به بخش فاکتور</h3>
       <button class="close-btn" id="closeInvoicePassModal">×</button>
     </div>
-    <p style="font-size:13px; color:var(--muted); margin-bottom:14px;">برای دسترسی به صدور فاکتور، رمز رو وارد کن</p>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:14px;">برای دسترسی به صدور فاکتور، نام کاربری و رمز رو وارد کن</p>
+    <input type="text" id="invoiceUserInput" class="lead-field" placeholder="نام کاربری" autocomplete="off" style="text-align:center; margin-bottom:10px;">
     <input type="password" id="invoicePassInput" class="lead-field" placeholder="رمز عبور" inputmode="numeric" style="text-align:center; letter-spacing:6px; font-size:18px;">
     <div class="lead-msg" id="invoicePassMsg"></div>
     <button type="button" id="invoicePassSubmit" class="lead-submit" style="margin-top:10px;">ورود</button>
@@ -2210,8 +2211,13 @@ const modeCRMBtn = document.getElementById('modeCRMBtn');
     if(tapCount >= 5){
       tapCount = 0;
       modeInvoiceBtn.style.display = '';
-      modeProfitBtn.style.display = '';
-      modeCRMBtn.style.display = '';
+      /* دکمه‌های سود/CRM فقط اگه کاربر همین الان با پروفایلی که دسترسی داره وارد شده باشه نشون داده می‌شن */
+      try{
+        const savedProfileId = sessionStorage.getItem('remyInvoiceProfile');
+        if(invoiceUnlocked && savedProfileId && sellerProfiles[savedProfileId]){
+          applyModeButtonPermissions(sellerProfiles[savedProfileId]);
+        }
+      }catch(e){ /* بی‌خیال */ }
       modeInvoiceBtn.scrollIntoView({behavior:'smooth', block:'center'});
     }
   });
@@ -2359,7 +2365,12 @@ modeWholesaleBtn.addEventListener('click', ()=>{
 let pendingInvoiceAction = 'invoice';
 modeProfitBtn.addEventListener('click', ()=>{
   if(invoiceUnlocked){
-    window.open('https://remyshops.github.io/Mohasebe_sood/', '_blank', 'noopener');
+    let allowed = false;
+    try{
+      const savedProfileId = sessionStorage.getItem('remyInvoiceProfile');
+      allowed = !!(savedProfileId && sellerProfiles[savedProfileId] && sellerProfiles[savedProfileId].permissions.profit);
+    }catch(e){ /* بی‌خیال */ }
+    if(allowed) window.open('https://remyshops.github.io/Mohasebe_sood/', '_blank', 'noopener');
   } else {
     pendingInvoiceAction = 'profit';
     openInvoicePassModal();
@@ -2368,9 +2379,8 @@ modeProfitBtn.addEventListener('click', ()=>{
 modeInvoiceBtn.addEventListener('click', ()=>{
   if(invoiceUnlocked){
     try{
-      const savedProfile = sessionStorage.getItem('remyInvoiceProfile');
-      if(savedProfile === 'sister') applySellerProfile(sellerProfiles.sister);
-      else if(savedProfile === 'own') applySellerProfile(sellerProfiles.own);
+      const savedProfileId = sessionStorage.getItem('remyInvoiceProfile');
+      if(savedProfileId && sellerProfiles[savedProfileId]) applySellerProfile(sellerProfiles[savedProfileId]);
     }catch(e){ /* بی‌خیال */ }
     setActiveMode('invoice');
     window.scrollTo({top: invoiceSectionOffset(), behavior:'smooth'});
@@ -2381,18 +2391,26 @@ modeInvoiceBtn.addEventListener('click', ()=>{
 });
 modeCRMBtn.addEventListener('click', ()=>{
   if(invoiceUnlocked){
-    setActiveMode('crm');
-    renderCRM();
-    window.scrollTo({top: crmSectionOffset(), behavior:'smooth'});
+    let allowed = false;
+    try{
+      const savedProfileId = sessionStorage.getItem('remyInvoiceProfile');
+      allowed = !!(savedProfileId && sellerProfiles[savedProfileId] && sellerProfiles[savedProfileId].permissions.crm);
+    }catch(e){ /* بی‌خیال */ }
+    if(allowed){
+      setActiveMode('crm');
+      renderCRM();
+      window.scrollTo({top: crmSectionOffset(), behavior:'smooth'});
+    }
   } else {
     pendingInvoiceAction = 'crm';
     openInvoicePassModal();
   }
 });
 
-/* ---------- رمز عبور بخش فاکتور ---------- */
-const INVOICE_PASSWORD = "5566";
-const INVOICE_PASSWORD_SISTER = "1396";
+/* ---------- رمز عبور بخش فاکتور ----------
+   هر کاربر (فروشنده) یه آیتم توی sellerProfiles داره با رمز اختصاصی خودش.
+   برای اضافه کردن یه فروشنده‌ی جدید، فقط یه بلاک جدید مثل بقیه اضافه کن —
+   بقیه‌ی کد (چک رمز، پرشدن خودکار فرم فاکتور) بدون تغییر کار می‌کنه. */
 const invoicePassOverlay = document.getElementById('invoicePassOverlay');
 const invoicePassInput = document.getElementById('invoicePassInput');
 const invoicePassMsg = document.getElementById('invoicePassMsg');
@@ -2402,20 +2420,59 @@ try{ invoiceUnlocked = sessionStorage.getItem('remyInvoiceUnlocked') === '1'; }c
 
 const sellerProfiles = {
   own: {
+    username: "Remy",
+    password: "killer",
     sellerName: "سید علی محمد مدرسی",
     sellerPhone: "09389561367",
     bankCard: "6219 8619 1044 6441",
     bankIban: "IR170560611828005137184201",
-    bankName: "سید علی محمد مدرسی"
+    bankName: "سید علی محمد مدرسی",
+    companyName: "پخش محصولات نانو غیاث - مدرسی",
+    /* own و sister دسترسی کامل دارن، بقیه فقط صدور فاکتور */
+    permissions: { profit: true, crm: true }
   },
   sister: {
+    username: "maryam",
+    password: "1396",
     sellerName: "مریم السادات مدرسی",
     sellerPhone: "09162594776",
     bankCard: "6219 8619 0082 1520",
     bankIban: "IR480560611828005137553601",
-    bankName: "مریم السادات مدرسی"
+    bankName: "مریم السادات مدرسی",
+    companyName: "پخش محصولات نانو غیاث - مدرسی",
+    permissions: { profit: true, crm: true }
+  },
+  akram: {
+    username: "akram",
+    password: "1361",
+    sellerName: "اکرم حسن زاده",
+    sellerPhone: "09059587897",
+    /* شماره کارت و شبا بعداً که فرستاد اینجا پر می‌شه */
+    bankCard: "",
+    bankIban: "",
+    bankName: "اکرم حسن زاده",
+    companyName: "پخش نانو جی پلاس",
+    /* دسترسی به پیگیری مشتری (CRM) داره، ولی به محاسبه سود نه */
+    permissions: { profit: false, crm: true }
   }
 };
+
+/* یوزرنیم و رمز واردشده رو با پروفایل‌ها مطابقت می‌ده */
+function findSellerProfile(username, pwd){
+  const uname = (username || "").trim().toLowerCase();
+  for(const id in sellerProfiles){
+    const p = sellerProfiles[id];
+    if(p.username.toLowerCase() === uname && p.password === pwd) return { id, profile: p };
+  }
+  return null;
+}
+
+/* نمایش/مخفی‌کردن دکمه‌های محاسبه سود و CRM بر اساس دسترسی همون کاربر */
+function applyModeButtonPermissions(profile){
+  const perms = (profile && profile.permissions) || {};
+  modeProfitBtn.style.display = perms.profit ? '' : 'none';
+  modeCRMBtn.style.display = perms.crm ? '' : 'none';
+}
 
 function applySellerProfile(profile){
   const sellerNameEl = document.getElementById('sellerName');
@@ -2423,18 +2480,22 @@ function applySellerProfile(profile){
   const bankCardEl = document.getElementById('invoiceBankCard');
   const bankIbanEl = document.getElementById('invoiceBankIban');
   const bankNameEl = document.getElementById('invoiceBankName');
+  const companyNameEl = document.getElementById('invoiceCompanyName');
   if(sellerNameEl) sellerNameEl.value = profile.sellerName;
   if(sellerPhoneEl) sellerPhoneEl.value = profile.sellerPhone;
-  if(bankCardEl) bankCardEl.value = profile.bankCard;
+  if(bankCardEl) bankCardEl.value = profile.bankCard || "";
   if(bankIbanEl) bankIbanEl.value = profile.bankIban || "";
   if(bankNameEl) bankNameEl.value = profile.bankName;
+  if(companyNameEl && profile.companyName) companyNameEl.value = profile.companyName;
 }
 
 function openInvoicePassModal(){
+  const invoiceUserInput = document.getElementById('invoiceUserInput');
+  if(invoiceUserInput) invoiceUserInput.value = "";
   invoicePassInput.value = "";
   invoicePassMsg.classList.remove('show');
   invoicePassOverlay.classList.add('show');
-  setTimeout(()=> invoicePassInput.focus(), 150);
+  setTimeout(()=> document.getElementById('invoiceUserInput').focus(), 150);
 }
 function closeInvoicePassModal(){
   invoicePassOverlay.classList.remove('show');
@@ -2443,29 +2504,40 @@ document.getElementById('closeInvoicePassModal').addEventListener('click', close
 invoicePassOverlay.addEventListener('click', (e)=>{ if(e.target === invoicePassOverlay) closeInvoicePassModal(); });
 
 function trySubmitInvoicePass(){
-  const entered = invoicePassInput.value.trim();
-  if(entered === INVOICE_PASSWORD || entered === INVOICE_PASSWORD_SISTER){
+  const enteredUser = document.getElementById('invoiceUserInput').value;
+  const enteredPass = invoicePassInput.value.trim();
+  const match = findSellerProfile(enteredUser, enteredPass);
+  if(match){
     invoiceUnlocked = true;
     try{
       sessionStorage.setItem('remyInvoiceUnlocked', '1');
-      sessionStorage.setItem('remyInvoiceProfile', entered === INVOICE_PASSWORD_SISTER ? 'sister' : 'own');
+      sessionStorage.setItem('remyInvoiceProfile', match.id);
     }catch(e){ /* بی‌خیال */ }
-    applySellerProfile(entered === INVOICE_PASSWORD_SISTER ? sellerProfiles.sister : sellerProfiles.own);
-    modeProfitBtn.style.display = '';
-    modeCRMBtn.style.display = '';
+    applySellerProfile(match.profile);
+    applyModeButtonPermissions(match.profile);
     closeInvoicePassModal();
     if(pendingInvoiceAction === 'profit'){
-      window.open('https://remyshops.github.io/Mohasebe_sood/', '_blank', 'noopener');
+      if(match.profile.permissions && match.profile.permissions.profit){
+        window.open('https://remyshops.github.io/Mohasebe_sood/', '_blank', 'noopener');
+      } else {
+        setActiveMode('invoice');
+        window.scrollTo({top: invoiceSectionOffset(), behavior:'smooth'});
+      }
     } else if(pendingInvoiceAction === 'crm'){
-      setActiveMode('crm');
-      renderCRM();
-      window.scrollTo({top: crmSectionOffset(), behavior:'smooth'});
+      if(match.profile.permissions && match.profile.permissions.crm){
+        setActiveMode('crm');
+        renderCRM();
+        window.scrollTo({top: crmSectionOffset(), behavior:'smooth'});
+      } else {
+        setActiveMode('invoice');
+        window.scrollTo({top: invoiceSectionOffset(), behavior:'smooth'});
+      }
     } else {
       setActiveMode('invoice');
       window.scrollTo({top: invoiceSectionOffset(), behavior:'smooth'});
     }
   } else {
-    invoicePassMsg.textContent = "❌ رمز اشتباهه";
+    invoicePassMsg.textContent = "❌ نام کاربری یا رمز اشتباهه";
     invoicePassMsg.className = "lead-msg show err";
     invoicePassInput.value = "";
     invoicePassInput.focus();
@@ -2473,6 +2545,7 @@ function trySubmitInvoicePass(){
 }
 invoicePassSubmit.addEventListener('click', trySubmitInvoicePass);
 invoicePassInput.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') trySubmitInvoicePass(); });
+document.getElementById('invoiceUserInput').addEventListener('keydown', (e)=>{ if(e.key === 'Enter') trySubmitInvoicePass(); });
 
 
 function renderTabs(){

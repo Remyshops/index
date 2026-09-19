@@ -3,115 +3,3641 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>مشاهده آنلاین کاتالوگ | رمی شاپ</title>
+<title>رمی شاپ | تست واقعی محصولات نانو قبل از خرید</title>
+<meta name="description" content="رمی شاپ - پخش محصولات نانو، غیاث مدرسی. بیش از ۱۰۰ ویدیوی تست واقعی محصولات، قبل از خرید ببینید و مستقیم از واتساپ سفارش دهید.">
+<meta name="robots" content="index, follow">
+<!-- توجه: وقتی دامنه‌ی remyshop.ir رو خریدی و به این سایت وصل کردی، این آدرس‌ها رو به remyshop.ir برگردون -->
+<link rel="canonical" href="https://remyshops.github.io/index/">
+<meta name="theme-color" content="#0a4fdb" id="metaThemeColor">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fa_IR">
+<meta property="og:title" content="رمی شاپ | تست واقعی محصولات نانو قبل از خرید">
+<meta property="og:description" content="بیش از ۱۰۰ ویدیوی تست واقعی محصولات نانو G+Plus — قبل از خرید ببینید، بعد با خیال راحت سفارش دهید.">
+<meta property="og:url" content="https://remyshops.github.io/index/">
+<meta property="og:site_name" content="رمی شاپ">
+<!-- توجه: آدرس زیر رو با لینک واقعی یک تصویر (لوگو یا بنر) روی دامنه خودت جایگزین کن -->
+<meta property="og:image" content="https://remyshops.github.io/remyshop-share.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="رمی شاپ | تست واقعی محصولات نانو قبل از خرید">
+<meta name="twitter:description" content="بیش از ۱۰۰ ویدیوی تست واقعی محصولات نانو G+Plus — قبل از خرید ببینید، بعد با خیال راحت سفارش دهید.">
+<meta name="twitter:image" content="https://remyshops.github.io/remyshop-share.jpg">
+
+<!-- Schema.org: Organization -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "رمی شاپ",
+  "description": "پخش محصولات نانو - غیاث مدرسی",
+  "telephone": "+989389561367",
+  "sameAs": [
+    "https://instagram.com/remyshops",
+    "https://eitaa.com/remyshop"
+  ]
+}
+</script>
 <style>
   :root{
-    --drop:#0a4fdb;
-    --drop-2:#0035a6;
     --bg:#ffffff;
     --surface:#f2f6fd;
+    --surface-2:#e6eefb;
+    --silver:#d3e0f5;
     --text:#141a24;
     --muted:#5b6472;
-    --line: rgba(10,79,219,0.16);
+    --drop:#0a4fdb;
+    --drop-2:#0035a6;
+    --drop-rgb:10,79,219;
+    --drop-2-rgb:0,53,166;
+    --gold:#0a4fdb;
+    --line: rgba(var(--drop-rgb),0.16);
+    --green:#16a34a;
+    --green-2:#0e7a3b;
+    --orange:#f7931e;
+    --orange-2:#d9740a;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
   body{
-    font-family:'Vazirmatn','Tahoma',sans-serif;
-    background:var(--bg);
+    font-family:'Vazirmatn','Vazir','IRANSans','Tahoma','Segoe UI',sans-serif;
+    background:
+      radial-gradient(circle at 15% 0%, rgba(var(--drop-rgb),0.07), transparent 45%),
+      radial-gradient(circle at 90% 10%, rgba(var(--drop-2-rgb),0.05), transparent 40%),
+      var(--bg);
     color:var(--text);
     min-height:100vh;
+    line-height:1.7;
   }
-  header{
-    padding:20px 16px;
-    text-align:center;
+  .wrap{max-width:640px; margin:0 auto; padding:0 20px 60px;}
+
+  /* ---------- droplet mark ---------- */
+  .drop{
+    width:14px; height:14px;
     background:linear-gradient(135deg, var(--drop), var(--drop-2));
-    color:#fff;
-    position:sticky;
-    top:0;
-    z-index:10;
-  }
-  header h1{ font-size:18px; font-weight:800; margin-bottom:4px; }
-  header p{ font-size:13px; opacity:.9; }
-  .back-link{
+    border-radius:50% 50% 50% 0;
+    transform:rotate(-135deg);
     display:inline-block;
-    margin-top:10px;
-    font-size:13px;
-    color:#fff;
-    text-decoration:none;
-    border-bottom:1px dashed rgba(255,255,255,.7);
-    padding-bottom:2px;
+    box-shadow:0 0 10px rgba(var(--drop-rgb),0.5);
   }
-  .wrap{ max-width:1100px; margin:0 auto; padding:16px 10px 50px; }
-  .catalog-block{ margin-bottom:34px; }
-  .catalog-block h2{
-    font-size:15px;
-    font-weight:700;
-    margin-bottom:10px;
+  .drop.lg{width:54px; height:54px; border-radius:60% 60% 60% 4%;}
+
+  /* ---------- header / hero ---------- */
+  header{
+    padding:44px 0 30px;
+    text-align:center;
+    position:relative;
+  }
+  .mark{
+    width:90px; height:90px;
+    margin:0 auto 18px;
+    display:flex; align-items:center; justify-content:center;
+    position:relative;
+  }
+  .mark img{
+    width:100%; height:100%;
+    border-radius:50%;
+    object-fit:cover;
+    box-shadow:0 0 20px rgba(var(--drop-rgb),0.3);
+    animation: logoFloat 4.5s ease-in-out infinite;
+  }
+  @keyframes logoFloat{
+    0%,100%{ transform: translateY(0); }
+    50%{ transform: translateY(-4px); }
+  }
+  .mark .drop.lg{
+    animation: bead 4.5s ease-in-out infinite;
+  }
+  @keyframes bead{
+    0%,100%{ transform: rotate(-135deg) translateY(0); }
+    50%{ transform: rotate(-135deg) translateY(-4px); }
+  }
+  .brand{
+    font-weight:800;
+    font-size:30px;
+    letter-spacing:0.5px;
+  }
+  .brand span{color:var(--drop);}
+  .tagline{
+    color:var(--muted);
+    font-size:14px;
+    margin-top:6px;
+    letter-spacing:0.3px;
+  }
+
+  .contact-row{
+    display:flex;
+    gap:10px;
+    justify-content:center;
+    flex-wrap:wrap;
+    margin-top:26px;
+  }
+  .chip{
     display:flex; align-items:center; gap:8px;
-  }
-  .catalog-block h2 .badge{
     background:var(--surface);
     border:1px solid var(--line);
-    color:var(--drop);
-    font-size:12px;
-    padding:3px 10px;
+    color:var(--text);
+    padding:10px 16px;
     border-radius:100px;
-  }
-  .pdf-frame{
-    width:100%;
-    height:92vh;
-    border:1px solid var(--line);
-    border-radius:14px;
-    overflow:hidden;
-    box-shadow:0 4px 18px rgba(10,79,219,0.08);
-  }
-  .pdf-frame iframe{
-    width:100%; height:100%; border:0; display:block;
-  }
-  .dl-link{
-    display:inline-block;
-    margin-top:10px;
-    font-size:13px;
-    color:var(--drop);
+    font-size:13.5px;
     text-decoration:none;
-    border-bottom:1px dashed var(--drop);
+    transition:border-color .25s, transform .25s;
+  }
+  .chip:hover{ border-color:var(--drop); transform:translateY(-2px); }
+  .chip svg{width:16px; height:16px; fill:var(--drop);}
+
+  .save-contact{
+    margin-top:14px;
+    display:inline-block;
+    font-size:12.5px;
+    color:var(--gold);
+    text-decoration:none;
+    border-bottom:1px dashed var(--gold);
     padding-bottom:2px;
   }
-  @media (max-width:600px){
-    .pdf-frame{ height:88vh; }
+
+  /* ---------- section titles ---------- */
+  .section-title{
+    display:flex; align-items:center; gap:10px;
+    margin:58px 0 20px;
   }
+  .section-title .drop{width:10px; height:10px;}
+  .section-title h2{
+    font-size:19px;
+    font-weight:700;
+  }
+  .section-title .line{
+    flex:1;
+    height:1px;
+    background:var(--line);
+  }
+  .section-sub{
+    color:var(--muted);
+    font-size:13px;
+    margin-bottom:18px;
+  }
+
+  /* ---------- category tabs ---------- */
+  .cat-tabs{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-bottom:14px;
+  }
+  .cat-tab{
+    background:var(--surface);
+    border:1px solid var(--line);
+    color:var(--muted);
+    padding:8px 15px;
+    border-radius:100px;
+    font-size:13px;
+    font-family:inherit;
+    cursor:pointer;
+    transition:border-color .2s, color .2s, background .2s;
+  }
+  .cat-tab:hover{ border-color:var(--drop); color:var(--text); }
+  .cat-tab.active{
+    background:linear-gradient(135deg, var(--drop), var(--drop-2));
+    border-color:var(--drop);
+    color:#ffffff;
+    font-weight:700;
+  }
+
+  /* ---------- search ---------- */
+  .search-box{
+    position:relative;
+    margin-bottom:18px;
+  }
+  .search-box input{
+    width:100%;
+    background:var(--surface);
+    border:1px solid var(--line);
+    color:var(--text);
+    padding:13px 16px;
+    border-radius:12px;
+    font-family:inherit;
+    font-size:14px;
+    outline:none;
+  }
+  .search-box input:focus{ border-color:var(--drop); }
+  .search-box input::placeholder{ color:var(--muted); }
+
+  /* ---------- product grid ---------- */
+  .grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+  }
+  @media(max-width:420px){ .grid{grid-template-columns:1fr;} }
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:16px;
+    cursor:pointer;
+    position:relative;
+    overflow:hidden;
+    box-shadow:0 2px 8px rgba(var(--drop-rgb),0.08);
+    transition:border-color .25s, transform .2s, box-shadow .25s;
+  }
+  .card::after{
+    content:"";
+    position:absolute;
+    top:0; right:-60%;
+    width:50%; height:100%;
+    background:linear-gradient(115deg, transparent, rgba(var(--drop-rgb),0.14), transparent);
+    transform:skewX(-20deg);
+    transition:right 0.6s ease;
+  }
+  .card:hover::after{ right:130%; }
+  .card:hover{ border-color:var(--drop); transform:translateY(-2px); }
+  .card .thumb{
+    width:100%;
+    aspect-ratio:1/1;
+    border-radius:10px;
+    overflow:hidden;
+    background:#fff;
+    margin-bottom:10px;
+    display:flex; align-items:center; justify-content:center;
+    position:relative;
+  }
+  .card .thumb img{ width:100%; height:100%; object-fit:contain; display:block; }
+
+  /* ---------- play icon overlay on thumbnails (shows the item has test videos) ---------- */
+  .play-badge{
+    position:absolute;
+    left:6px; bottom:6px;
+    width:26px; height:26px;
+    border-radius:50%;
+    background:rgba(var(--drop-rgb),0.82);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 2px 6px rgba(var(--drop-rgb),0.35);
+    pointer-events:none;
+  }
+  .play-badge svg{ width:12px; height:12px; fill:#ffffff; margin-left:1px; }
+  .best-card .thumb .play-badge{ width:22px; height:22px; left:5px; bottom:5px; }
+  .best-card .thumb .play-badge svg{ width:10px; height:10px; }
+  .item-thumb{ position:relative; }
+  .cat-thumb{ position:relative; }
+  .card .pname{ font-size:14.5px; font-weight:700; margin-bottom:6px; }
+  .card .pcount{ font-size:12px; color:var(--muted); display:flex; align-items:center; gap:6px; }
+  .card .pcount .drop{width:7px; height:7px;}
+  .price-tag{ font-size:13px; font-weight:700; color:var(--green); margin-top:6px; }
+  .price-tag.lg{ font-size:16px; margin:10px 0; }
+
+  .no-result{
+    color:var(--muted);
+    text-align:center;
+    padding:30px 0;
+    font-size:13.5px;
+    display:none;
+  }
+
+  /* ---------- best sellers ---------- */
+  .best-scroll{
+    display:flex;
+    gap:12px;
+    overflow-x:auto;
+    padding:4px 2px 14px;
+    scroll-snap-type:x proximity;
+  }
+  .best-scroll::-webkit-scrollbar{ height:6px; }
+  .best-scroll::-webkit-scrollbar-thumb{ background:var(--silver); border-radius:10px; }
+  .best-card{
+    position:relative;
+    flex:0 0 auto;
+    width:168px;
+    background:linear-gradient(160deg, var(--surface), var(--surface-2));
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:16px 14px 14px;
+    cursor:pointer;
+    scroll-snap-align:start;
+    box-shadow:0 3px 10px rgba(var(--drop-rgb),0.1);
+    transition:border-color .25s, transform .2s, box-shadow .25s;
+  }
+  .best-card:hover{ border-color:var(--drop); transform:translateY(-3px); }
+  .best-card .thumb{
+    width:100%;
+    aspect-ratio:1/1;
+    border-radius:8px;
+    overflow:hidden;
+    background:#fff;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .best-card .thumb img{ width:100%; height:100%; object-fit:contain; display:block; }
+  .best-badge{
+    position:absolute;
+    top:-9px; right:12px;
+    background:linear-gradient(135deg, var(--drop), var(--drop-2));
+    color:#fff;
+    font-size:10.5px;
+    font-weight:700;
+    padding:3px 9px;
+    border-radius:100px;
+    box-shadow:0 2px 6px rgba(var(--drop-rgb),0.35);
+  }
+  .best-card .pname{
+    font-size:13.5px;
+    font-weight:700;
+    margin-top:6px;
+    line-height:1.5;
+  }
+  .best-card .pcount{ font-size:11.5px; color:var(--muted); display:flex; align-items:center; gap:6px; margin-top:8px; }
+  .best-card .pcount .drop{width:6px; height:6px;}
+
+  /* ---------- modal ---------- */
+  .overlay{
+    position:fixed; inset:0;
+    background:rgba(3,10,11,0.72);
+    backdrop-filter:blur(3px);
+    display:flex;
+    align-items:center; justify-content:center;
+    z-index:50;
+    padding:20px;
+    opacity:0;
+    visibility:hidden;
+    transition:opacity .28s ease;
+  }
+  .overlay.show{ opacity:1; visibility:visible; }
+  .modal{
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    border-radius:16px;
+    max-width:420px; width:100%;
+    max-height:80vh;
+    overflow-y:auto;
+    padding:22px;
+    transform:translateY(14px) scale(.97);
+    transition:transform .28s ease;
+  }
+  .overlay.show .modal{ transform:translateY(0) scale(1); }
+  .modal-head{
+    display:flex; justify-content:space-between; align-items:center;
+    margin-bottom:16px;
+  }
+  .modal-head h3{ font-size:17px; }
+  .modal-thumb{
+    width:100%;
+    aspect-ratio:4/3;
+    border-radius:12px;
+    overflow:hidden;
+    background:#fff;
+    margin-bottom:14px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .modal-thumb img{ width:100%; height:100%; object-fit:contain; display:block; }
+  .close-btn{
+    background:none; border:none; color:var(--muted);
+    font-size:22px; cursor:pointer; line-height:1;
+  }
+  .video-item{
+    display:flex; align-items:center; gap:10px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:12px 14px;
+    margin-bottom:8px;
+    text-decoration:none;
+    color:var(--text);
+    font-size:13.5px;
+    transition:border-color .2s;
+  }
+  .video-item:hover{ border-color:var(--drop); }
+  .video-item svg{width:18px; height:18px; fill:var(--drop); flex-shrink:0;}
+  .modal-note{
+    margin-top:14px;
+    font-size:11.5px;
+    color:var(--muted);
+    border-top:1px dashed var(--line);
+    padding-top:12px;
+  }
+  .order-here{
+    display:block;
+    margin-top:14px;
+    text-align:center;
+    background:var(--gold);
+    color:#ffffff;
+    font-weight:700;
+    padding:11px;
+    border-radius:10px;
+    text-decoration:none;
+    font-size:13.5px;
+  }
+  .share-row{
+    display:flex;
+    gap:8px;
+    margin-top:10px;
+  }
+  .share-btn{
+    flex:1;
+    display:flex; align-items:center; justify-content:center; gap:6px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    color:var(--text);
+    font-weight:700;
+    padding:11px;
+    border-radius:10px;
+    font-size:13px;
+    font-family:inherit;
+    cursor:pointer;
+    transition:border-color .2s, transform .2s;
+  }
+  .share-btn:hover{ border-color:var(--drop); transform:translateY(-2px); }
+  .share-btn svg{ width:15px; height:15px; fill:var(--drop); }
+
+  /* ---------- video player modal ---------- */
+  #videoOverlay{ z-index:60; }
+  .video-modal{ max-width:640px; padding:16px; }
+  .video-frame-wrap{
+    position:relative;
+    width:100%;
+    padding-top:56.25%;
+    background:#000;
+    border-radius:10px;
+    overflow:hidden;
+  }
+  .video-frame-wrap iframe{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    border:0;
+  }
+
+  /* ---------- hero preview video (shown immediately, before scrolling) ---------- */
+  .hero-video{
+    margin-top:22px;
+    max-width:360px;
+    margin-inline:auto;
+  }
+  .hero-video-frame{
+    position:relative;
+    width:100%;
+    padding-top:56.25%;
+    background:#000;
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:0 6px 20px rgba(var(--drop-rgb),0.25);
+  }
+  .hero-video-frame iframe{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    border:0;
+  }
+  .hero-video-label{
+    font-size:12px;
+    color:var(--muted);
+    margin-top:8px;
+  }
+
+  /* ---------- simple list categories (no per-product buttons) ---------- */
+  .simple-block{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:18px 18px 16px;
+    margin-bottom:16px;
+  }
+  .gplus-logo{
+    display:inline-flex;
+    align-items:baseline;
+    font-family:Arial, Helvetica, sans-serif;
+    direction:ltr;
+    unicode-bidi:isolate;
+  }
+  .gplus-g{
+    position:relative;
+    color:#e21f26;
+    font-weight:900;
+    font-style:italic;
+    font-size:1.15em;
+  }
+  .gplus-plus-sign{
+    position:absolute;
+    top:-0.55em;
+    right:-0.35em;
+    color:#e21f26;
+    font-weight:900;
+    font-size:0.55em;
+    font-style:normal;
+  }
+  .gplus-word{
+    color:#1a1a1a;
+    font-weight:900;
+    font-style:italic;
+    margin-inline-start:1px;
+  }
+  .highlight-blue{
+    color:#1a73e8;
+    font-weight:700;
+  }
+  .simple-block h3{
+    font-size:15.5px;
+    font-weight:800;
+    margin-bottom:12px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .simple-block h3 .drop{width:9px; height:9px;}
+  .cat-thumb{
+    width:100%;
+    max-height:170px;
+    border-radius:10px;
+    overflow:hidden;
+    background:#fff;
+    margin-bottom:12px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .cat-thumb img{ width:100%; height:100%; object-fit:contain; display:block; max-height:170px; }
+  .simple-items li.has-thumb{
+    display:flex; align-items:center; gap:10px;
+  }
+  .item-thumb{
+    flex-shrink:0;
+    width:43px; height:43px;
+    border-radius:8px;
+    overflow:hidden;
+    background:#fff;
+    display:flex; align-items:center; justify-content:center;
+    border:1px solid var(--line);
+  }
+  .item-thumb img{ width:100%; height:100%; object-fit:contain; display:block; }
+  .simple-items{
+    list-style:none;
+    margin-bottom:14px;
+  }
+  .simple-items li{
+    font-size:13.5px;
+    color:var(--text);
+    padding:8px 0;
+    border-bottom:1px dashed var(--line);
+  }
+  .simple-items li:last-child{ border-bottom:none; }
+  .simple-links{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .simple-links a{
+    flex:1;
+    min-width:140px;
+    text-align:center;
+    padding:10px 12px;
+    border-radius:10px;
+    font-size:13px;
+    font-weight:700;
+    text-decoration:none;
+    transition:transform .2s;
+  }
+  .simple-links a:hover{ transform:translateY(-2px); }
+  .simple-links .test-link{
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    color:var(--text);
+  }
+  .simple-links .buy-link{
+    background:linear-gradient(135deg, var(--drop), var(--drop-2));
+    color:#ffffff;
+  }
+
+  /* ---------- basalam order link ---------- */
+  .basalam-box{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    width:100%;
+    background:linear-gradient(135deg, var(--drop), var(--drop-2));
+    color:#ffffff;
+    font-weight:800;
+    font-size:15px;
+    border:none;
+    padding:16px;
+    border-radius:14px;
+    text-decoration:none;
+    transition:transform .2s;
+  }
+  .basalam-box:hover{ transform:translateY(-2px); }
+  .basalam-box svg{width:18px; height:18px; fill:#ffffff;}
+
+  /* ---------- mode tabs: خرده‌فروشی / عمده ---------- */
+  .mode-tabs{
+    display:flex;
+    gap:10px;
+    margin:26px 0 8px;
+  }
+  .mode-tab{
+    flex:1;
+    background:var(--surface);
+    border:1px solid var(--line);
+    color:var(--muted);
+    padding:13px 10px;
+    border-radius:12px;
+    font-size:14px;
+    font-weight:700;
+    font-family:inherit;
+    cursor:pointer;
+    transition:border-color .2s, color .2s, background .2s, transform .2s;
+  }
+  .mode-tab:hover{ transform:translateY(-2px); border-color:var(--drop); }
+  .mode-tab.active{
+    background:linear-gradient(135deg, var(--drop), var(--drop-2));
+    border-color:var(--drop);
+    color:#ffffff;
+    box-shadow:0 4px 14px rgba(var(--drop-rgb),0.28);
+  }
+
+  /* ---------- wholesale (عمده) view ---------- */
+  .retail-view.hide{ display:none; }
+  .wholesale-view{ display:none; }
+  .wholesale-view.show{ display:block; }
+
+  .wholesale-disclaimer{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:12px 14px;
+    font-size:12.5px;
+    color:var(--muted);
+    line-height:1.9;
+    margin-bottom:16px;
+  }
+
+  .wholesale-block{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:16px 16px 14px;
+    margin-bottom:16px;
+  }
+  .wholesale-block h3{
+    font-size:15.5px;
+    font-weight:800;
+    margin-bottom:4px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .wholesale-block h3 .drop{width:9px; height:9px;}
+  .wholesale-note{
+    font-size:12px;
+    color:var(--gold);
+    margin-bottom:12px;
+  }
+  .wholesale-table-wrap{
+    overflow-x:auto;
+    border-radius:10px;
+    border:1px solid var(--line);
+  }
+  table.wholesale-table{
+    width:100%;
+    table-layout:fixed;
+    border-collapse:collapse;
+    font-size:12.5px;
+  }
+  table.wholesale-table th{
+    background:linear-gradient(135deg, var(--drop), var(--drop-2));
+    color:#ffffff;
+    font-weight:700;
+    padding:10px 6px;
+    text-align:center;
+  }
+  table.wholesale-table th:first-child{ text-align:right; padding-right:10px; }
+  table.wholesale-table td{
+    padding:9px 6px;
+    text-align:center;
+    border-bottom:1px solid var(--line);
+    white-space:normal;
+    word-break:break-word;
+  }
+  table.wholesale-table tr:last-child td{ border-bottom:none; }
+  table.wholesale-table tr:nth-child(even) td{ background:var(--surface-2); }
+  table.wholesale-table td.pname-cell{
+    text-align:right;
+    font-weight:600;
+    width:46%;
+  }
+  table.wholesale-table td.buy-price{ color:var(--drop); font-weight:800; }
+  table.wholesale-table td.sell-price{ color:var(--green); font-weight:700; }
+
+  /* ---------- invoice (فاکتور) view ---------- */
+  .invoice-view{ display:none; }
+  .invoice-view.show{ display:block; }
+
+  /* ---------- CRM / پیگیری مشتری ---------- */
+  .crm-view{ display:none; }
+  .crm-view.show{ display:block; }
+  .crm-filter-tabs{ display:flex; gap:8px; margin-bottom:16px; }
+  .crm-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:14px 16px;
+    margin-bottom:12px;
+  }
+  .crm-card.due-over{ border-color:#dc2626; background:rgba(220,38,38,0.06); }
+  .crm-card.due-soon{ border-color:var(--orange); background:rgba(247,147,30,0.08); }
+  .crm-card-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
+  .crm-card-name{ font-weight:700; font-size:15px; }
+  .crm-card-phone{ color:var(--muted); font-size:12.5px; margin-top:2px; }
+  .crm-card-badge{
+    font-size:11.5px; font-weight:700; padding:4px 10px; border-radius:100px;
+    background:var(--surface-2); color:var(--muted); white-space:nowrap;
+  }
+  .crm-card.due-over .crm-card-badge{ background:#dc2626; color:#fff; }
+  .crm-card.due-soon .crm-card-badge{ background:var(--orange); color:#fff; }
+  .crm-card-items{ color:var(--muted); font-size:12.5px; margin-top:8px; line-height:1.8; }
+  .crm-card-actions{ display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; }
+  .crm-card-actions a, .crm-card-actions button{
+    font-size:12.5px; padding:7px 12px; border-radius:8px; border:1px solid var(--line);
+    background:var(--bg); color:var(--text); text-decoration:none; cursor:pointer; font-family:inherit;
+  }
+  .crm-card-actions .crm-done-btn{ border-color:var(--green); color:var(--green-2); }
+  .crm-card-actions .crm-del-btn{ border-color:#dc2626; color:#dc2626; margin-right:auto; }
+  .crm-empty{ text-align:center; color:var(--muted); padding:30px 0; font-size:13.5px; }
+
+  .invoice-box{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:22px;
+    box-shadow:0 4px 18px rgba(var(--drop-rgb),0.10);
+  }
+  .invoice-bismillah{
+    text-align:center;
+    font-size:13px;
+    font-weight:700;
+    color:var(--muted);
+    margin-bottom:10px;
+    line-height:1.9;
+  }
+
+  /* top bar: invoice number (right) + date (left) */
+  .invoice-topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size:12.5px;
+    color:var(--muted);
+    margin-bottom:14px;
+  }
+  .invoice-topbar-item{ display:flex; align-items:center; gap:6px; }
+  .invoice-field-inline{
+    border:1px solid var(--line);
+    background:var(--surface);
+    color:var(--text);
+    font-family:inherit;
+    font-size:12.5px;
+    font-weight:700;
+    border-radius:8px;
+    padding:5px 8px;
+    width:120px;
+    outline:none;
+    text-align:center;
+  }
+  .invoice-field-inline:focus{ border-color:var(--drop); }
+
+  /* centered title block, like a real پیش‌چاپ‌شده invoice header */
+  .invoice-title-block{
+    text-align:center;
+    padding-bottom:16px;
+    margin-bottom:18px;
+    border-bottom:2px solid var(--drop);
+  }
+  .invoice-title{
+    font-size:14px;
+    font-weight:700;
+    color:var(--muted);
+  }
+  .invoice-company{
+    font-size:24px;
+    font-weight:800;
+    margin-top:4px;
+  }
+  .invoice-company span{ color:var(--drop); }
+  .invoice-company-sub{
+    font-size:12.5px;
+    color:var(--muted);
+    margin-top:4px;
+  }
+  .invoice-company-input{
+    display:block;
+    width:100%;
+    text-align:center;
+    background:transparent;
+    border:1px dashed var(--line);
+    border-radius:8px;
+    font-family:inherit;
+    outline:none;
+    padding:4px 8px;
+  }
+  .invoice-company-input:focus{ border-color:var(--drop); border-style:solid; }
+  #invoiceCompanyName{
+    font-size:24px;
+    font-weight:800;
+    color:var(--drop);
+  }
+  #invoiceCompanySub{
+    font-size:12.5px;
+    color:var(--muted);
+    margin-top:4px;
+  }
+
+  /* labeled boxes: فروشنده / مشتری / اطلاعات حساب */
+  .invoice-party-box{
+    position:relative;
+    border:1px solid var(--line);
+    background:var(--surface);
+    border-radius:12px;
+    padding:16px 14px 12px;
+    margin-bottom:12px;
+  }
+  .invoice-party-tab{
+    position:absolute;
+    top:-11px;
+    right:14px;
+    background:linear-gradient(135deg, var(--drop), var(--drop-2));
+    color:#fff;
+    font-size:12px;
+    font-weight:700;
+    padding:4px 14px;
+    border-radius:100px;
+    box-shadow:0 2px 6px rgba(var(--drop-rgb),0.35);
+  }
+  .invoice-party-content{
+    font-size:13px;
+    color:var(--text);
+    line-height:1.9;
+  }
+  .invoice-customer{ display:flex; flex-direction:column; gap:10px; }
+  .lead-field{
+    display:block;
+    width:100%;
+    height:48px;
+    box-sizing:border-box;
+    background:var(--surface);
+    border:1px solid var(--line);
+    color:var(--text);
+    padding:0 16px;
+    border-radius:12px;
+    font-family:inherit;
+    font-size:14px;
+    outline:none;
+    transition:border-color .2s, box-shadow .2s;
+  }
+  .lead-field::placeholder{ color:var(--muted); }
+  .lead-field:focus{ border-color:var(--drop); box-shadow:0 0 0 3px rgba(var(--drop-rgb),0.12); }
+  .invoice-customer .lead-field{ margin-bottom:0; }
+  .invoice-info-row{ display:flex; align-items:center; gap:6px; margin-bottom:8px; }
+  .invoice-info-row:last-child{ margin-bottom:0; }
+  .invoice-info-label{ font-size:13px; color:var(--muted); white-space:nowrap; }
+  .invoice-info-input{
+    flex:1 1 auto;
+    min-width:0;
+    background:transparent;
+    border:1px dashed var(--line);
+    border-radius:8px;
+    font-family:inherit;
+    font-size:13px;
+    color:var(--text);
+    padding:5px 8px;
+    outline:none;
+  }
+  .invoice-info-input:focus{ border-color:var(--drop); border-style:solid; }
+
+  .price-mode-tabs{ display:flex; gap:8px; margin-bottom:16px; }
+  .price-mode-tab{
+    flex:1;
+    background:var(--surface);
+    border:1px solid var(--line);
+    color:var(--muted);
+    padding:10px 8px;
+    border-radius:10px;
+    font-size:13px;
+    font-weight:700;
+    font-family:inherit;
+    cursor:pointer;
+    transition:all .2s;
+  }
+  .price-mode-tab.active{
+    background:linear-gradient(135deg, var(--green), var(--green-2));
+    border-color:var(--green);
+    color:#fff;
+  }
+
+  .invoice-add-row{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-bottom:16px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:12px;
+  }
+  .invoice-select{
+    flex:2 1 160px;
+    background:#fff;
+    border:1px solid var(--line);
+    color:var(--text);
+    padding:10px;
+    border-radius:10px;
+    font-family:inherit;
+    font-size:13px;
+    outline:none;
+  }
+  .invoice-qty, .invoice-unit-price{
+    flex:1 1 80px;
+    min-width:70px;
+    background:#fff;
+    border:1px solid var(--line);
+    color:var(--text);
+    padding:10px 8px;
+    border-radius:10px;
+    font-family:inherit;
+    font-size:13px;
+    outline:none;
+    text-align:center;
+  }
+  .invoice-add-btn{
+    flex:1 1 100%;
+    background:linear-gradient(135deg, var(--drop), var(--drop-2));
+    color:#fff;
+    border:none;
+    padding:11px;
+    border-radius:10px;
+    font-weight:700;
+    font-size:13.5px;
+    font-family:inherit;
+    cursor:pointer;
+    transition:transform .2s;
+  }
+  .invoice-add-btn:hover{ transform:translateY(-2px); }
+
+  .invoice-table-wrap{
+    overflow-x:auto;
+    border-radius:12px;
+    border:1px solid var(--line);
+    margin-bottom:10px;
+  }
+  table.invoice-table{ width:100%; border-collapse:collapse; font-size:12.5px; }
+  table.invoice-table th{
+    background:linear-gradient(135deg, var(--drop), var(--drop-2));
+    color:#ffffff;
+    font-weight:700;
+    padding:11px 6px;
+    text-align:center;
+  }
+  table.invoice-table th:nth-child(2){ text-align:right; padding-right:12px; }
+  table.invoice-table td{
+    padding:10px 6px;
+    text-align:center;
+    border-bottom:1px solid var(--line);
+  }
+  table.invoice-table tr:last-child td{ border-bottom:none; }
+  table.invoice-table tr:nth-child(even) td{ background:var(--surface-2); }
+  .invoice-item-name{ text-align:right; font-weight:600; padding-right:12px !important; }
+  .invoice-cell-input{
+    width:58px;
+    background:#fff;
+    border:1px solid var(--line);
+    color:var(--text);
+    padding:5px 4px;
+    border-radius:6px;
+    font-family:inherit;
+    font-size:12.5px;
+    text-align:center;
+    outline:none;
+  }
+  .invoice-cell-input:focus{ border-color:var(--drop); }
+  .invoice-row-del{
+    background:none;
+    border:1px solid var(--line);
+    color:#c0392b;
+    width:24px; height:24px;
+    border-radius:50%;
+    cursor:pointer;
+    font-size:12px;
+    line-height:1;
+  }
+  .invoice-row-del:hover{ border-color:#c0392b; }
+  .invoice-empty{ text-align:center; color:var(--muted); font-size:13px; padding:16px 0; }
+
+  .invoice-bottom-row{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+    align-items:stretch;
+    margin-top:8px;
+  }
+  .invoice-totals{
+    flex:1 1 220px;
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:14px;
+    background:var(--surface);
+  }
+  .invoice-total-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size:13.5px;
+    padding:6px 0;
+    color:var(--muted);
+  }
+  .invoice-total-row.grand{
+    font-size:16px;
+    font-weight:800;
+    color:#fff;
+    background:linear-gradient(135deg, var(--drop), var(--drop-2));
+    border-radius:10px;
+    margin-top:8px;
+    padding:10px 12px;
+  }
+  .invoice-total-words{
+    margin-top:10px;
+    font-size:12px;
+    color:var(--muted);
+    text-align:center;
+    line-height:1.7;
+  }
+  .invoice-discount-input{
+    width:90px;
+    background:#fff;
+    border:1px solid var(--line);
+    color:var(--text);
+    padding:5px 8px;
+    border-radius:8px;
+    font-family:inherit;
+    font-size:13px;
+    text-align:center;
+    outline:none;
+  }
+  .invoice-bank-box{
+    flex:1 1 220px;
+    margin-bottom:0;
+  }
+  .invoice-bank-content{ text-align:center; }
+  .invoice-bank-label{ font-size:11.5px; color:var(--muted); }
+  .invoice-bank-card-input{
+    display:block;
+    width:100%;
+    background:transparent;
+    border:1px dashed var(--line);
+    border-radius:8px;
+    font-family:inherit;
+    font-size:16px;
+    font-weight:800;
+    letter-spacing:1px;
+    color:var(--drop-2);
+    direction:ltr;
+    text-align:center;
+    margin:4px 0 6px;
+    padding:4px 2px;
+    outline:none;
+  }
+  .invoice-bank-card-input:focus{ border-color:var(--drop); border-style:solid; }
+  .invoice-bank-iban-input{
+    display:block;
+    width:100%;
+    background:transparent;
+    border:1px dashed var(--line);
+    border-radius:8px;
+    font-family:inherit;
+    font-size:12.5px;
+    font-weight:700;
+    letter-spacing:0.5px;
+    color:var(--drop-2);
+    direction:ltr;
+    text-align:center;
+    margin:0 0 6px;
+    padding:3px 2px;
+    outline:none;
+  }
+  .invoice-bank-iban-input:focus{ border-color:var(--drop); border-style:solid; }
+  .invoice-bank-name-row{ font-size:12.5px; font-weight:600; display:flex; align-items:center; justify-content:center; gap:4px; }
+  .invoice-bank-name-input{
+    background:transparent;
+    border:1px dashed var(--line);
+    border-radius:8px;
+    font-family:inherit;
+    font-size:12.5px;
+    font-weight:600;
+    color:var(--text);
+    text-align:center;
+    padding:3px 6px;
+    outline:none;
+    flex:1 1 auto;
+    min-width:0;
+  }
+  .invoice-bank-name-input:focus{ border-color:var(--drop); border-style:solid; }
+  .invoice-disclaimer{
+    margin-top:14px;
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:10px 12px;
+    font-size:11.5px;
+    color:var(--muted);
+    line-height:1.8;
+    text-align:center;
+  }
+  .print-only{ display:none; }
+  .invoice-note-print{ display:none; }
+
+  .invoice-actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:18px; }
+  .invoice-action-btn{
+    flex:1 1 150px;
+    padding:13px 10px;
+    border-radius:12px;
+    border:none;
+    font-weight:700;
+    font-size:13.5px;
+    font-family:inherit;
+    cursor:pointer;
+    color:#fff;
+    transition:transform .2s;
+  }
+  .invoice-action-btn:hover{ transform:translateY(-2px); }
+  .invoice-action-btn.print{ background:linear-gradient(135deg, var(--drop), var(--drop-2)); }
+  .invoice-action-btn.image{ background:linear-gradient(135deg, #6d28d9, #4c1d95); }
+  .invoice-action-btn.copy{ background:linear-gradient(135deg, var(--green), var(--green-2)); }
+  .invoice-action-btn.reset{ background:linear-gradient(135deg, var(--orange), var(--orange-2)); }
+  .invoice-action-btn:disabled{ opacity:.6; cursor:default; transform:none; }
+
+  /* حالتِ گرفتنِ خروجی عکس: مثل حالت چاپ، ورودی‌های بدون خروجی رو مخفی می‌کنه */
+  .capturing-image .no-print{ display:none !important; }
+  .capturing-image .print-only{ display:inline !important; }
+  .capturing-image .invoice-note-print{ display:block !important; text-align:center; margin-top:20px; font-size:12px; color:#555; }
+  .capturing-image input{
+    border-color:transparent !important;
+    background:transparent !important;
+    padding-left:2px !important;
+    padding-right:2px !important;
+  }
+  .invoice-copy-msg{ text-align:center; font-size:13px; color:var(--green-2); margin-top:10px; min-height:16px; }
+
+  @media(max-width:600px){
+    .mode-tab{ font-size:12.5px; padding:11px 6px; }
+  }
+  @media(max-width:420px){
+    .invoice-select, .invoice-qty, .invoice-unit-price{ flex:1 1 100%; }
+    .invoice-topbar{ flex-direction:column; align-items:flex-end; gap:6px; }
+  }
+
+  @media print{
+    body *{ visibility:hidden; }
+    #invoicePrintArea, #invoicePrintArea *{ visibility:visible; }
+    #invoicePrintArea{
+      position:absolute; top:0; right:0; left:0;
+      width:100%;
+      box-shadow:none;
+      border:none;
+      padding:0;
+    }
+    .no-print{ display:none !important; }
+    .print-only{ display:inline !important; }
+    .invoice-note-print{ display:block !important; text-align:center; margin-top:20px; font-size:12px; color:#555; }
+    #invoicePrintArea input{
+      border-color:transparent !important;
+      background:transparent !important;
+      padding-left:2px !important;
+      padding-right:2px !important;
+    }
+  }
+
+  /* نام محصول + آیکون پخش ویدیوی تست */
+  .pname-inner{
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  .wtest-icon{
+    flex:none;
+    width:20px; height:20px;
+    border-radius:50%;
+    background:linear-gradient(135deg, var(--drop), var(--drop-2));
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    box-shadow:0 0 6px rgba(var(--drop-rgb),0.4);
+    transition:transform .2s;
+  }
+  .wtest-icon:hover{ transform:scale(1.12); }
+  .wtest-icon svg{ width:9px; height:9px; fill:#ffffff; margin-right:-1px; }
+  .pname-text{ flex:1; min-width:0; }
+
+  @media(max-width:420px){
+    .mode-tabs{ flex-direction:column; }
+    table.wholesale-table{ font-size:11.5px; }
+    table.wholesale-table td, table.wholesale-table th{ padding:7px 4px; }
+    table.wholesale-table td.pname-cell{ width:44%; }
+    .wtest-icon{ width:18px; height:18px; }
+  }
+
+  footer{
+    text-align:center;
+    margin-top:50px;
+    padding-top:24px;
+    border-top:1px solid var(--line);
+    color:var(--muted);
+    font-size:12px;
+    padding-bottom:70px;
+  }
+  .footer-links{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:16px;
+  }
+  .footer-links a{
+    display:flex; align-items:center; gap:6px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    color:var(--text);
+    padding:8px 14px;
+    border-radius:100px;
+    font-size:12.5px;
+    text-decoration:none;
+    transition:border-color .2s, transform .2s;
+  }
+  .footer-links a:hover{ border-color:var(--drop); transform:translateY(-2px); }
+
+  /* ---------- hero headline + CTAs ---------- */
+  .hero-headline{
+    font-size:20px;
+    font-weight:800;
+    margin-top:22px;
+    line-height:1.6;
+  }
+  .hero-headline .highlight-blue{ color:var(--drop); }
+  .hero-sub{
+    color:var(--muted);
+    font-size:13.5px;
+    margin-top:8px;
+  }
+  .hero-ctas{
+    display:flex;
+    gap:10px;
+    justify-content:center;
+    flex-wrap:wrap;
+    margin-top:20px;
+  }
+  .btn-cta{
+    display:flex; align-items:center; gap:8px;
+    font-weight:700;
+    font-size:14px;
+    padding:13px 20px;
+    border-radius:12px;
+    text-decoration:none;
+    transition:transform .2s;
+  }
+  .btn-cta:hover{ transform:translateY(-2px); }
+  .btn-cta.blue{
+    background:linear-gradient(135deg, var(--drop), var(--drop-2));
+    color:#ffffff;
+  }
+  .btn-cta.green{
+    background:linear-gradient(135deg, var(--green), var(--green-2));
+    color:#ffffff;
+  }
+  .btn-cta.orange{
+    background:linear-gradient(135deg, var(--orange), var(--orange-2));
+    color:#ffffff;
+  }
+  .btn-cta.outline{
+    background:var(--surface);
+    color:var(--text);
+    border:1px solid var(--line);
+  }
+
+  /* ---------- catalog download ---------- */
+  .catalog-download{
+    margin:16px 0 22px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .catalog-download .btn-cta{
+    flex:1 1 auto;
+    justify-content:center;
+    font-size:13.5px;
+    padding:12px 16px;
+  }
+
+  /* ---------- lead form ---------- */
+  .lead-submit{
+    width:100%;
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    font-weight:700;
+    font-size:14px;
+    padding:13px 20px;
+    border:none;
+    border-radius:12px;
+    color:#fff;
+    background:linear-gradient(135deg, var(--drop), var(--drop-2));
+    cursor:pointer;
+    transition:transform .2s, opacity .2s;
+    font-family:inherit;
+  }
+  .lead-submit:hover{ transform:translateY(-2px); }
+  .lead-submit:disabled{ opacity:.6; cursor:default; transform:none; }
+  .lead-msg{
+    text-align:center;
+    font-size:13px;
+    margin-top:10px;
+    display:none;
+  }
+  .lead-msg.show{ display:block; }
+  .lead-msg.ok{ color:var(--green-2); }
+  .lead-msg.err{ color:#c0392b; }
+
+  /* ---------- trust box ---------- */
+  .trust-box{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:18px;
+    margin-top:36px;
+  }
+  @media(max-width:420px){ .trust-box{grid-template-columns:1fr;} }
+  .trust-item{
+    display:flex; align-items:center; gap:8px;
+    font-size:13px;
+  }
+  .trust-item .check{ color:var(--green); font-weight:800; }
+
+  /* ---------- stats strip ---------- */
+  .stats-strip{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-bottom:20px;
+  }
+  @media(max-width:420px){ .stats-strip{grid-template-columns:1fr 1fr;} }
+  .stat-box{
+    background:linear-gradient(160deg, var(--surface), var(--surface-2));
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:14px 10px;
+    text-align:center;
+  }
+  .stat-box .num{
+    font-size:19px;
+    font-weight:800;
+    color:var(--drop);
+    display:block;
+  }
+  .stat-box .lbl{
+    font-size:11.5px;
+    color:var(--muted);
+    margin-top:4px;
+  }
+
+  /* ---------- catalog intro ---------- */
+  .catalog-intro{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:16px 18px;
+    margin-bottom:20px;
+    font-size:13.5px;
+  }
+  .catalog-intro strong{ display:block; margin-bottom:8px; font-size:14.5px; }
+  .catalog-intro ul{ list-style:none; }
+  .catalog-intro li{ padding:3px 0; }
+
+  /* ---------- catalog attention animation ---------- */
+  #catalogSection .drop{
+    animation: pulseDrop 1.8s ease-in-out infinite;
+  }
+  @keyframes pulseDrop{
+    0%{ box-shadow:0 0 0 0 rgba(var(--drop-rgb),0.55); }
+    70%{ box-shadow:0 0 0 12px rgba(var(--drop-rgb),0); }
+    100%{ box-shadow:0 0 0 0 rgba(var(--drop-rgb),0); }
+  }
+  #catalogSection h2{
+    background:linear-gradient(90deg, var(--drop), var(--drop-2), var(--drop), var(--drop-2));
+    background-size:300% auto;
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    -webkit-text-fill-color:transparent;
+    animation: shimmerText 4s linear infinite;
+  }
+  #catalogSection h2 span{
+    -webkit-text-fill-color:currentColor;
+  }
+  @keyframes shimmerText{
+    0%{ background-position:0% center; }
+    100%{ background-position:300% center; }
+  }
+  .catalog-hint{
+    text-align:center;
+    font-size:14px;
+    font-weight:700;
+    color:var(--drop);
+    margin-bottom:14px;
+    animation: hintBounce 1.5s ease-in-out infinite;
+  }
+  @keyframes hintBounce{
+    0%,100%{ transform:translateY(0); }
+    50%{ transform:translateY(7px); }
+  }
+
+  /* ---------- why test section ---------- */
+  .why-test{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:10px;
+  }
+  @media(max-width:520px){ .why-test{grid-template-columns:1fr;} }
+  .why-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:16px;
+    text-align:center;
+  }
+  .why-card .icon{ font-size:22px; display:block; margin-bottom:8px; }
+  .why-card .t{ font-weight:700; font-size:13.5px; }
+
+  /* ---------- end-of-page WhatsApp CTA ---------- */
+  .end-cta{
+    text-align:center;
+    background:linear-gradient(160deg, var(--surface), var(--surface-2));
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:28px 20px;
+    margin-top:46px;
+  }
+  .end-cta h3{ font-size:17px; margin-bottom:8px; }
+  .end-cta p{ color:var(--muted); font-size:13px; margin-bottom:16px; }
+  .end-cta .btn-cta{ display:inline-flex; }
+
+  /* ---------- floating WhatsApp button ---------- */
+  .floating-wa{
+    position:fixed;
+    left:18px; bottom:18px;
+    z-index:40;
+    display:flex; align-items:center; gap:8px;
+    background:linear-gradient(135deg, var(--green), var(--green-2));
+    color:#ffffff;
+    font-weight:700;
+    font-size:13.5px;
+    padding:13px 18px;
+    border-radius:100px;
+    text-decoration:none;
+    box-shadow:0 4px 16px rgba(22,163,74,0.4);
+    transition:transform .2s;
+    animation: floatPulse 3.2s ease-in-out infinite;
+  }
+  @keyframes floatPulse{
+    0%,80%,100%{ box-shadow:0 4px 16px rgba(22,163,74,0.4); }
+    40%{ box-shadow:0 4px 16px rgba(22,163,74,0.4), 0 0 0 8px rgba(22,163,74,0.12); }
+  }
+  .floating-wa:hover{ transform:translateY(-2px); animation-play-state:paused; }
+  .floating-wa svg{ width:18px; height:18px; fill:#ffffff; }
+
+  /* ---------- invoice color picker ---------- */
+  .invoice-color-picker{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+    justify-content:center;
+    margin-bottom:14px;
+    padding:10px 12px;
+    border:1px solid var(--line);
+    border-radius:12px;
+    background:var(--surface);
+  }
+  .invoice-color-label{
+    font-size:12.5px;
+    color:var(--muted);
+    white-space:nowrap;
+  }
+  .invoice-color-swatches{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  .invoice-color-swatch{
+    width:26px; height:26px;
+    border-radius:50%;
+    border:2px solid #ffffff;
+    outline:1px solid var(--line);
+    cursor:pointer;
+    padding:0;
+    transition:transform .15s;
+  }
+  .invoice-color-swatch:hover{ transform:scale(1.12); }
+  .invoice-color-swatch.active{ outline:2px solid var(--text); }
 </style>
+<!-- برای خروجی عکس از فاکتور -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
 
-<header>
-  <h1>📖 کاتالوگ محصولات G+plus</h1>
-  <p>مشاهده آنلاین هر دو بخش کاتالوگ</p>
-  <a href="index.html" class="back-link">↩ بازگشت به سایت</a>
-</header>
-
 <div class="wrap">
 
-  <div class="catalog-block">
-    <h2>بخش ۱ <span class="badge">صفحه اول</span></h2>
-    <div class="pdf-frame">
-      <iframe src="catalog-1.pdf#toolbar=1&view=FitH" title="کاتالوگ بخش ۱"></iframe>
+  <header id="header">
+    <div class="mark"><img src="logo.jpg" alt="رمی شاپ"></div>
+    <div class="brand">رمی <span>شاپ</span></div>
+    <div class="tagline">پخش محصولات نانو — غیاث مدرسی</div>
+
+    <div class="contact-row">
+      <a class="chip" href="tel:09389561367">
+        <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.5.6 3.6.1.4 0 .8-.2 1L6.6 10.8z"/></svg>
+        تماس مستقیم
+      </a>
+      <a class="chip" href="https://wa.me/989389561367" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3.1.8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.7.8-.8.9-.2.2-.3.2-.5.1-.2-.1-1-.4-1.9-1.2-.7-.6-1.2-1.4-1.3-1.6-.1-.2 0-.4.1-.5l.4-.5c.1-.2.2-.3.2-.4.1-.2 0-.4 0-.5s-.6-1.5-.9-2c-.2-.5-.4-.4-.6-.5h-.5c-.2 0-.5.1-.7.3-.2.2-.9.9-.9 2.2 0 1.3.9 2.5 1.1 2.7.1.2 1.9 3 4.7 4.1.7.3 1.2.4 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.2-1.2-.1-.2-.3-.2-.5-.3z"/></svg>
+        واتساپ
+      </a>
+      <a class="chip" href="https://instagram.com/remyshops" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 8.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4zM16.9 5.5a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4zM21.9 7.4c-.1-1.2-.4-2.2-1.2-3.1-.9-.9-1.9-1.2-3.1-1.2C16.4 3 16 3 12 3s-4.4 0-5.6.1c-1.2.1-2.2.3-3.1 1.2-.9.9-1.1 1.9-1.2 3.1C2 8.6 2 9 2 12s0 3.4.1 4.6c.1 1.2.4 2.2 1.2 3.1.9.9 1.9 1.1 3.1 1.2C7.6 21 8 21 12 21s4.4 0 5.6-.1c1.2-.1 2.2-.4 3.1-1.2.9-.9 1.1-1.9 1.2-3.1.1-1.2.1-1.6.1-4.6s0-3.4-.1-4.6z"/></svg>
+        اینستاگرام
+      </a>
+      <a class="chip" href="https://eitaa.com/remyshop" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M21.9 4.3 2.7 11.8c-.9.4-.9 1.6.1 1.9l4.6 1.5 1.8 5.7c.2.7 1.1.9 1.6.3l2.5-2.8 4.8 3.5c.7.5 1.7.1 1.9-.7l3.1-14.8c.2-1-.9-1.7-1.7-1.2zM8.7 14.6l9-6.2c.2-.1.4.1.2.3l-7.4 7.1c-.3.3-.5.7-.6 1.1l-.3 2.4-.9-4.7z"/></svg>
+        عضویت در کانال ایتا
+      </a>
+      <a class="chip" href="https://eitaa.com/EZGAMETV" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M21.9 4.3 2.7 11.8c-.9.4-.9 1.6.1 1.9l4.6 1.5 1.8 5.7c.2.7 1.1.9 1.6.3l2.5-2.8 4.8 3.5c.7.5 1.7.1 1.9-.7l3.1-14.8c.2-1-.9-1.7-1.7-1.2zM8.7 14.6l9-6.2c.2-.1.4.1.2.3l-7.4 7.1c-.3.3-.5.7-.6 1.1l-.3 2.4-.9-4.7z"/></svg>
+        سوال داری بپرس
+      </a>
     </div>
-    <a href="catalog-1.pdf" download class="dl-link">⬇ دانلود این بخش</a>
+    <a class="save-contact" id="saveContact" href="#">+ ذخیره در مخاطبین</a>
+
+    <div class="hero-headline">قبل از خرید، <span class="highlight-blue">تست واقعی</span> محصولات نانو را ببینید</div>
+    <div class="hero-sub">بیش از ۱۰۰ ویدیوی تست واقعی محصولات G+Plus — بعد با خیال راحت سفارش دهید</div>
+
+    <!-- پیش‌نمایش ویدیو همین بالای صفحه، بدون نیاز به اسکرول یا کلیک -->
+    <div class="hero-video">
+      <div class="hero-video-frame">
+        <iframe src="https://www.aparat.com/video/video/embed/videohash/sva419y/vt/frame" allow="autoplay; fullscreen" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe>
+      </div>
+      <div class="hero-video-label">🎥 نمونه تست واقعی «نانو چند منظوره خانگی» — همین الان ببینید</div>
+    </div>
+
+    <div class="hero-ctas">
+      <a href="#catalogSection" class="btn-cta blue">🎥 مشاهده همه تست‌ها</a>
+      <a href="#orderSection" class="btn-cta green">🛒 ثبت سفارش</a>
+    </div>
+  </header>
+
+  <!-- ================= MODE TABS: خرده‌فروشی / عمده ================= -->
+  <div class="mode-tabs">
+    <button class="mode-tab active" id="modeRetailBtn" type="button">🛍 خرده‌فروشی (تکی)</button>
+    <button class="mode-tab" id="modeWholesaleBtn" type="button">📦 قیمت عمده</button>
+    <button class="mode-tab" id="modeInvoiceBtn" type="button" style="display:none;">🧾 صدور فاکتور</button>
+    <button class="mode-tab" id="modeProfitBtn" type="button" style="display:none;">📊 محاسبه سود</button>
+    <button class="mode-tab" id="modeCRMBtn" type="button" style="display:none;">🧑‍🤝‍🧑 پیگیری مشتری</button>
   </div>
 
-  <div class="catalog-block">
-    <h2>بخش ۲ <span class="badge">صفحه دوم</span></h2>
-    <div class="pdf-frame">
-      <iframe src="catalog-2.pdf#toolbar=1&view=FitH" title="کاتالوگ بخش ۲"></iframe>
-    </div>
-    <a href="catalog-2.pdf" download class="dl-link">⬇ دانلود این بخش</a>
+  <div class="retail-view" id="retailView">
+
+  <!-- ================= TRUST BOX ================= -->
+  <div class="trust-box">
+    <div class="trust-item"><span class="check">✔</span> ارسال به سراسر ایران</div>
+    <div class="trust-item"><span class="check">✔</span> قیمت همکاری ویژه فروشگاه‌ها</div>
+    <div class="trust-item"><span class="check">✔</span> امکان خرید عمده و تکی</div>
+    <div class="trust-item"><span class="check">✔</span> پشتیبانی پس از فروش</div>
   </div>
 
+  <!-- ================= WHY US ================= -->
+  <div class="section-title"><span class="drop"></span><h2>چرا <span class="gplus-logo"><span class="gplus-g">G<span class="gplus-plus-sign">+</span></span><span class="gplus-word">plus</span></span>؟</h2><span class="line"></span></div>
+  <div class="why-test">
+    <div class="why-card"><span class="icon">💰</span><div class="t">سود مناسب فروشگاه</div></div>
+    <div class="why-card"><span class="icon">🏆</span><div class="t">کیفیت بالا</div></div>
+    <div class="why-card"><span class="icon">🎬</span><div class="t">تست واقعی در کاتالوگ</div></div>
+    <div class="why-card"><span class="icon">📦</span><div class="t">تنوع کامل محصولات</div></div>
+    <div class="why-card"><span class="icon">🚚</span><div class="t">ارسال سریع</div></div>
+    <div class="why-card"><span class="icon">🎧</span><div class="t">پشتیبانی پس از فروش</div></div>
+  </div>
+
+  <!-- ================= WHY TEST ================= -->
+  <div class="section-title"><span class="drop"></span><h2>چرا قبل از خرید باید تست محصولات را ببینید؟</h2><span class="line"></span></div>
+  <div class="why-test">
+    <div class="why-card"><span class="icon">🎥</span><div class="t">تست واقعی</div></div>
+    <div class="why-card"><span class="icon">🧪</span><div class="t">بدون ادعا</div></div>
+    <div class="why-card"><span class="icon">✅</span><div class="t">نتیجه قبل از خرید</div></div>
+  </div>
+
+  <!-- ================= BEST SELLERS ================= -->
+  <div class="section-title" id="bestSellersSection"><span class="drop"></span><h2>پرفروش‌ترین‌ها</h2><span class="line"></span></div>
+  <div class="section-sub">محبوب‌ترین محصولات بین مشتری‌ها — بزنید و ویدیوهای تست رو ببینید</div>
+  <div class="best-scroll" id="bestSellersRow"></div>
+
+  <!-- ================= CATALOG ================= -->
+  <div class="section-title" id="catalogSection"><span class="drop"></span><h2>کاتالوگ هوشمند <span class="gplus-logo"><span class="gplus-g">G<span class="gplus-plus-sign">+</span></span><span class="gplus-word">plus</span></span> | همراه با <span class="highlight-blue">ویدیو معرفی</span> و <span class="highlight-blue">تست محصولات</span></h2><span class="line"></span></div>
+  <div class="section-sub">روی هر محصول بزنید تا ویدیوهای تست همون محصول رو ببینید</div>
+
+  <div class="catalog-intro">
+    <strong>این فقط یک کاتالوگ نیست:</strong>
+    <ul>
+      <li>✅ ویدیوی تست واقعی هر محصول را ببینید</li>
+      <li>✅ کاربردهای هر محصول را یاد بگیرید</li>
+      <li>✅ مستقیم از باسلام سفارش دهید</li>
+    </ul>
+  </div>
+
+  <div class="catalog-download">
+    <a href="catalog-1.pdf" download class="btn-cta blue">📄 دانلود کاتالوگ (بخش ۱)</a>
+    <a href="catalog-2.pdf" download class="btn-cta orange">📄 دانلود کاتالوگ (بخش ۲)</a>
+    <a href="catalog.html" target="_blank" rel="noopener" class="btn-cta outline">👁 مشاهده آنلاین کاتالوگ</a>
+  </div>
+
+  <div class="stats-strip" id="statsStrip"></div>
+
+  <div class="cat-tabs" id="catTabs"></div>
+
+  <div class="catalog-hint">👇 محصولات رو ببین و روشون بزن 👇</div>
+
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="جستجوی نام محصول...">
+  </div>
+
+  <div class="grid" id="productGrid"></div>
+  <div class="no-result" id="noResult">❌ محصولی با این نام پیدا نشد</div>
+
+  <!-- ================= SIMPLE LIST CATEGORIES ================= -->
+  <div id="simpleCatsWrap"></div>
+
+  </div><!-- /retailView -->
+
+  <!-- ================= WHOLESALE (قیمت عمده) ================= -->
+  <div class="wholesale-view" id="wholesaleView">
+    <div class="section-title" id="wholesaleSection"><span class="drop"></span><h2>لیست قیمت عمده</h2><span class="line"></span></div>
+    <div class="section-sub">قیمت خرید عمده و حداقل قیمت مجاز فروش در بازار — 🟢 اختلاف این دو ستون، سود شماست. سفارش بر اساس تعداد کارتن</div>
+
+    <div class="cat-tabs" id="wholesaleCatTabs"></div>
+
+    <div id="wholesaleTablesWrap"></div>
+
+    <div class="wholesale-disclaimer">
+      ⚠️ حداقل قیمت فروش درج‌شده در جدول، کمترین قیمت مجاز برای عرضه محصول در بازار است؛ فروش کمتر از این مبلغ مجاز نیست، اما فروش با قیمت بالاتر بلامانع است.
+    </div>
+
+    <a href="https://eitaa.com/EZGAMETV" target="_blank" rel="noopener" class="basalam-box" style="background:linear-gradient(135deg, var(--orange), var(--orange-2)); margin-bottom:8px;">
+      <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2z"/></svg>
+      برای سفارش عمده در ایتا پیام بدهید
+    </a>
+  </div>
+
+  <!-- ================= INVOICE (صدور فاکتور) ================= -->
+  <div class="invoice-view" id="invoiceView">
+    <div class="section-title" id="invoiceSection"><span class="drop"></span><h2>صدور فاکتور</h2><span class="line"></span></div>
+    <div class="section-sub">اسم مشتری رو وارد کن، کالاها رو با قیمت خرده یا عمده اضافه کن، بعد چاپ یا کپی بگیر</div>
+
+    <div class="invoice-box" id="invoicePrintArea">
+      <div class="invoice-bismillah">
+        <div>بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِیمِ</div>
+        <div>هُوَ الرَّزّاق</div>
+      </div>
+
+      <div class="invoice-topbar">
+        <div class="invoice-topbar-item">
+          <span>شماره فاکتور:</span>
+          <input type="text" id="invoiceNumber" class="invoice-field-inline">
+        </div>
+        <div class="invoice-topbar-item">
+          <span>تاریخ:</span>
+          <input type="text" id="invoiceDate" class="invoice-field-inline">
+        </div>
+      </div>
+
+      <div class="invoice-title-block">
+        <div class="invoice-title">فاکتور فروش</div>
+        <input type="text" id="invoiceCompanyName" class="invoice-company-input" value="پخش محصولات نانو غیاث - مدرسی" autocomplete="off">
+      </div>
+
+      <div class="invoice-party-box">
+        <span class="invoice-party-tab">فروشنده</span>
+        <div class="invoice-party-content">
+          <div class="invoice-info-row"><input type="text" id="sellerName" class="invoice-info-input" value="سید علی محمد مدرسی" autocomplete="off"></div>
+          <div class="invoice-info-row"><span class="invoice-info-label">موبایل:</span><input type="text" id="sellerPhone" class="invoice-info-input" value="09389561367" autocomplete="off"></div>
+          <div class="invoice-info-row"><span class="invoice-info-label">آدرس:</span><input type="text" id="sellerAddress" class="invoice-info-input" value="یزد" autocomplete="off"></div>
+        </div>
+      </div>
+
+      <div class="invoice-party-box">
+        <span class="invoice-party-tab">مشتری</span>
+        <div class="invoice-party-content invoice-customer">
+          <input type="text" id="customerName" class="lead-field" placeholder="نام مشتری" autocomplete="off">
+          <input type="text" id="customerPhone" class="lead-field" placeholder="شماره تماس مشتری (اختیاری)" autocomplete="off">
+          <input type="text" id="customerAddress" class="lead-field" placeholder="آدرس مشتری (اختیاری)" autocomplete="off">
+        </div>
+      </div>
+
+      <div class="price-mode-tabs no-print" id="priceModeTabs">
+        <button type="button" class="price-mode-tab active" data-mode="retail">🛍 قیمت خرده</button>
+        <button type="button" class="price-mode-tab" data-mode="wholesale">📦 قیمت عمده</button>
+      </div>
+
+      <div class="invoice-add-row no-print">
+        <select id="invoiceProductSelect" class="invoice-select"></select>
+        <input type="text" id="invoiceCustomName" class="invoice-select" placeholder="نام کالای دلخواه" style="display:none;">
+        <input type="number" id="invoiceQty" class="invoice-qty" min="1" value="1" placeholder="تعداد">
+        <input type="number" id="invoiceUnitPrice" class="invoice-unit-price" min="0" placeholder="قیمت واحد">
+        <button type="button" id="invoiceAddBtn" class="invoice-add-btn">+ افزودن به فاکتور</button>
+      </div>
+
+      <div class="invoice-table-wrap">
+        <table class="invoice-table" id="invoiceTable">
+          <thead><tr><th>#</th><th>شرح کالا</th><th>تعداد</th><th>قیمت واحد</th><th>جمع کل</th><th class="no-print"></th></tr></thead>
+          <tbody id="invoiceTableBody"></tbody>
+        </table>
+      </div>
+      <div class="invoice-empty" id="invoiceEmpty">هنوز کالایی به فاکتور اضافه نشده</div>
+
+      <div class="invoice-bottom-row">
+        <div class="invoice-party-box invoice-bank-box">
+          <span class="invoice-party-tab">💳 اطلاعات حساب</span>
+          <div class="invoice-party-content invoice-bank-content">
+            <div class="invoice-bank-label">شماره کارت</div>
+            <input type="text" id="invoiceBankCard" class="invoice-bank-card-input" value="6219 8619 1044 6441" inputmode="numeric" autocomplete="off">
+            <div class="invoice-bank-label">شماره شبا</div>
+            <input type="text" id="invoiceBankIban" class="invoice-bank-iban-input" value="IR170560611828005137184201" autocomplete="off">
+            <div class="invoice-bank-name-row">به نام:
+              <input type="text" id="invoiceBankName" class="invoice-bank-name-input" value="سید علی محمد مدرسی" autocomplete="off">
+            </div>
+          </div>
+        </div>
+
+        <div class="invoice-totals">
+          <div class="invoice-total-row"><span>جمع کل</span><span id="invoiceSubtotal">۰ تومان</span></div>
+          <div class="invoice-total-row discount-row">
+            <span>تخفیف</span>
+            <span>
+              <input type="number" id="invoiceDiscount" class="invoice-discount-input no-print" min="0" value="0">
+              <span class="print-only" id="invoiceDiscountPrint"></span>
+            </span>
+          </div>
+          <div class="invoice-total-row grand"><span>مبلغ قابل پرداخت</span><span id="invoiceGrandTotal">۰ تومان</span></div>
+          <div class="invoice-total-words" id="invoiceTotalWords"></div>
+        </div>
+      </div>
+
+      <div class="invoice-disclaimer">
+        * لطفاً قبل از واریز وجه، کالاها و تعداد ثبت‌شده در فاکتور را بررسی کنید.
+      </div>
+
+      <div class="invoice-note-print" id="invoiceNotePrint">با تشکر از خرید شما — رمی شاپ</div>
+    </div>
+
+    <div class="invoice-color-picker no-print">
+      <span class="invoice-color-label">رنگ فاکتور:</span>
+      <div class="invoice-color-swatches" id="invoiceColorSwatches"></div>
+    </div>
+
+    <div class="invoice-actions no-print">
+      <button type="button" id="invoicePrintBtn" class="invoice-action-btn print">🖨 چاپ / ذخیره PDF</button>
+      <button type="button" id="invoiceImageBtn" class="invoice-action-btn image">📷 خروجی عکس</button>
+      <button type="button" id="invoiceCopyBtn" class="invoice-action-btn copy">📋 کپی متن فاکتور</button>
+      <button type="button" id="invoiceCRMBtn" class="invoice-action-btn copy">📇 ثبت در CRM</button>
+      <button type="button" id="invoiceResetBtn" class="invoice-action-btn reset">🗑 فاکتور جدید</button>
+    </div>
+    <div class="invoice-copy-msg no-print" id="invoiceCopyMsg"></div>
+  </div>
+
+  <!-- ================= CRM / پیگیری مشتری ================= -->
+  <div class="crm-view" id="crmView">
+    <div class="section-title" id="crmSection"><span class="drop"></span><h2>پیگیری مشتری‌ها</h2><span class="line"></span></div>
+    <div class="section-sub">۳۱ روز بعد از هر فروش، این‌جا یادت می‌ندازه دوباره پیگیری کنی</div>
+
+    <div class="crm-filter-tabs">
+      <button type="button" class="cat-tab crm-filter active" data-filter="due">سررسیده (<span id="crmDueCount">0</span>)</button>
+      <button type="button" class="cat-tab crm-filter" data-filter="all">همه مشتری‌ها</button>
+      <button type="button" id="crmExportBtn" class="cat-tab" style="margin-inline-start:auto;">📊 خروجی اکسل</button>
+    </div>
+
+    <div class="crm-list" id="crmList"></div>
+    <div class="crm-empty" id="crmEmpty" style="display:none;"></div>
+  </div>
+
+  <!-- ================= ORDER ================= -->
+  <div class="section-title" id="orderSection"><span class="drop"></span><h2>ثبت سفارش</h2><span class="line"></span></div>
+  <div class="section-sub">برای خرید و ثبت سفارش، به غرفه ما در باسلام مراجعه کنید</div>
+
+  <a href="https://basalam.com/editor" target="_blank" rel="noopener" class="basalam-box" style="background:linear-gradient(135deg, var(--green), var(--green-2));">
+    <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2z"/></svg>
+    مشاهده غرفه و ثبت سفارش در باسلام
+  </a>
+
+  <!-- ================= END CTA ================= -->
+  <div class="end-cta" id="freeConsult">
+    <h3>هنوز محصول مورد نظرت را پیدا نکردی؟</h3>
+    <p>برای مشاوره رایگان مستقیم برامون پیام بذار، سریع جوابت رو می‌دیم</p>
+
+    <a href="https://eitaa.com/EZGAMETV" target="_blank" rel="noopener" class="btn-cta green" style="background:linear-gradient(135deg, var(--orange), var(--orange-2));">📱 پیام در ایتا</a>
+  </div>
+
+  <footer>
+    <div class="footer-links">
+      <a href="tel:09389561367">📞 تماس مستقیم</a>
+      <a href="https://eitaa.com/EZGAMETV" target="_blank" rel="noopener">💬 پیام در ایتا</a>
+      <a href="#" id="footerWholesaleLink">📦 خرید عمده</a>
+      <a href="#header">📍 درباره رمی شاپ</a>
+    </div>
+    رمی شاپ · پخش محصولات نانو · غیاث مدرسی<br>
+    09389561367<br>
+    فعال در یزد · ارسال به سراسر کشور
+  </footer>
 </div>
+
+<!-- ================= FLOATING WHATSAPP ================= -->
+<a class="floating-wa" href="#freeConsult">
+  <svg viewBox="0 0 24 24"><path d="M21.9 4.3 2.7 11.8c-.9.4-.9 1.6.1 1.9l4.6 1.5 1.8 5.7c.2.7 1.1.9 1.6.3l2.5-2.8 4.8 3.5c.7.5 1.7.1 1.9-.7l3.1-14.8c.2-1-.9-1.7-1.7-1.2zM8.7 14.6l9-6.2c.2-.1.4.1.2.3l-7.4 7.1c-.3.3-.5.7-.6 1.1l-.3 2.4-.9-4.7z"/></svg>
+  مشاوره رایگان
+</a>
+
+<!-- ================= MODAL ================= -->
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="modalTitle">نام محصول</h3>
+      <button class="close-btn" id="closeModal">×</button>
+    </div>
+    <div id="modalThumbWrap"></div>
+    <div id="videoList"></div>
+    <a href="https://basalam.com/editor" target="_blank" rel="noopener" class="order-here" id="orderLink">ثبت سفارش در باسلام</a>
+    <div class="share-row">
+      <button class="share-btn" id="shareBtn" type="button">
+        <svg viewBox="0 0 24 24"><path d="M18 16.1c-.8 0-1.5.3-2 .8l-6.1-3.6c.1-.3.1-.6.1-.9s0-.6-.1-.9l6-3.5c.6.5 1.3.9 2.1.9 1.7 0 3-1.3 3-3s-1.3-3-3-3-3 1.3-3 3c0 .3 0 .6.1.9l-6 3.5c-.6-.5-1.3-.9-2.1-.9-1.7 0-3 1.3-3 3s1.3 3 3 3c.8 0 1.5-.3 2.1-.9l6.1 3.6c-.1.3-.1.5-.1.8 0 1.6 1.3 2.9 3 2.9s3-1.3 3-2.9-1.3-3-3-3z"/></svg>
+        <span id="shareBtnLabel">اشتراک‌گذاری این محصول</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= VIDEO PLAYER MODAL ================= -->
+<div class="overlay" id="videoOverlay">
+  <div class="modal video-modal">
+    <div class="modal-head">
+      <h3 id="videoModalTitle">پخش ویدیو</h3>
+      <button class="close-btn" id="closeVideoModal">×</button>
+    </div>
+    <div class="video-frame-wrap">
+      <iframe id="videoFrame" src="" allow="autoplay; fullscreen" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe>
+    </div>
+  </div>
+</div>
+
+<!-- ================= CRM RECEIPT IMAGE MODAL ================= -->
+<div id="crmReceiptTemplate" style="position:fixed; left:-9999px; top:0; width:360px; z-index:-1;"></div>
+<div class="overlay" id="crmImageOverlay">
+  <div class="modal" style="max-width:400px; text-align:center;">
+    <div class="modal-head">
+      <h3 id="crmImageTitle">خرید مشتری</h3>
+      <button class="close-btn" id="closeCrmImageModal">×</button>
+    </div>
+    <div style="max-height:65vh; overflow:auto; margin:10px 0; border-radius:10px;">
+      <img id="crmImagePreview" style="width:100%; display:block; border-radius:10px;" alt="عکس خرید مشتری">
+    </div>
+    <button type="button" id="crmImageDownloadBtn" class="invoice-action-btn image" style="width:100%;">📥 ذخیره عکس</button>
+  </div>
+</div>
+
+<!-- ================= INVOICE PASSWORD MODAL ================= -->
+<div class="overlay" id="invoicePassOverlay">
+  <div class="modal" style="max-width:300px; text-align:center;">
+    <div class="modal-head">
+      <h3>🔒 ورود به بخش فاکتور</h3>
+      <button class="close-btn" id="closeInvoicePassModal">×</button>
+    </div>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:14px;">برای دسترسی به صدور فاکتور، نام کاربری و رمز رو وارد کن</p>
+    <input type="text" id="invoiceUserInput" class="lead-field" placeholder="نام کاربری" autocomplete="off" style="text-align:center; margin-bottom:12px; letter-spacing:1px;">
+    <input type="password" id="invoicePassInput" class="lead-field" placeholder="رمز عبور" inputmode="numeric" style="text-align:center; letter-spacing:3px;">
+    <div class="lead-msg" id="invoicePassMsg"></div>
+    <button type="button" id="invoicePassSubmit" class="lead-submit" style="margin-top:10px;">ورود</button>
+  </div>
+</div>
+
+<script>
+/* =========================================================
+   محصولات: هر محصول یک نام و یک لیست از ویدیوهای تست داره.
+   برای اضافه/ویرایش محصولات، همین آرایه رو تغییر بدید.
+   لینک هر ویدیو رو با آدرس واقعی (یوتیوب/آپارات/درایو) جایگزین کنید.
+========================================================= */
+const products = [
+  { name:"نانو چند منظوره خانگی", price:285000, cat:"خانگی", buyUrl:"https://basalam.com/editor/product/41543803", img:"home-multi-cleaner.webp", videos:[
+    {label:"ویدیوی تست ۱", url:"https://www.aparat.com/v/sva419y"},
+    {label:"ویدیوی تست ۲", url:"https://www.aparat.com/v/mfq9184"},
+    {label:"ویدیوی تست ۳", url:"https://aparat.com/v/jcs280x"},
+    {label:"ویدیوی تست ۴", url:"https://aparat.com/v/wjmg0qy"}
+  ]},
+  { name:"پاک کننده گاز", price:280000, cat:"خانگی", buyUrl:"https://basalam.com/editor/product/42580333", img:"gas-stove-cleaner.webp", videos:[
+    {label:"ویدیوی تست ۱", url:"https://aparat.com/v/gzrk14y"},
+    {label:"ویدیوی تست ۲", url:"https://aparat.com/v/jdcm071"},
+    {label:"ویدیوی تست ۳", url:"https://aparat.com/v/xulf06h"},
+    {label:"ویدیوی تست ۴", url:"https://www.aparat.com/v/ulax9a9"},
+    {label:"ویدیوی تست ۵", url:"https://www.aparat.com/v/ytrk65j"},
+    {label:"ویدیوی تست ۶", url:"https://aparat.com/v/via8xqj"}
+  ]},
+  { name:"پاک کننده سینک و شیر آلات", price:276500, cat:"خانگی", buyUrl:"https://basalam.com/editor/product/42580846", img:"sink-faucet-cleaner.webp", videos:[
+    {label:"ویدیوی تست ۱", url:"https://aparat.com/v/pvj4ouv"},
+    {label:"ویدیوی تست ۲", url:"https://aparat.com/v/rhcb4ko"},
+    {label:"ویدیوی تست ۳", url:"https://aparat.com/v/wmv7rt5"},
+    {label:"ویدیوی تست ۴", url:"https://aparat.com/v/jzwjq3f"},
+    {label:"ویدیوی تست ۵", url:"https://aparat.com/v/igs7a9p"},
+    {label:"ویدیوی تست ۶", url:"https://aparat.com/v/xuub49y"},
+    {label:"ویدیوی تست ۷", url:"https://aparat.com/v/sxmx2bh"},
+    {label:"ویدیوی تست ۸", url:"https://aparat.com/v/vko9q15"}
+  ]},
+  { name:"پاک کننده مبل، فرش و پارچه", price:278000, cat:"خانگی", buyUrl:"https://basalam.com/editor/product/42619107", img:"sofa-carpet-cleaner.webp", videos:[
+    {label:"ویدیوی تست ۱", url:"https://aparat.com/v/nrhp775"},
+    {label:"ویدیوی تست ۲", url:"https://www.aparat.com/v/dgw87vw"},
+    {label:"ویدیوی تست ۳", url:"https://aparat.com/v/kbgzbo9"},
+    {label:"ویدیوی تست ۴", url:"https://aparat.com/v/dwa5c36"},
+    {label:"ویدیوی تست ۵", url:"https://aparat.com/v/kudri5q"},
+    {label:"ویدیوی تست ۶", url:"https://www.aparat.com/v/zju3eu2"},
+    {label:"ویدیوی تست ۷", url:"https://www.aparat.com/v/lrs7eug"}
+  ]},
+  { name:"پاک کننده ال ای دی و صفحه نمایش", price:270000, cat:"خانگی", buyUrl:"https://basalam.com/editor/product/44743589", img:"led-screen-cleaner.webp", videos:[
+    {label:"ویدیوی تست ۱", url:"https://aparat.com/v/zwal0vo"},
+    {label:"ویدیوی تست ۲", url:"https://aparat.com/v/mric64p"},
+    {label:"ویدیوی تست ۳", url:"https://www.aparat.com/v/zojwtss"}
+  ]},
+  { name:"پاک کننده کاغذ دیواری", price:270000, cat:"خانگی", buyUrl:"https://basalam.com/editor/product/42619327", img:"wallpaper-cleaner.webp", videos:[
+    {label:"ویدیوی تست ۱", url:"https://aparat.com/v/pkbssva"},
+    {label:"ویدیوی تست ۲", url:"https://aparat.com/v/ehf1x23"}
+  ]},
+  { name:"پاک کننده پارکت و سرامیک", price:275000, cat:"خانگی", buyUrl:"https://basalam.com/editor/product/42619670", img:"tile-ceramic-cleaner.webp", videos:[
+    {label:"ویدیوی تست ۱", url:"https://aparat.com/v/vqaspq1"},
+    {label:"ویدیوی تست ۲", url:"https://aparat.com/v/xxi4uu9"},
+    {label:"ویدیوی تست ۳", url:"https://aparat.com/v/hcnyubl"},
+    {label:"ویدیوی تست ۴", url:"https://aparat.com/v/rgq0r6r"},
+    {label:"ویدیوی تست ۵", url:"https://aparat.com/v/ridvud3"}
+  ]},
+  { name:"واکس مات کننده لاستیک", price:345000, cat:"واکس", buyUrl:"https://basalam.com/editor", img:"tire-matte.webp", videos:[
+    {label:"ویدیوی تست ۱", url:"https://aparat.com/v/kssq96r"},
+    {label:"ویدیوی تست ۲", url:"https://aparat.com/v/zaubx68"},
+    {label:"ویدیوی تست ۳", url:"https://aparat.com/v/smu8d4q"},
+    {label:"ویدیوی تست ۴", url:"https://aparat.com/v/kqo7a41"},
+    {label:"ویدیوی تست ۵", url:"https://aparat.com/v/wxx97h8"}
+  ]},
+  { name:"واکس براق کننده لاستیک ( براق شاین)", price:370000, cat:"واکس", buyUrl:"https://basalam.com/editor/", img:"black-shine.webp", videos:[
+    {label:"ویدیوی تست ۱", url:"https://aparat.com/v/lnsddtl"},
+    {label:"ویدیوی تست ۲", url:"https://aparat.com/v/mygqm4i"}
+  ]},
+  { name:"واکس داشبورد سیلیکونی", price:300000, cat:"واکس", buyUrl:"https://basalam.com/editor", img:"dashboard-silicon-wax.webp", videos:[
+    {label:"ویدیوی تست ۱", url:"https://aparat.com/v/gdz1dho"},
+    {label:"ویدیوی تست ۲", url:"https://aparat.com/v/ntzk4v2"},
+    {label:"ویدیوی تست ۳", url:"https://aparat.com/v/taeax83"}
+  ]},
+  { name:"واکس داشبورد غیر سیلیکونی", price:335000, cat:"واکس", buyUrl:"https://basalam.com/editor", img:"dashboard-wax.webp", videos:[
+    {label:"ویدیوی تست ۱", url:"https://www.aparat.com/v/bla205b"},
+    {label:"ویدیوی تست ۲", url:"https://aparat.com/v/phk64x2"}
+  ]},
+  { name:"واکس سه کاره لاستیک داشبورد", price:359000, cat:"واکس", buyUrl:"https://basalam.com/editor/product/44746616", img:"tire-dashboard-pro-wax.webp", videos:[
+    {label:"ویدیوی تست ۱", url:"https://aparat.com/v/gpiaci8"},
+    {label:"ویدیوی تست ۲", url:"https://aparat.com/v/jvz4214"},
+    {label:"ویدیوی تست ۳", url:"https://aparat.com/v/uzou08s"},
+    {label:"ویدیوی تست ۴", url:"https://aparat.com/v/cops4l1"},
+    {label:"ویدیوی تست ۵", url:"https://www.aparat.com/v/merqvd1"}
+  ]},
+  { name:"صفر شوی", price:300000, cat:"خودرویی", buyUrl:"https://basalam.com/editor", img:"zero-car-wash.webp", videos:[
+    {label:"ویدیوی تست ۱", url:"https://www.aparat.com/v/hbj049k"},
+    {label:"ویدیوی تست ۲", url:"https://aparat.com/v/uee58ek"},
+    {label:"ویدیوی تست ۳", url:"https://aparat.com/v/txol3r7"},
+    {label:"ویدیوی تست ۴", url:"https://aparat.com/v/rmwzr8h"},
+    {label:"ویدیوی تست ۵", url:"https://aparat.com/v/lagxfpf"},
+    {label:"ویدیوی تست ۶", url:"https://aparat.com/v/eagwb4x"},
+    {label:"ویدیوی تست ۷", url:"https://aparat.com/v/rsozp22"},
+    {label:"ویدیوی تست ۸", url:"https://aparat.com/v/ewm1o5w"},
+    {label:"ویدیوی تست ۹", url:"https://aparat.com/v/cnog75c"}
+  ]},
+  { name:"موتور شوی", price:300000, cat:"خودرویی", buyUrl:"https://basalam.com/editor", img:"engine-cleaner.webp", videos:[
+    {label:"ویدیوی تست ۱", url:"https://www.aparat.com/v/whc79m4"},
+    {label:"ویدیوی تست ۲", url:"https://aparat.com/v/zzjjg65"},
+    {label:"ویدیوی تست ۳", url:"https://aparat.com/v/wyz8k3k"},
+    {label:"ویدیوی تست ۴", url:"https://aparat.com/v/xym0oe3"}
+  ]},
+  { name:"رینگ شوی", price:259000, cat:"خودرویی", buyUrl:"https://basalam.com/editor/product/45139589", img:"rim-cleaner.webp", videos:[
+    {label:"ویدیوی تست ۱", url:"https://aparat.com/v/osdeza7"},
+    {label:"ویدیوی تست ۲", url:"https://aparat.com/v/bvb1n02"},
+    {label:"ویدیوی تست ۳", url:"https://aparat.com/v/afvpo38"},
+    {label:"ویدیوی تست ۴", url:"https://aparat.com/v/fsl0h32"}
+  ]},
+  { name:"پاک کننده چند منظوره خودرو", price:300000, cat:"خودرویی", buyUrl:"https://basalam.com/editor/product/41546837", img:"car-multi-cleaner.webp", videos:[
+    {label:"ویدیوی تست ۱", url:"https://aparat.com/v/abso38f"},
+    {label:"ویدیوی تست ۲", url:"https://aparat.com/v/ild383c"},
+    {label:"ویدیوی تست ۳", url:"https://aparat.com/v/jci2528"},
+    {label:"ویدیوی تست ۴", url:"https://aparat.com/v/ajgi3pr"},
+    {label:"ویدیوی تست ۵", url:"https://aparat.com/v/ucka454"}
+  ]},
+  { name:"شیشه شوی", price:275000, cat:"خودرویی", buyUrl:"https://basalam.com/editor/product/45139055", img:"windshield-cleaner.webp", videos:[
+    {label:"ویدیوی تست ۱", url:"https://aparat.com/v/wab9wg9"},
+    {label:"ویدیوی تست ۲", url:"https://aparat.com/v/owrkriv"}
+  ]},
+  { name:"شامپو بدنه", price:275000, cat:"خودرویی", buyUrl:"https://basalam.com/editor/product/44745609", img:"car-shampoo.webp", videos:[
+    {label:"ویدیوی تست ۱", url:"https://aparat.com/v/vrr7v3g"},
+    {label:"ویدیوی تست ۲", url:"https://aparat.com/v/ycq93tk"},
+    {label:"ویدیوی تست ۳", url:"https://aparat.com/v/nwg6by3"},
+    {label:"ویدیوی تست ۴", url:"https://aparat.com/v/ookw75z"},
+    {label:"ویدیوی تست ۵", url:"https://aparat.com/v/lzcm1va"}
+  ]},
+  { name:"براق کننده بدنه", price:300000, cat:"خودرویی", buyUrl:"https://basalam.com/editor/product/44746229", img:"body-polish.webp", videos:[
+    {label:"ویدیوی تست ۱", url:"https://aparat.com/v/dkl8p3k"},
+    {label:"ویدیوی تست ۲", url:"https://aparat.com/v/who3822"},
+    {label:"ویدیوی تست ۳", url:"https://aparat.com/v/sur87s4"},
+    {label:"ویدیوی تست ۴", url:"https://aparat.com/v/nyu9c48"},
+    {label:"ویدیوی تست ۵", url:"https://aparat.com/v/asp5fdq"}
+  ]},
+  { name:"براق کننده چراغ", price:300000, cat:"خودرویی", buyUrl:"https://basalam.com/editor/product/41545678", img:"headlight-polish.webp", videos:[
+    {label:"ویدیوی تست ۱", url:"https://aparat.com/v/ver9e1y"},
+    {label:"ویدیوی تست ۲", url:"https://aparat.com/v/bdywd36"},
+    {label:"ویدیوی تست ۳", url:"https://aparat.com/v/syaky9v"},
+    {label:"ویدیوی تست ۴", url:"https://aparat.com/v/mpp598q"}
+  ]},
+  { name:"بلک مجیک", price:345000, cat:"خودرویی", buyUrl:"https://basalam.com/editor/product/51881795", img:"black-magic.webp", videos:[
+    {label:"ویدیوی تست ۱", url:"https://aparat.com/v/mvz4qd5"},
+    {label:"ویدیوی تست ۲", url:"https://aparat.com/v/qza45e0"},
+    {label:"ویدیوی تست ۳", url:"https://aparat.com/v/zzmo12s"},
+    {label:"ویدیوی تست ۴", url:"https://aparat.com/v/ljvoi0j"}
+  ]},
+];
+
+/* دسته‌هایی که ویدیوی جداگانه برای هر محصول ندارند —
+   فقط اسم محصولات + یک ویدیوی تست کلی + یک لینک خرید کلی برای کل دسته.
+   کافیه videoUrl و buyUrl هر دسته رو با لینک واقعی جایگزین کنید. */
+const simpleCategories = [
+  { title:"عطر", buyUrl:"https://basalam.com/editor", introLabel:"معرفی عطر", catImg:"perfume-set.webp", videoUrls:[
+    "https://aparat.com/v/gcn0onx"
+  ], items:[
+    {name:"عطر با رایحه دانهیل", price:300000},{name:"عطر با رایحه ایفوریا", price:300000},{name:"عطر با رایحه باس من", price:300000},
+    {name:"عطر با رایحه مادام بیوتی", price:300000},{name:"عطر با رایحه لوندر", price:300000},{name:"عطر با رایحه کول فرش", price:300000}
+  ]},
+  { title:"ادکلن", buyUrl:"https://basalam.com/editor", introLabel:"معرفی ادکلن", catImg:"cologne-set.webp", videoUrls:[
+    "https://aparat.com/v/myx2f11","https://aparat.com/v/negc5ae"
+  ], items:[
+    {name:"ادکلن زنانه همراز", price:930000},{name:"ادکلن مردانه کایرا", price:930000}
+  ]},
+  { title:"خوشبو کننده", buyUrl:"https://basalam.com/editor", introLabel:"معرفی خوشبو کننده", catImg:"air-freshener-set.webp", videoUrls:[
+    "https://aparat.com/v/ejelu90","https://aparat.com/v/ezjv82d","https://aparat.com/v/phaxsff"
+  ], items:[
+    {name:"اسپری خوشبوکننده هوا رایحه باس من", price:318000},{name:"اسپری خوشبوکننده هوا رایحه مادام بیوتی", price:318000},
+    {name:"اسپری خوشبوکننده هوا رایحه لاوندر", price:318000},{name:"اسپری خوشبوکننده هوا رایحه کول فرش", price:318000}
+  ]},
+  { title:"واکس چرم", buyUrl:"https://basalam.com/editor", introLabel:"معرفی واکس چرم جی پلاس", catImg:"leather-wax.webp", videoUrls:[
+    "https://aparat.com/v/rsslhf2"
+  ], items:[
+    {name:"نانو چرم کیف و کفش بدون جعبه", price:275000},{name:"نانو چرم کیف و کفش با جعبه", price:295000}
+  ]}
+];
+
+const categories = ["همه","خانگی","خودرویی","واکس","عطر","ادکلن","خوشبو کننده","واکس چرم"];
+
+/* =========================================================
+   قیمت عمده (Wholesale) — قیمت خرید عمده + حداقل کارتن هر دسته.
+   برای ویرایش قیمت‌ها یا افزودن محصول جدید، همین آرایه رو تغییر بدید.
+========================================================= */
+const wholesaleCategories = [
+  { key:"home", tab:"خانگی", title:"خانگی ۵۰۰ سی‌سی", note:"حداقل سفارش: ۱ کارتن = ۲۰ عدد", cartonQty:20, items:[
+    {name:"پاک کننده چند منظوره", en:"MULTI CLEANER", volume:500, buy:189700, sell:285000},
+    {name:"پاک کننده گاز", en:"STOVE CLEANER", volume:500, buy:184000, sell:280000},
+    {name:"پاک کننده سینک و شیر آلات", en:"SINK & FAUCET CLEANER", volume:500, buy:183000, sell:276500},
+    {name:"پاک کننده مبل، فرش و پارچه", en:"SOFA CLEANER", volume:500, buy:186500, sell:278000},
+    {name:"پاک کننده ال‌ای‌دی و صفحه نمایش", en:"SCREEN CLEANER", volume:500, buy:180000, sell:270000},
+    {name:"پاک کننده کاغذ دیواری", en:"WALLPAPER CLEANER", volume:500, buy:184000, sell:270000},
+    {name:"پاک کننده پارکت و سرامیک", en:"PARQUET & CERAMIC CLEANER", volume:500, buy:183000, sell:275000}
+  ]},
+  { key:"auto", tab:"خودرویی", title:"نانو خودرویی ۵۰۰ سی‌سی", note:"حداقل سفارش: ۱ کارتن = ۲۰ عدد", cartonQty:20, items:[
+    {name:"واکس مات کننده لاستیک", en:"TIRE MATTE", volume:500, buy:179500, sell:345000},
+    {name:"واکس براق کننده لاستیک", en:"TIRE SHINE", volume:500, buy:199500, sell:370000},
+    {name:"واکس داشبورد سیلیکونی", en:"SILICON DASHBOARD", volume:500, buy:211500, sell:300000},
+    {name:"واکس داشبورد غیر سیلیکونی", en:"DASHBOARD WAX", volume:500, buy:194500, sell:335000},
+    {name:"واکس سه‌کاره لاستیک داشبورد", en:"PRO WAX", volume:500, buy:208000, sell:359000},
+    {name:"صفر شوی", en:"ZERO CARWASH", volume:500, buy:194500, sell:300000},
+    {name:"موتور شوی", en:"ENGINE CLEANER", volume:500, buy:186500, sell:300000},
+    {name:"رینگ شوی", en:"RIM CLEANER", volume:500, buy:169000, sell:259000},
+    {name:"پاک کننده چند منظوره خودرو", en:"MULTI CLEANER", volume:500, buy:209500, sell:300000},
+    {name:"شیشه شوی", en:"WINDSHIELD CLEANER", volume:500, buy:164000, sell:275000},
+    {name:"شامپو بدنه", en:"CAR SHAMPOO", volume:500, buy:220000, sell:275000},
+    {name:"براق کننده بدنه", en:"BODY POLISH", volume:500, buy:182000, sell:300000},
+    {name:"براق کننده چراغ", en:"HEADLIGHT POLISH", volume:500, buy:182000, sell:300000},
+    {name:"واکس براق کننده لاستیک ( براق شاین)", en:"BLACK SHINE", volume:500, buy:241000, sell:345000},
+    {name:"بلک مجیک", en:"BLACK MAGIC", volume:500, buy:219000, sell:335000}
+  ]},
+  { key:"freshener", tab:"خوشبو کننده هوا", title:"اسپری خوشبوکننده هوا ۱۲۵ سی‌سی", note:"حداقل سفارش: ۱ کارتن = ۲۵ عدد", cartonQty:25, items:[
+    {name:"اسپری خوشبوکننده هوا رایحه باس من", volume:125, buy:194000, sell:254000},
+    {name:"اسپری خوشبوکننده هوا رایحه مادام بیوتی", volume:125, buy:194000, sell:254000},
+    {name:"اسپری خوشبوکننده هوا رایحه لاوندر", volume:125, buy:194000, sell:254000},
+    {name:"اسپری خوشبوکننده هوا رایحه کول فرش", volume:125, buy:194000, sell:254000}
+  ]},
+  { key:"cologne", tab:"ادکلن", title:"ادکلن ۵۰ سی‌سی", note:"حداقل سفارش: ۱ کارتن = ۶ عدد (همراز و کایرا به دلخواه)", cartonQty:6, items:[
+    {name:"ادکلن زنانه همراز", volume:50, buy:481500, sell:561000},
+    {name:"ادکلن مردانه کایرا", volume:50, buy:481500, sell:561000}
+  ]},
+  { key:"leatherwax", tab:"واکس (نانو چرم)", title:"نانو چرم کیف و کفش", note:"تعداد در کارتن بسته به مدل: ۲۵ عددی (بدون جعبه) یا ۱۲ عددی (با جعبه)", items:[
+    {name:"نانو چرم کیف و کفش بدون جعبه", volume:125, buy:200000, sell:250000, cartonQty:25},
+    {name:"نانو چرم کیف و کفش با جعبه", volume:125, buy:222000, sell:272000, cartonQty:12}
+  ]},
+  { key:"perfume", tab:"عطر", title:"عطر جی‌پلاس ۳۰ سی‌سی", note:"حداقل سفارش: ۱ کارتن = ۲۴ عدد", cartonQty:24, items:[
+    {name:"عطر با رایحه دانهیل", en:"DUNHILL", volume:30, buy:236000, sell:286000},
+    {name:"عطر با رایحه ایفوریا", en:"EUPHORIA", volume:30, buy:236000, sell:286000},
+    {name:"عطر با رایحه باس من", en:"BOSS MAN", volume:30, buy:236000, sell:286000},
+    {name:"عطر با رایحه مادام بیوتی", en:"MADAM BEAUTY", volume:30, buy:236000, sell:286000},
+    {name:"عطر با رایحه لاوندر", en:"LAVENDER", volume:30, buy:236000, sell:286000},
+    {name:"عطر با رایحه کول فرش", en:"COOL FRESH", volume:30, buy:236000, sell:286000}
+  ]}
+];
+
+const wholesaleTabList = ["همه", ...wholesaleCategories.map(c=>c.tab)];
+let activeWholesaleTab = "همه";
+
+/* پرفروش‌ترین‌ها — دقیقاً باید با name محصول در آرایه products بالا یکی باشه.
+   اگه اسم محصولی رو عوض کردید، اینجا رو هم به‌روز کنید. */
+const bestSellerNames = [
+  "نانو چند منظوره خانگی",
+  "پاک کننده مبل، فرش و پارچه",
+  "پاک کننده چند منظوره خودرو",
+  "براق کننده چراغ",
+  "بلک مجیک",
+  "پاک کننده پارکت و سرامیک",
+  "پاک کننده سینک و شیر آلات"
+];
+
+const DEFAULT_BUY_URL = "https://basalam.com/editor";
+const grid = document.getElementById('productGrid');
+const noResult = document.getElementById('noResult');
+const overlay = document.getElementById('overlay');
+const modalTitle = document.getElementById('modalTitle');
+const modalThumbWrap = document.getElementById('modalThumbWrap');
+const videoList = document.getElementById('videoList');
+const orderLink = document.getElementById('orderLink');
+const shareBtn = document.getElementById('shareBtn');
+const shareBtnLabel = document.getElementById('shareBtnLabel');
+let currentModalProduct = null;
+const catTabs = document.getElementById('catTabs');
+
+let activeCat = "همه";
+
+function formatPrice(p){
+  if(!p && p !== 0) return "";
+  return p.toLocaleString('en-US') + " تومان";
+}
+
+function renderStats(){
+  const strip = document.getElementById('statsStrip');
+  if(!strip) return;
+  const totalProducts = products.length + simpleCategories.reduce((sum,c)=> sum + c.items.length, 0);
+  const totalVideos = products.reduce((sum,p)=> sum + p.videos.length, 0)
+    + simpleCategories.reduce((sum,c)=> sum + c.videoUrls.length, 0);
+  strip.innerHTML = `
+    <div class="stat-box"><span class="num">+${totalVideos}</span><span class="lbl">🎥 ویدیوی تست</span></div>
+    <div class="stat-box"><span class="num">+${totalProducts}</span><span class="lbl">🧴 محصول</span></div>
+    <div class="stat-box"><span class="num">هزاران</span><span class="lbl">👥 بازدید</span></div>
+    <div class="stat-box"><span class="num">مداوم</span><span class="lbl">📅 بروزرسانی</span></div>
+  `;
+}
+
+/* ---------- قیمت عمده: DOM refs + render ---------- */
+const wholesaleCatTabsEl = document.getElementById('wholesaleCatTabs');
+const wholesaleTablesWrap = document.getElementById('wholesaleTablesWrap');
+const retailViewEl = document.getElementById('retailView');
+const wholesaleViewEl = document.getElementById('wholesaleView');
+const invoiceViewEl = document.getElementById('invoiceView');
+const crmViewEl = document.getElementById('crmView');
+const modeRetailBtn = document.getElementById('modeRetailBtn');
+const modeWholesaleBtn = document.getElementById('modeWholesaleBtn');
+const modeInvoiceBtn = document.getElementById('modeInvoiceBtn');
+const modeProfitBtn = document.getElementById('modeProfitBtn');
+const modeCRMBtn = document.getElementById('modeCRMBtn');
+
+/* ---------- دکمه فاکتور مخفیه؛ با ۵ بار ضربه روی لوگو ظرف ۳ ثانیه آشکار میشه ---------- */
+(function(){
+  const logoEl = document.querySelector('.mark');
+  if(!logoEl) return;
+  let tapCount = 0;
+  let tapTimer = null;
+  logoEl.style.cursor = 'pointer';
+  logoEl.addEventListener('click', ()=>{
+    tapCount++;
+    clearTimeout(tapTimer);
+    tapTimer = setTimeout(()=>{ tapCount = 0; }, 3000);
+    if(tapCount >= 5){
+      tapCount = 0;
+      modeInvoiceBtn.style.display = '';
+      /* دکمه‌های سود/CRM فقط اگه کاربر همین الان با پروفایلی که دسترسی داره وارد شده باشه نشون داده می‌شن */
+      try{
+        const savedProfileId = sessionStorage.getItem('remyInvoiceProfile');
+        if(invoiceUnlocked && savedProfileId && sellerProfiles[savedProfileId]){
+          applyModeButtonPermissions(sellerProfiles[savedProfileId]);
+        }
+      }catch(e){ /* بی‌خیال */ }
+      modeInvoiceBtn.scrollIntoView({behavior:'smooth', block:'center'});
+    }
+  });
+})();
+
+function renderWholesaleTabs(){
+  wholesaleCatTabsEl.innerHTML = "";
+  wholesaleTabList.forEach(t=>{
+    const btn = document.createElement('button');
+    btn.className = "cat-tab" + (t === activeWholesaleTab ? " active" : "");
+    btn.textContent = t;
+    btn.addEventListener('click', ()=>{
+      activeWholesaleTab = t;
+      renderWholesaleTabs();
+      renderWholesaleTables();
+    });
+    wholesaleCatTabsEl.appendChild(btn);
+  });
+}
+
+/* ---------- تطبیق نام محصول عمده با محصولی که ویدیوی تست داره ---------- */
+function normalizeProductName(s){
+  return (s || "")
+    .replace(/\(.*?\)/g, "")   // حذف پرانتز و متن داخلش
+    .replace(/[\u200c]/g, " ") // نیم‌فاصله -> فاصله معمولی
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+/* چند اسم که تو لیست عمده کوتاه‌تر نوشته شده ولی همون محصول خرده‌فروشیه */
+const wholesaleNameAliases = {
+  "پاک کننده چند منظوره": "نانو چند منظوره خانگی"
+};
+
+function findRetailMatch(itemName){
+  const alias = wholesaleNameAliases[itemName];
+  const target = normalizeProductName(alias || itemName);
+
+  const product = products.find(p => normalizeProductName(p.name) === target);
+  if(product) return { type:"product", data:product };
+
+  for(const cat of simpleCategories){
+    const hit = cat.items.some(it => normalizeProductName(typeof it === "string" ? it : it.name) === target);
+    if(hit) return { type:"category", data:cat };
+  }
+  return null;
+}
+
+function openWholesaleTest(itemName){
+  const match = findRetailMatch(itemName);
+  if(match && match.type === "product"){
+    openModal(match.data);
+    return;
+  }
+  if(match && match.type === "category"){
+    const label = match.data.introLabel || "ویدیوی تست";
+    openVideo(match.data.videoUrls[0], label);
+    return;
+  }
+  /* اگه محصول با ویدیوی جداگانه پیدا نشد، بریم بخش خرده‌فروشی و با اسمش سرچ کنیم */
+  modeRetailBtn.click();
+  const input = document.getElementById('searchInput');
+  input.value = itemName;
+  renderGrid(itemName);
+  input.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+wholesaleTablesWrap.addEventListener('click', (e)=>{
+  const icon = e.target.closest('.wtest-icon');
+  if(!icon) return;
+  openWholesaleTest(icon.dataset.name);
+});
+
+function renderWholesaleTables(){
+  wholesaleTablesWrap.innerHTML = "";
+  wholesaleCategories
+    .filter(cat => activeWholesaleTab === "همه" || cat.tab === activeWholesaleTab)
+    .forEach(cat=>{
+      const block = document.createElement('div');
+      block.className = "wholesale-block";
+      const rows = cat.items.map(it=>{
+        const enLine = it.en ? `<br><span style="color:var(--muted);font-size:10.5px">${it.en}</span>` : "";
+        const playIcon = `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
+        return `<tr>
+          <td class="pname-cell">
+            <div class="pname-inner">
+              <span class="wtest-icon" data-name="${it.name.replace(/"/g,'&quot;')}" title="مشاهده ویدیوی تست">${playIcon}</span>
+              <span class="pname-text">${it.name}${enLine}</span>
+            </div>
+          </td>
+          <td class="buy-price">${formatPrice(it.buy)}</td>
+          <td class="sell-price">${formatPrice(it.sell)}</td>
+        </tr>`;
+      }).join("");
+      const sellHeader = (cat.key === "home" || cat.key === "auto") ? "قیمت فروش" : "حداقل فروش";
+      block.innerHTML = `
+        <h3><span class="drop"></span>${cat.title}</h3>
+        <div class="wholesale-note">${cat.note}</div>
+        <div class="wholesale-table-wrap">
+          <table class="wholesale-table">
+            <thead><tr>
+              <th>نام محصول</th><th>قیمت خرید</th><th>${sellHeader}</th>
+            </tr></thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </div>`;
+      wholesaleTablesWrap.appendChild(block);
+    });
+}
+
+function wholesaleSectionOffset(){
+  const el = document.getElementById('wholesaleSection');
+  return el ? el.getBoundingClientRect().top + window.scrollY - 16 : 0;
+}
+
+function invoiceSectionOffset(){
+  const el = document.getElementById('invoiceSection');
+  return el ? el.getBoundingClientRect().top + window.scrollY - 16 : 0;
+}
+
+function crmSectionOffset(){
+  const el = document.getElementById('crmSection');
+  return el ? el.getBoundingClientRect().top + window.scrollY - 16 : 0;
+}
+
+function setActiveMode(mode){
+  modeRetailBtn.classList.toggle('active', mode === 'retail');
+  modeWholesaleBtn.classList.toggle('active', mode === 'wholesale');
+  modeInvoiceBtn.classList.toggle('active', mode === 'invoice');
+  modeCRMBtn.classList.toggle('active', mode === 'crm');
+  retailViewEl.classList.toggle('hide', mode !== 'retail');
+  wholesaleViewEl.classList.toggle('show', mode === 'wholesale');
+  invoiceViewEl.classList.toggle('show', mode === 'invoice');
+  crmViewEl.classList.toggle('show', mode === 'crm');
+}
+
+modeRetailBtn.addEventListener('click', ()=>{
+  setActiveMode('retail');
+  window.scrollTo({top:0, behavior:'smooth'});
+});
+modeWholesaleBtn.addEventListener('click', ()=>{
+  setActiveMode('wholesale');
+  window.scrollTo({top: wholesaleSectionOffset(), behavior:'smooth'});
+});
+let pendingInvoiceAction = 'invoice';
+modeProfitBtn.addEventListener('click', ()=>{
+  if(invoiceUnlocked){
+    let allowed = false;
+    try{
+      const savedProfileId = sessionStorage.getItem('remyInvoiceProfile');
+      allowed = !!(savedProfileId && sellerProfiles[savedProfileId] && sellerProfiles[savedProfileId].permissions.profit);
+    }catch(e){ /* بی‌خیال */ }
+    if(allowed) window.open('https://remyshops.github.io/Mohasebe_sood/', '_blank', 'noopener');
+  } else {
+    pendingInvoiceAction = 'profit';
+    openInvoicePassModal();
+  }
+});
+modeInvoiceBtn.addEventListener('click', ()=>{
+  if(invoiceUnlocked){
+    try{
+      const savedProfileId = sessionStorage.getItem('remyInvoiceProfile');
+      if(savedProfileId && sellerProfiles[savedProfileId]) applySellerProfile(sellerProfiles[savedProfileId]);
+    }catch(e){ /* بی‌خیال */ }
+    setActiveMode('invoice');
+    window.scrollTo({top: invoiceSectionOffset(), behavior:'smooth'});
+  } else {
+    pendingInvoiceAction = 'invoice';
+    openInvoicePassModal();
+  }
+});
+modeCRMBtn.addEventListener('click', ()=>{
+  if(invoiceUnlocked){
+    let allowed = false;
+    try{
+      const savedProfileId = sessionStorage.getItem('remyInvoiceProfile');
+      allowed = !!(savedProfileId && sellerProfiles[savedProfileId] && sellerProfiles[savedProfileId].permissions.crm);
+    }catch(e){ /* بی‌خیال */ }
+    if(allowed){
+      setActiveMode('crm');
+      renderCRM();
+      window.scrollTo({top: crmSectionOffset(), behavior:'smooth'});
+    }
+  } else {
+    pendingInvoiceAction = 'crm';
+    openInvoicePassModal();
+  }
+});
+
+/* ---------- رمز عبور بخش فاکتور ----------
+   هر کاربر (فروشنده) یه آیتم توی sellerProfiles داره با رمز اختصاصی خودش.
+   برای اضافه کردن یه فروشنده‌ی جدید، فقط یه بلاک جدید مثل بقیه اضافه کن —
+   بقیه‌ی کد (چک رمز، پرشدن خودکار فرم فاکتور) بدون تغییر کار می‌کنه. */
+const invoicePassOverlay = document.getElementById('invoicePassOverlay');
+const invoicePassInput = document.getElementById('invoicePassInput');
+const invoicePassMsg = document.getElementById('invoicePassMsg');
+const invoicePassSubmit = document.getElementById('invoicePassSubmit');
+let invoiceUnlocked = false;
+try{ invoiceUnlocked = sessionStorage.getItem('remyInvoiceUnlocked') === '1'; }catch(e){ /* بی‌خیال */ }
+
+const sellerProfiles = {
+  own: {
+    username: "Remy",
+    password: "1367",
+    sellerName: "سید علی محمد مدرسی",
+    sellerPhone: "09389561367",
+    familyName: "مدرسی",
+    bankCard: "6219 8619 1044 6441",
+    bankIban: "IR170560611828005137184201",
+    bankName: "سید علی محمد مدرسی",
+    companyName: "پخش محصولات نانو غیاث - مدرسی",
+    sellerAddress: "یزد",
+    /* own و sister دسترسی کامل دارن، بقیه فقط صدور فاکتور */
+    permissions: { profit: true, crm: true }
+  },
+  sister: {
+    username: "maryam",
+    password: "1396",
+    sellerName: "مریم السادات مدرسی",
+    sellerPhone: "09162594776",
+    familyName: "مدرسی",
+    bankCard: "6219 8619 0082 1520",
+    bankIban: "IR480560611828005137553601",
+    bankName: "مریم السادات مدرسی",
+    companyName: "پخش محصولات نانو غیاث - مدرسی",
+    sellerAddress: "یزد",
+    permissions: { profit: true, crm: true }
+  },
+  akram: {
+    username: "akram",
+    password: "1361",
+    sellerName: "اکرم حسن زاده",
+    sellerPhone: "09059587897",
+    familyName: "حسن زاده",
+    bankCard: "6104 3389 5716 8558",
+    bankIban: "IR170120020000009645866973",
+    bankName: "اکرم حسن زاده",
+    companyName: "پخش نانو جی پلاس",
+    sellerAddress: "مشهد",
+    /* دسترسی به پیگیری مشتری (CRM) داره، ولی به محاسبه سود نه */
+    permissions: { profit: false, crm: true }
+  }
+};
+
+/* یوزرنیم و رمز واردشده رو با پروفایل‌ها مطابقت می‌ده */
+function findSellerProfile(username, pwd){
+  const uname = (username || "").trim().toLowerCase();
+  for(const id in sellerProfiles){
+    const p = sellerProfiles[id];
+    if(p.username.toLowerCase() === uname && p.password === pwd) return { id, profile: p };
+  }
+  return null;
+}
+
+/* نمایش/مخفی‌کردن دکمه‌های محاسبه سود و CRM بر اساس دسترسی همون کاربر */
+function applyModeButtonPermissions(profile){
+  const perms = (profile && profile.permissions) || {};
+  modeProfitBtn.style.display = perms.profit ? '' : 'none';
+  modeCRMBtn.style.display = perms.crm ? '' : 'none';
+}
+
+/* پروفایل کاربری که الان لاگینه رو برمی‌گردونه (برای پیام پیگیری و امثالش) */
+function getCurrentSellerProfile(){
+  try{
+    const savedProfileId = sessionStorage.getItem('remyInvoiceProfile');
+    if(savedProfileId && sellerProfiles[savedProfileId]) return sellerProfiles[savedProfileId];
+  }catch(e){ /* بی‌خیال */ }
+  return sellerProfiles.own;
+}
+
+function applySellerProfile(profile){
+  const sellerNameEl = document.getElementById('sellerName');
+  const sellerPhoneEl = document.getElementById('sellerPhone');
+  const sellerAddressEl = document.getElementById('sellerAddress');
+  const bankCardEl = document.getElementById('invoiceBankCard');
+  const bankIbanEl = document.getElementById('invoiceBankIban');
+  const bankNameEl = document.getElementById('invoiceBankName');
+  const companyNameEl = document.getElementById('invoiceCompanyName');
+  if(sellerNameEl) sellerNameEl.value = profile.sellerName;
+  if(sellerPhoneEl) sellerPhoneEl.value = profile.sellerPhone;
+  if(sellerAddressEl && profile.sellerAddress) sellerAddressEl.value = profile.sellerAddress;
+  if(bankCardEl) bankCardEl.value = profile.bankCard || "";
+  if(bankIbanEl) bankIbanEl.value = profile.bankIban || "";
+  if(bankNameEl) bankNameEl.value = profile.bankName;
+  if(companyNameEl && profile.companyName) companyNameEl.value = profile.companyName;
+}
+
+function openInvoicePassModal(){
+  const invoiceUserInput = document.getElementById('invoiceUserInput');
+  if(invoiceUserInput) invoiceUserInput.value = "";
+  invoicePassInput.value = "";
+  invoicePassMsg.classList.remove('show');
+  invoicePassOverlay.classList.add('show');
+  setTimeout(()=> document.getElementById('invoiceUserInput').focus(), 150);
+}
+function closeInvoicePassModal(){
+  invoicePassOverlay.classList.remove('show');
+}
+document.getElementById('closeInvoicePassModal').addEventListener('click', closeInvoicePassModal);
+invoicePassOverlay.addEventListener('click', (e)=>{ if(e.target === invoicePassOverlay) closeInvoicePassModal(); });
+
+function trySubmitInvoicePass(){
+  const enteredUser = document.getElementById('invoiceUserInput').value;
+  const enteredPass = invoicePassInput.value.trim();
+  const match = findSellerProfile(enteredUser, enteredPass);
+  if(match){
+    invoiceUnlocked = true;
+    try{
+      sessionStorage.setItem('remyInvoiceUnlocked', '1');
+      sessionStorage.setItem('remyInvoiceProfile', match.id);
+    }catch(e){ /* بی‌خیال */ }
+    applySellerProfile(match.profile);
+    applyModeButtonPermissions(match.profile);
+    closeInvoicePassModal();
+    if(pendingInvoiceAction === 'profit'){
+      if(match.profile.permissions && match.profile.permissions.profit){
+        window.open('https://remyshops.github.io/Mohasebe_sood/', '_blank', 'noopener');
+      } else {
+        setActiveMode('invoice');
+        window.scrollTo({top: invoiceSectionOffset(), behavior:'smooth'});
+      }
+    } else if(pendingInvoiceAction === 'crm'){
+      if(match.profile.permissions && match.profile.permissions.crm){
+        setActiveMode('crm');
+        renderCRM();
+        window.scrollTo({top: crmSectionOffset(), behavior:'smooth'});
+      } else {
+        setActiveMode('invoice');
+        window.scrollTo({top: invoiceSectionOffset(), behavior:'smooth'});
+      }
+    } else {
+      setActiveMode('invoice');
+      window.scrollTo({top: invoiceSectionOffset(), behavior:'smooth'});
+    }
+  } else {
+    invoicePassMsg.textContent = "❌ نام کاربری یا رمز اشتباهه";
+    invoicePassMsg.className = "lead-msg show err";
+    invoicePassInput.value = "";
+    invoicePassInput.focus();
+  }
+}
+invoicePassSubmit.addEventListener('click', trySubmitInvoicePass);
+invoicePassInput.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') trySubmitInvoicePass(); });
+document.getElementById('invoiceUserInput').addEventListener('keydown', (e)=>{ if(e.key === 'Enter') trySubmitInvoicePass(); });
+
+
+function renderTabs(){
+  catTabs.innerHTML = "";
+  categories.forEach(c=>{
+    const btn = document.createElement('button');
+    btn.className = "cat-tab" + (c === activeCat ? " active" : "");
+    btn.textContent = c;
+    btn.addEventListener('click', ()=>{
+      activeCat = c;
+      renderTabs();
+      renderGrid(document.getElementById('searchInput').value);
+    });
+    catTabs.appendChild(btn);
+  });
+}
+
+function renderGrid(filter=""){
+  grid.innerHTML = "";
+  const f = filter.trim().toLowerCase();
+  const list = products.filter(p =>
+    p.name.toLowerCase().includes(f) &&
+    (activeCat === "همه" || p.cat === activeCat)
+  );
+  list.forEach(p=>{
+    const card = document.createElement('div');
+    card.className = "card";
+    const playBadge = `<span class="play-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>`;
+    const thumb = p.img ? `<div class="thumb"><img src="${p.img}" alt="${p.name}" loading="lazy" decoding="async">${playBadge}</div>` : "";
+    card.innerHTML = `${thumb}<div class="pname">${p.name}</div>
+      <div class="pcount"><span class="drop"></span>${p.videos.length} ویدیوی تست</div>
+      <div class="price-tag">${formatPrice(p.price)}</div>`;
+    card.addEventListener('click', ()=> openModal(p));
+    grid.appendChild(card);
+  });
+  const simpleMatches = simpleCategories
+    .filter(cat => activeCat === "همه" || cat.title === activeCat)
+    .some(cat => cat.items.some(it => (typeof it === "string" ? it : it.name).toLowerCase().includes(f)));
+  noResult.style.display = (list.length || simpleMatches) ? "none" : "block";
+  renderSimpleCats(f);
+}
+
+function renderBestSellers(){
+  const row = document.getElementById('bestSellersRow');
+  row.innerHTML = "";
+  bestSellerNames.forEach(name=>{
+    const p = products.find(pr => pr.name === name);
+    if(!p) return;
+    const card = document.createElement('div');
+    card.className = "best-card";
+    const playBadge = `<span class="play-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>`;
+    const thumb = p.img ? `<div class="thumb"><img src="${p.img}" alt="${p.name}" loading="lazy" decoding="async">${playBadge}</div>` : "";
+    card.innerHTML = `<span class="best-badge">پرفروش</span>
+      ${thumb}
+      <div class="pname">${p.name}</div>
+      <div class="pcount"><span class="drop"></span>${p.videos.length} ویدیوی تست</div>
+      <div class="price-tag">${formatPrice(p.price)}</div>`;
+    card.addEventListener('click', ()=> openModal(p));
+    row.appendChild(card);
+  });
+}
+
+const simpleCatsWrap = document.getElementById('simpleCatsWrap');
+simpleCatsWrap.addEventListener('click', (e)=>{
+  const link = e.target.closest('.test-link');
+  if(!link) return;
+  e.preventDefault();
+  openVideo(link.dataset.url, link.dataset.label);
+});
+
+function renderSimpleCats(filter=""){
+  simpleCatsWrap.innerHTML = "";
+  simpleCategories
+    .filter(cat => activeCat === "همه" || cat.title === activeCat)
+    .forEach(cat=>{
+      const items = cat.items.filter(it => (typeof it === "string" ? it : it.name).toLowerCase().includes(filter));
+      const itemPrice = it => (typeof it === "object" && it && it.price != null) ? formatPrice(it.price) : "";
+      if (!items.length) return;
+      const block = document.createElement('div');
+      block.className = "simple-block";
+      const label = cat.introLabel || "ویدیوی تست";
+      const videoLinks = cat.videoUrls.map((url,i)=>
+        `<a class="test-link" href="${url}" data-url="${url}" data-label="${label}${cat.videoUrls.length>1 ? ' '+(i+1) : ''}">🎬 ${label}${cat.videoUrls.length>1 ? ' '+(i+1) : ''}</a>`
+      ).join("");
+      const catPlayBadge = `<span class="play-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>`;
+      const catImgHtml = cat.catImg
+        ? `<div class="cat-thumb"><img src="${cat.catImg}" alt="${cat.title}" loading="lazy" decoding="async">${catPlayBadge}</div>`
+        : "";
+      const itemsHtml = items.map(it=>{
+        if (typeof it === "string") return `<li>${it}</li>`;
+        const thumb = it.img ? `<span class="item-thumb"><img src="${it.img}" alt="${it.name}" loading="lazy" decoding="async"></span>` : "";
+        const priceHtml = itemPrice(it) ? `<span class="price-tag" style="margin:0 0 0 auto">${itemPrice(it)}</span>` : "";
+        return `<li class="has-thumb">${thumb}<span>${it.name}</span>${priceHtml}</li>`;
+      }).join("");
+      block.innerHTML = `
+        <h3><span class="drop"></span>${cat.title}</h3>
+        ${catImgHtml}
+        <ul class="simple-items">
+          ${itemsHtml}
+        </ul>
+        <div class="simple-links">
+          ${videoLinks}
+          <a class="buy-link" href="${cat.buyUrl}" target="_blank" rel="noopener">🛒 خرید از باسلام</a>
+        </div>`;
+      simpleCatsWrap.appendChild(block);
+    });
+}
+
+function openModal(p){
+  currentModalProduct = p;
+  modalTitle.textContent = p.name;
+  modalThumbWrap.innerHTML = p.img
+    ? `<div class="modal-thumb"><img src="${p.img}" alt="${p.name}" loading="lazy" decoding="async"></div>`
+    : "";
+  let priceEl = document.getElementById('modalPrice');
+  if(!priceEl){
+    priceEl = document.createElement('div');
+    priceEl.id = 'modalPrice';
+    priceEl.className = 'price-tag lg';
+    modalTitle.insertAdjacentElement('afterend', priceEl);
+  }
+  priceEl.textContent = formatPrice(p.price);
+  videoList.innerHTML = "";
+  p.videos.forEach(v=>{
+    const a = document.createElement('a');
+    a.className = "video-item";
+    a.href = v.url;
+    a.innerHTML = `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>${v.label}`;
+    a.addEventListener('click', (e)=>{ e.preventDefault(); openVideo(v.url, v.label); });
+    videoList.appendChild(a);
+  });
+  orderLink.href = p.buyUrl || DEFAULT_BUY_URL;
+  overlay.classList.add('show');
+}
+
+document.getElementById('closeModal').addEventListener('click', ()=> overlay.classList.remove('show'));
+overlay.addEventListener('click', (e)=>{ if(e.target === overlay) overlay.classList.remove('show'); });
+
+/* ---------- video embed player (fixes aparat's own mobile auto-fullscreen glitch
+   by playing the video inside our page instead of sending users to aparat.com) ---------- */
+const videoOverlay = document.getElementById('videoOverlay');
+const videoFrame = document.getElementById('videoFrame');
+const videoModalTitle = document.getElementById('videoModalTitle');
+
+function aparatHash(url){
+  const m = url.match(/aparat\.com\/v\/([a-zA-Z0-9]+)/);
+  return m ? m[1] : null;
+}
+
+function openVideo(url, label){
+  const hash = aparatHash(url);
+  if(!hash){
+    window.open(url, '_blank', 'noopener');
+    return;
+  }
+  videoModalTitle.textContent = label || "پخش ویدیو";
+  videoFrame.src = `https://www.aparat.com/video/video/embed/videohash/${hash}/vt/frame`;
+  videoOverlay.classList.add('show');
+}
+
+function closeVideo(){
+  videoOverlay.classList.remove('show');
+  videoFrame.src = ""; // پخش رو متوقف می‌کنه
+}
+
+document.getElementById('closeVideoModal').addEventListener('click', closeVideo);
+videoOverlay.addEventListener('click', (e)=>{ if(e.target === videoOverlay) closeVideo(); });
+
+document.getElementById('searchInput').addEventListener('input', (e)=> renderGrid(e.target.value));
+
+document.getElementById('saveContact').addEventListener('click', (e)=>{
+  e.preventDefault();
+  const vcard = `BEGIN:VCARD
+VERSION:3.0
+FN:رمی شاپ - غیاث مدرسی
+ORG:رمی شاپ - پخش محصولات نانو
+TEL;TYPE=CELL:+989389561367
+URL:https://instagram.com/remyshops
+NOTE:پخش محصولات نانو
+END:VCARD`;
+  const blob = new Blob([vcard], {type:"text/vcard"});
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = "remy-shop.vcf";
+  link.click();
+});
+
+/* ================= INVOICE (صدور فاکتور) ================= */
+
+/* کاتالوگ فاکتور: ترکیب محصولات خرده + عمده، بر اساس نام. اگه قیمت عمده
+   موجود نباشه، از قیمت خرده به‌عنوان جایگزین استفاده می‌شه. */
+const invoiceCatalog = (function(){
+  const map = {};
+  function ensure(name){
+    if(!map[name]) map[name] = {name, retail:null, wholesale:null};
+    return map[name];
+  }
+  products.forEach(p=>{ ensure(p.name).retail = p.price; });
+  simpleCategories.forEach(c=> c.items.forEach(it=>{
+    if(typeof it === "object" && it && it.price != null) ensure(it.name).retail = it.price;
+  }));
+  wholesaleCategories.forEach(c=> c.items.forEach(it=>{
+    const e = ensure(it.name);
+    e.wholesale = it.buy;
+    if(e.retail == null) e.retail = it.sell;
+  }));
+  return Object.values(map).sort((a,b)=> a.name.localeCompare(b.name, "fa"));
+})();
+
+const invoiceProductSelect = document.getElementById('invoiceProductSelect');
+const invoiceCustomNameInput = document.getElementById('invoiceCustomName');
+const invoiceQtyInput = document.getElementById('invoiceQty');
+const invoiceUnitPriceInput = document.getElementById('invoiceUnitPrice');
+const invoiceAddBtn = document.getElementById('invoiceAddBtn');
+const invoiceTableBody = document.getElementById('invoiceTableBody');
+const invoiceEmpty = document.getElementById('invoiceEmpty');
+const invoiceSubtotalEl = document.getElementById('invoiceSubtotal');
+const invoiceGrandTotalEl = document.getElementById('invoiceGrandTotal');
+const invoiceDiscountInput = document.getElementById('invoiceDiscount');
+const invoiceDiscountPrint = document.getElementById('invoiceDiscountPrint');
+const customerNameInput = document.getElementById('customerName');
+const customerPhoneInput = document.getElementById('customerPhone');
+const customerAddressInput = document.getElementById('customerAddress');
+const invoiceNumberInput = document.getElementById('invoiceNumber');
+const invoiceDateInput = document.getElementById('invoiceDate');
+const priceModeTabsEl = document.getElementById('priceModeTabs');
+const invoiceCopyMsg = document.getElementById('invoiceCopyMsg');
+
+let invoicePriceMode = "retail"; // یا "wholesale"
+let invoiceItems = []; // {name, qty, unitPrice}
+
+/* تبدیل تاریخ میلادی به شمسی (الگوریتم استاندارد، بدون نیاز به کتابخانه) */
+function toJalali(gy, gm, gd){
+  const g_d_m = [0,31,59,90,120,151,181,212,243,273,304,334];
+  let jy = (gy <= 1600) ? 0 : 979;
+  gy -= (gy <= 1600) ? 621 : 1600;
+  const gy2 = (gm > 2) ? (gy + 1) : gy;
+  let days = (365 * gy) + (Math.floor((gy2 + 3) / 4)) - (Math.floor((gy2 + 99) / 100)) + (Math.floor((gy2 + 399) / 400)) - 80 + gd + g_d_m[gm - 1];
+  jy += 33 * Math.floor(days / 12053);
+  days %= 12053;
+  jy += 4 * Math.floor(days / 1461);
+  days %= 1461;
+  if (days > 365){
+    jy += Math.floor((days - 1) / 365);
+    days = (days - 1) % 365;
+  }
+  let jm, jd;
+  if (days < 186){
+    jm = 1 + Math.floor(days / 31);
+    jd = 1 + (days % 31);
+  } else {
+    jm = 7 + Math.floor((days - 186) / 30);
+    jd = 1 + ((days - 186) % 30);
+  }
+  return [jy, jm, jd];
+}
+
+function todayJalaliString(){
+  const d = new Date();
+  const [jy, jm, jd] = toJalali(d.getFullYear(), d.getMonth()+1, d.getDate());
+  const months = ["فروردین","اردیبهشت","خرداد","تیر","مرداد","شهریور","مهر","آبان","آذر","دی","بهمن","اسفند"];
+  return `${jd} ${months[jm-1]} ${jy}`;
+}
+
+function generateInvoiceNumber(){
+  let seq = 1;
+  try{
+    seq = parseInt(localStorage.getItem('remyInvoiceSeq') || '0', 10) + 1;
+    localStorage.setItem('remyInvoiceSeq', String(seq));
+  }catch(e){ /* localStorage در دسترس نیست، مشکلی نیست */ }
+  const d = new Date();
+  const [jy] = toJalali(d.getFullYear(), d.getMonth()+1, d.getDate());
+  return `RS-${jy}-${String(seq).padStart(4,'0')}`;
+}
+
+function populateInvoiceProductSelect(){
+  if(!invoiceProductSelect) return;
+  const filtered = invoiceCatalog.filter(p=>
+    invoicePriceMode === "wholesale" ? p.wholesale != null : p.retail != null
+  );
+  const customOption = `<option value="__custom__">➕ کالای دلخواه (تایپ کنید)</option>`;
+  invoiceProductSelect.innerHTML = customOption + filtered.map(p=>
+    `<option value="${p.name.replace(/"/g,'&quot;')}">${p.name}</option>`
+  ).join("");
+}
+
+function priceForCurrentMode(name){
+  const p = invoiceCatalog.find(x=> x.name === name);
+  if(!p) return "";
+  const val = invoicePriceMode === "wholesale" ? p.wholesale : p.retail;
+  if(val != null) return val;
+  return p.retail != null ? p.retail : (p.wholesale != null ? p.wholesale : "");
+}
+
+function syncInvoiceUnitPriceField(){
+  if(!invoiceProductSelect) return;
+  if(invoiceProductSelect.value === "__custom__") return;
+  const price = priceForCurrentMode(invoiceProductSelect.value);
+  invoiceUnitPriceInput.value = (price !== "" && price != null) ? price : "";
+}
+
+function syncInvoiceCustomFieldVisibility(focusIt){
+  if(!invoiceProductSelect) return;
+  const isCustom = invoiceProductSelect.value === "__custom__";
+  invoiceCustomNameInput.style.display = isCustom ? "block" : "none";
+  if(isCustom){
+    invoiceUnitPriceInput.value = "";
+    if(focusIt) invoiceCustomNameInput.focus();
+  } else {
+    invoiceCustomNameInput.value = "";
+    syncInvoiceUnitPriceField();
+  }
+}
+
+if(invoiceProductSelect){
+  invoiceProductSelect.addEventListener('change', ()=> syncInvoiceCustomFieldVisibility(true));
+}
+
+if(priceModeTabsEl){
+  priceModeTabsEl.addEventListener('click', (e)=>{
+    const btn = e.target.closest('.price-mode-tab');
+    if(!btn) return;
+    invoicePriceMode = btn.dataset.mode;
+    priceModeTabsEl.querySelectorAll('.price-mode-tab').forEach(b=> b.classList.toggle('active', b === btn));
+    populateInvoiceProductSelect();
+    syncInvoiceCustomFieldVisibility(false);
+  });
+}
+
+if(invoiceAddBtn){
+  invoiceAddBtn.addEventListener('click', ()=>{
+    let name;
+    if(invoiceProductSelect.value === "__custom__"){
+      name = invoiceCustomNameInput.value.trim();
+      if(!name){ alert('اسم کالا رو وارد کن'); invoiceCustomNameInput.focus(); return; }
+    } else {
+      name = invoiceProductSelect.value;
+    }
+    if(!name) return;
+    const qty = Math.max(1, parseInt(invoiceQtyInput.value, 10) || 1);
+    const unitPrice = Math.max(0, parseFloat(invoiceUnitPriceInput.value) || 0);
+    const existing = invoiceItems.find(it=> it.name === name && it.unitPrice === unitPrice);
+    if(existing){
+      existing.qty += qty;
+    } else {
+      invoiceItems.push({name, qty, unitPrice});
+    }
+    invoiceQtyInput.value = 1;
+    if(invoiceProductSelect.value === "__custom__"){
+      invoiceCustomNameInput.value = "";
+      invoiceUnitPriceInput.value = "";
+    }
+    renderInvoiceTable();
+  });
+}
+
+function removeInvoiceItem(idx){
+  invoiceItems.splice(idx, 1);
+  renderInvoiceTable();
+}
+
+const PW_ONES = ['','یک','دو','سه','چهار','پنج','شش','هفت','هشت','نه'];
+const PW_TEENS = ['ده','یازده','دوازده','سیزده','چهارده','پانزده','شانزده','هفده','هجده','نوزده'];
+const PW_TENS = ['','ده','بیست','سی','چهل','پنجاه','شصت','هفتاد','هشتاد','نود'];
+const PW_HUNDREDS = ['','صد','دویست','سیصد','چهارصد','پانصد','ششصد','هفتصد','هشتصد','نهصد'];
+const PW_SCALES = ['','هزار','میلیون','میلیارد'];
+
+function threeDigitToPersianWords(n){
+  const parts = [];
+  const h = Math.floor(n/100), r = n%100;
+  if(h) parts.push(PW_HUNDREDS[h]);
+  if(r){
+    if(r < 10) parts.push(PW_ONES[r]);
+    else if(r < 20) parts.push(PW_TEENS[r-10]);
+    else {
+      const t = Math.floor(r/10), o = r%10;
+      parts.push(o ? (PW_TENS[t] + ' و ' + PW_ONES[o]) : PW_TENS[t]);
+    }
+  }
+  return parts.join(' و ');
+}
+
+function numberToPersianWords(num){
+  num = Math.round(Math.max(0, num));
+  if(num === 0) return 'صفر';
+  const groups = [];
+  let scaleIdx = 0;
+  while(num > 0 && scaleIdx < PW_SCALES.length){
+    const g = num % 1000;
+    if(g) groups.unshift(threeDigitToPersianWords(g) + (PW_SCALES[scaleIdx] ? ' ' + PW_SCALES[scaleIdx] : ''));
+    num = Math.floor(num/1000);
+    scaleIdx++;
+  }
+  return groups.join(' و ');
+}
+
+function updateInvoiceTotals(){
+  const subtotal = invoiceItems.reduce((s, it)=> s + it.qty * it.unitPrice, 0);
+  const discount = Math.max(0, parseFloat(invoiceDiscountInput.value) || 0);
+  const grand = Math.max(0, subtotal - discount);
+  invoiceSubtotalEl.textContent = formatPrice(subtotal);
+  invoiceGrandTotalEl.textContent = formatPrice(grand);
+  if(invoiceDiscountPrint) invoiceDiscountPrint.textContent = formatPrice(discount);
+  const wordsEl = document.getElementById('invoiceTotalWords');
+  if(wordsEl){
+    wordsEl.textContent = grand > 0 ? (numberToPersianWords(grand) + ' تومان') : '';
+  }
+}
+
+function renderInvoiceTable(){
+  if(!invoiceTableBody) return;
+  if(!invoiceItems.length){
+    invoiceTableBody.innerHTML = "";
+    invoiceEmpty.style.display = "block";
+  } else {
+    invoiceEmpty.style.display = "none";
+    invoiceTableBody.innerHTML = invoiceItems.map((it, idx)=>{
+      const lineTotal = it.qty * it.unitPrice;
+      return `<tr>
+        <td>${idx+1}</td>
+        <td class="invoice-item-name">${it.name}</td>
+        <td><input type="number" class="invoice-cell-input" data-idx="${idx}" data-field="qty" min="1" value="${it.qty}"></td>
+        <td><input type="number" class="invoice-cell-input" data-idx="${idx}" data-field="unitPrice" min="0" value="${it.unitPrice}"></td>
+        <td class="invoice-line-total">${formatPrice(lineTotal)}</td>
+        <td class="no-print"><button type="button" class="invoice-row-del" data-idx="${idx}">✕</button></td>
+      </tr>`;
+    }).join("");
+  }
+  updateInvoiceTotals();
+}
+
+if(invoiceTableBody){
+  invoiceTableBody.addEventListener('input', (e)=>{
+    const inp = e.target.closest('.invoice-cell-input');
+    if(!inp) return;
+    const idx = parseInt(inp.dataset.idx, 10);
+    const field = inp.dataset.field;
+    const item = invoiceItems[idx];
+    if(!item) return;
+    let val = parseFloat(inp.value);
+    if(isNaN(val) || val < 0) val = 0;
+    if(field === 'qty') val = Math.max(1, Math.round(val));
+    item[field] = val;
+    const row = inp.closest('tr');
+    const totalCell = row.querySelector('.invoice-line-total');
+    if(totalCell) totalCell.textContent = formatPrice(item.qty * item.unitPrice);
+    updateInvoiceTotals();
+  });
+}
+
+if(invoiceTableBody){
+  invoiceTableBody.addEventListener('click', (e)=>{
+    const btn = e.target.closest('.invoice-row-del');
+    if(!btn) return;
+    removeInvoiceItem(parseInt(btn.dataset.idx, 10));
+  });
+}
+
+if(invoiceDiscountInput){
+  invoiceDiscountInput.addEventListener('input', updateInvoiceTotals);
+}
+
+const invoiceClosingNotes = [
+  "«از اینکه ما را انتخاب کردید سپاسگزاریم. مشتاق دیدار دوباره شما هستیم.»",
+  "«اعتماد شما دلیل ادامه مسیر ماست؛ منتظر حضور دوباره شما هستیم.»",
+  "«هر بار که به ما بازمی‌گردید، انگیزه ما برای بهتر شدن بیشتر می‌شود.»",
+  "«خوشحالیم که بخشی از انتخاب شما هستیم؛ امیدواریم دوباره در خدمتتان باشیم.»",
+  "«تجربه خوب امروز، شروع یک همکاری ماندگار است.»",
+  "«از انتخاب شما ممنونیم؛ رضایت شما همیشه اولویت ماست.»",
+  "«ما به دنبال یک خرید نیستیم؛ به دنبال ساختن یک رابطه طولانی هستیم.»",
+  "«ممنون که به ما اعتماد کردید؛ دفعه بعد هم کنار شما هستیم.»",
+  "«یک بار انتخاب ما، آغاز یک اعتماد ماندگار است.»",
+  "«به جمع مشتریان ارزشمند ما خوش آمدید؛ خوشحال می‌شویم دوباره شما را ببینیم.»",
+  "«کیفیت را تجربه کنید، تفاوت را احساس کنید.»",
+  "«انتخاب شما برای ما ارزشمند است؛ تلاش می‌کنیم همیشه شایسته این انتخاب باشیم.»",
+  "«ممنون که اجازه دادید بخشی از تجربه خوب شما باشیم.»",
+  "«ما هر روز بهتر می‌شویم تا انتخاب بعدی شما، انتخابی مطمئن‌تر باشد.»",
+  "«اعتماد ساختنی است؛ ما هر روز برای حفظ اعتماد شما تلاش می‌کنیم.»",
+  "«خوشحالیم که امروز انتخاب شما بودیم؛ امیدواریم همیشه انتخاب شما بمانیم.»",
+  "«پشت هر خرید موفق، یک اعتماد ارزشمند وجود دارد. سپاس از اعتماد شما.»",
+  "«شما فقط مشتری نیستید؛ بخشی از داستان رشد ما هستید.»",
+  "«تجربه‌ای که ارزش تکرار دارد، با کیفیت ساخته می‌شود.»",
+  "«از همراهی شما سپاسگزاریم؛ منتظر فرصت بعدی برای خدمت‌رسانی هستیم.»"
+];
+function randomizeInvoiceClosingNote(){
+  const el = document.getElementById('invoiceNotePrint');
+  if(!el) return;
+  const pick = invoiceClosingNotes[Math.floor(Math.random() * invoiceClosingNotes.length)];
+  el.textContent = pick;
+}
+
+function resetInvoiceForm(full){
+  invoiceItems = [];
+  invoiceDiscountInput.value = 0;
+  if(full){
+    customerNameInput.value = "";
+    customerPhoneInput.value = "";
+    if(customerAddressInput) customerAddressInput.value = "";
+  }
+  invoiceNumberInput.value = generateInvoiceNumber();
+  invoiceDateInput.value = todayJalaliString();
+  randomizeInvoiceClosingNote();
+  renderInvoiceTable();
+}
+
+const invoiceResetBtn = document.getElementById('invoiceResetBtn');
+if(invoiceResetBtn){
+  invoiceResetBtn.addEventListener('click', ()=>{
+    if(invoiceItems.length && !confirm('فاکتور فعلی پاک بشه و یه فاکتور جدید شروع بشه؟')) return;
+    resetInvoiceForm(true);
+  });
+}
+
+/* هنگام گرفتن خروجی عکس، input هایی که هنوز دیده می‌شن (شماره فاکتور، تاریخ،
+   نام/تلفن مشتری، تعداد و قیمت واحد هر ردیف) رو موقتاً به متن ساده تبدیل می‌کنیم؛
+   چون html2canvas فونت داخل input ها رو درست رندر نمی‌کنه و باعث به‌هم‌ریختگی می‌شه. */
+function convertInvoiceInputsToText(root){
+  const replacements = [];
+  root.querySelectorAll('input').forEach(inp=>{
+    if(inp.closest('.no-print')) return; // این‌ها به‌هرحال حین گرفتن عکس مخفی‌ان
+    let text = inp.value || "";
+    if(inp.classList.contains('invoice-cell-input') && inp.dataset.field === 'unitPrice'){
+      text = formatPrice(parseFloat(inp.value) || 0);
+    }
+    const span = document.createElement('span');
+    span.textContent = text;
+    span.className = 'capture-text-swap';
+    /* رشته‌های عددی جداشده با فاصله (مثل شماره کارت) اگه جهت صریح نداشته باشن،
+       داخل صفحه‌ی راست‌به‌چپ توسط الگوریتم bidi برعکس نمایش داده می‌شن؛
+       برای همین جهت و چینش واقعی خود input رو روی span کپی می‌کنیم. */
+    const computed = window.getComputedStyle(inp);
+    span.style.direction = computed.direction;
+    span.style.unicodeBidi = 'isolate';
+    span.style.textAlign = computed.textAlign;
+    span.style.display = 'inline-block';
+    span.style.fontSize = computed.fontSize;
+    span.style.fontWeight = computed.fontWeight;
+    span.style.fontFamily = computed.fontFamily;
+    span.style.color = computed.color;
+    span.style.letterSpacing = computed.letterSpacing;
+    span.style.lineHeight = computed.lineHeight;
+    if(computed.direction === 'ltr') span.style.width = '100%';
+    inp.style.display = 'none';
+    inp.insertAdjacentElement('afterend', span);
+    replacements.push({input: inp, span});
+  });
+  return replacements;
+}
+function restoreInvoiceInputs(replacements){
+  replacements.forEach(({input, span})=>{
+    input.style.display = "";
+    if(span && span.parentNode) span.parentNode.removeChild(span);
+  });
+}
+
+const invoicePrintBtn = document.getElementById('invoicePrintBtn');
+if(invoicePrintBtn){
+  invoicePrintBtn.addEventListener('click', ()=>{
+    if(!invoiceItems.length){ alert('اول حداقل یک کالا به فاکتور اضافه کن'); return; }
+    randomizeInvoiceClosingNote();
+    window.print();
+  });
+}
+
+const invoiceImageBtn = document.getElementById('invoiceImageBtn');
+if(invoiceImageBtn){
+  invoiceImageBtn.addEventListener('click', async ()=>{
+    if(!invoiceItems.length){ alert('اول حداقل یک کالا به فاکتور اضافه کن'); return; }
+    if(typeof html2canvas === 'undefined'){
+      alert('امکان ساخت عکس در دسترس نیست — اتصال اینترنت رو چک کن و دوباره تلاش کن');
+      return;
+    }
+    randomizeInvoiceClosingNote();
+    const target = document.getElementById('invoicePrintArea');
+    const originalLabel = invoiceImageBtn.textContent;
+    invoiceImageBtn.disabled = true;
+    invoiceImageBtn.textContent = "⏳ در حال ساخت عکس...";
+    target.classList.add('capturing-image');
+    const replacements = convertInvoiceInputsToText(target);
+    try{
+      if(document.fonts && document.fonts.ready){
+        try{
+          await document.fonts.load('700 16px Vazirmatn');
+          await document.fonts.load('800 16px Vazirmatn');
+          await document.fonts.load('400 16px Vazirmatn');
+          await document.fonts.ready;
+        }catch(fontErr){ /* اگه لود فونت خطا داد، با فونت پیش‌فرض ادامه بده */ }
+      }
+      const canvas = await html2canvas(target, {backgroundColor:'#ffffff', scale:4, useCORS:true, imageTimeout:0});
+      const link = document.createElement('a');
+      const safeNumber = (invoiceNumberInput.value || 'remyshop').replace(/[^\w-]/g, '');
+      link.download = `factor-${safeNumber}.png`;
+      link.href = canvas.toDataURL('image/png', 1.0);
+      link.click();
+    }catch(err){
+      alert('ساخت عکس فاکتور با خطا مواجه شد، دوباره تلاش کن');
+    }finally{
+      restoreInvoiceInputs(replacements);
+      target.classList.remove('capturing-image');
+      invoiceImageBtn.disabled = false;
+      invoiceImageBtn.textContent = originalLabel;
+    }
+  });
+}
+
+const invoiceCopyBtn = document.getElementById('invoiceCopyBtn');
+if(invoiceCopyBtn){
+  invoiceCopyBtn.addEventListener('click', async ()=>{
+    if(!invoiceItems.length){ alert('اول حداقل یک کالا به فاکتور اضافه کن'); return; }
+    const lines = [];
+    lines.push(`🧾 فاکتور فروش — رمی شاپ`);
+    lines.push(`شماره: ${invoiceNumberInput.value}   تاریخ: ${invoiceDateInput.value}`);
+    if(customerNameInput.value.trim()) lines.push(`مشتری: ${customerNameInput.value.trim()}`);
+    if(customerPhoneInput.value.trim()) lines.push(`تماس: ${customerPhoneInput.value.trim()}`);
+    if(customerAddressInput && customerAddressInput.value.trim()) lines.push(`آدرس: ${customerAddressInput.value.trim()}`);
+    lines.push('—————————————');
+    invoiceItems.forEach((it, idx)=>{
+      lines.push(`${idx+1}. ${it.name} × ${it.qty} = ${formatPrice(it.qty*it.unitPrice)}`);
+    });
+    lines.push('—————————————');
+    const subtotal = invoiceItems.reduce((s, it)=> s + it.qty*it.unitPrice, 0);
+    const discount = Math.max(0, parseFloat(invoiceDiscountInput.value) || 0);
+    lines.push(`جمع کل: ${formatPrice(subtotal)}`);
+    if(discount > 0) lines.push(`تخفیف: ${formatPrice(discount)}`);
+    lines.push(`مبلغ قابل پرداخت: ${formatPrice(Math.max(0, subtotal-discount))}`);
+    lines.push('رمی شاپ — 09389561367');
+    const text = lines.join('\n');
+    try{
+      await navigator.clipboard.writeText(text);
+      invoiceCopyMsg.textContent = "✅ متن فاکتور کپی شد";
+    }catch(e){
+      window.prompt('این متن رو کپی کن:', text);
+      invoiceCopyMsg.textContent = "";
+      return;
+    }
+    setTimeout(()=>{ invoiceCopyMsg.textContent = ""; }, 2500);
+  });
+}
+
+/* ================= CRM / پیگیری مشتری ================= */
+const CRM_STORAGE_KEY = 'remyCRM';
+const CRM_FOLLOWUP_DAYS = 31;
+
+function loadCRM(){
+  try{ return JSON.parse(localStorage.getItem(CRM_STORAGE_KEY) || '[]'); }
+  catch(e){ return []; }
+}
+function saveCRM(list){
+  try{ localStorage.setItem(CRM_STORAGE_KEY, JSON.stringify(list)); }catch(e){ /* بی‌خیال */ }
+}
+function toWhatsappNumber(phone){
+  const digits = (phone || '').replace(/\D/g, '');
+  if(!digits) return '';
+  return digits.startsWith('0') ? '98' + digits.slice(1) : digits;
+}
+
+const invoiceCRMBtn = document.getElementById('invoiceCRMBtn');
+if(invoiceCRMBtn){
+  invoiceCRMBtn.addEventListener('click', ()=>{
+    if(!invoiceItems.length){ alert('اول حداقل یک کالا به فاکتور اضافه کن'); return; }
+    const name = customerNameInput.value.trim();
+    if(!name){ alert('برای ثبت در CRM، اول اسم مشتری رو بنویس'); customerNameInput.focus(); return; }
+    const subtotal = invoiceItems.reduce((s, it)=> s + it.qty*it.unitPrice, 0);
+    const now = Date.now();
+    const record = {
+      id: 'c' + now + Math.floor(Math.random()*1000),
+      name,
+      phone: customerPhoneInput.value.trim(),
+      address: (customerAddressInput && customerAddressInput.value.trim()) || '',
+      invoiceNumber: invoiceNumberInput.value,
+      items: invoiceItems.map(it=> ({name: it.name, qty: it.qty, unitPrice: it.unitPrice})),
+      subtotal,
+      purchaseAt: now,
+      purchaseJalali: invoiceDateInput.value,
+      followUpAt: now + CRM_FOLLOWUP_DAYS*24*60*60*1000,
+      followedUp: false
+    };
+    const list = loadCRM();
+    list.push(record);
+    saveCRM(list);
+    renderCRM();
+    if(invoiceCopyMsg){
+      invoiceCopyMsg.textContent = "✅ مشتری در CRM ثبت شد — ۳۱ روز دیگه یادت می‌ندازیم پیگیری کنی";
+      setTimeout(()=>{ invoiceCopyMsg.textContent = ""; }, 3500);
+    }
+  });
+}
+
+let crmFilter = 'due';
+
+function renderCRM(){
+  const listEl = document.getElementById('crmList');
+  const emptyEl = document.getElementById('crmEmpty');
+  const dueCountEl = document.getElementById('crmDueCount');
+  if(!listEl) return;
+
+  const all = loadCRM();
+  const now = Date.now();
+  const dueCount = all.filter(r=> !r.followedUp && r.followUpAt <= now).length;
+  if(dueCountEl) dueCountEl.textContent = String(dueCount);
+
+  let items = all.filter(r=> !r.followedUp);
+  if(crmFilter === 'due'){
+    items = items.filter(r=> r.followUpAt <= now);
+  }
+  items.sort((a,b)=> a.followUpAt - b.followUpAt);
+
+  if(!items.length){
+    listEl.innerHTML = '';
+    emptyEl.style.display = 'block';
+    emptyEl.textContent = crmFilter === 'due' ? 'فعلاً کسی برای پیگیری نیست 🎉' : 'هنوز مشتری‌ای در CRM ثبت نشده';
+    return;
+  }
+  emptyEl.style.display = 'none';
+
+  listEl.innerHTML = items.map(r=>{
+    const daysLeft = Math.ceil((r.followUpAt - now) / (24*60*60*1000));
+    let statusClass = '';
+    let badge = `${daysLeft} روز تا موعد پیگیری`;
+    if(daysLeft <= 0){ statusClass = 'due-over'; badge = `${Math.abs(daysLeft)} روز از موعد گذشته 🔴`; }
+    else if(daysLeft <= 5){ statusClass = 'due-soon'; badge = `${daysLeft} روز تا موعد 🟠`; }
+
+    const itemsText = r.items.map(it=> `${it.name} ×${it.qty}`).join('، ');
+    const wa = toWhatsappNumber(r.phone);
+    const phoneLine = r.phone ? `<div class="crm-card-phone">📞 ${r.phone}</div>` : '';
+    const contactBtns = r.phone ? `
+      <a href="tel:${r.phone}">📞 تماس</a>
+      <a href="https://wa.me/${wa}?text=${encodeURIComponent('سلام '+r.name+' عزیز، وقت بخیر 🌿')}" target="_blank" rel="noopener">💬 واتساپ</a>
+    ` : '';
+
+    return `<div class="crm-card ${statusClass}" data-id="${r.id}">
+      <div class="crm-card-top">
+        <div>
+          <div class="crm-card-name">${r.name}</div>
+          ${phoneLine}
+        </div>
+        <span class="crm-card-badge">${badge}</span>
+      </div>
+      <div class="crm-card-items">🧾 خرید قبلی (${r.purchaseJalali}): ${itemsText}</div>
+      <div class="crm-card-actions">
+        ${contactBtns}
+        <button type="button" class="crm-view-btn" data-action="view">🖼 نمایش خرید</button>
+        <button type="button" class="crm-copy-btn" data-action="copytext">📋 کپی پیام پیگیری</button>
+        <button type="button" class="crm-done-btn" data-action="done">✅ پیگیری شد</button>
+        <button type="button" class="crm-del-btn" data-action="del">🗑 حذف</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function buildCrmReceiptHTML(r){
+  const itemsRows = r.items.map(it=> `
+    <tr>
+      <td style="padding:6px 4px; border-bottom:1px solid rgba(0,0,0,0.08); text-align:right;">${it.name}</td>
+      <td style="padding:6px 4px; border-bottom:1px solid rgba(0,0,0,0.08); text-align:center;">${it.qty}</td>
+      <td style="padding:6px 4px; border-bottom:1px solid rgba(0,0,0,0.08); text-align:left;">${formatPrice(it.qty*it.unitPrice)}</td>
+    </tr>`).join('');
+  return `
+    <div style="font-family:'Vazirmatn','Tahoma',sans-serif; direction:rtl; background:#ffffff; color:#141a24; padding:22px; border-radius:14px; border:1px solid #e6eefb;">
+      <div style="text-align:center; margin-bottom:14px;">
+        <div style="font-weight:800; font-size:18px; color:#0a4fdb;">رمی شاپ</div>
+        <div style="font-size:12px; color:#5b6472; margin-top:2px;">فاکتور فروش${r.invoiceNumber ? ' — '+r.invoiceNumber : ''}</div>
+      </div>
+      <div style="font-size:13px; margin-bottom:10px; line-height:1.9;">
+        <div>مشتری: ${r.name}</div>
+        ${r.phone ? `<div>تماس: ${r.phone}</div>` : ''}
+        <div>تاریخ خرید: ${r.purchaseJalali || ''}</div>
+      </div>
+      <table style="width:100%; border-collapse:collapse; font-size:12.5px; margin-top:8px;">
+        <thead>
+          <tr>
+            <th style="text-align:right; padding:6px 4px; border-bottom:2px solid #0a4fdb; color:#5b6472;">کالا</th>
+            <th style="text-align:center; padding:6px 4px; border-bottom:2px solid #0a4fdb; color:#5b6472;">تعداد</th>
+            <th style="text-align:left; padding:6px 4px; border-bottom:2px solid #0a4fdb; color:#5b6472;">قیمت</th>
+          </tr>
+        </thead>
+        <tbody>${itemsRows}</tbody>
+      </table>
+      <div style="display:flex; justify-content:space-between; margin-top:14px; padding-top:10px; border-top:1px dashed #d3e0f5; font-weight:700; font-size:14px;">
+        <span>جمع کل</span><span>${formatPrice(r.subtotal)}</span>
+      </div>
+      <div style="text-align:center; margin-top:16px; font-size:11.5px; color:#5b6472;">رمی شاپ — 09389561367</div>
+    </div>`;
+}
+
+async function showCrmReceiptImage(r){
+  const template = document.getElementById('crmReceiptTemplate');
+  const overlay = document.getElementById('crmImageOverlay');
+  const img = document.getElementById('crmImagePreview');
+  const title = document.getElementById('crmImageTitle');
+  const downloadBtn = document.getElementById('crmImageDownloadBtn');
+  if(!template || !overlay || typeof html2canvas === 'undefined'){
+    alert('امکان ساخت عکس در دسترس نیست — اتصال اینترنت رو چک کن و دوباره تلاش کن');
+    return;
+  }
+  template.innerHTML = buildCrmReceiptHTML(r);
+  try{
+    if(document.fonts && document.fonts.ready){
+      try{
+        await document.fonts.load('700 16px Vazirmatn');
+        await document.fonts.load('800 16px Vazirmatn');
+        await document.fonts.ready;
+      }catch(fontErr){ /* بی‌خیال */ }
+    }
+    const canvas = await html2canvas(template.firstElementChild, {backgroundColor:'#ffffff', scale:3, useCORS:true});
+    const dataUrl = canvas.toDataURL('image/png', 1.0);
+    img.src = dataUrl;
+    title.textContent = `خرید ${r.name}`;
+    downloadBtn.onclick = ()=>{
+      const link = document.createElement('a');
+      const safeName = (r.name || 'moshtari').replace(/[^\w\u0600-\u06FF-]/g, '_');
+      link.download = `kharid-${safeName}.png`;
+      link.href = dataUrl;
+      link.click();
+    };
+    overlay.classList.add('show');
+  }catch(err){
+    alert('ساخت عکس با خطا مواجه شد، دوباره تلاش کن');
+  }finally{
+    template.innerHTML = '';
+  }
+}
+
+const closeCrmImageModalBtn = document.getElementById('closeCrmImageModal');
+if(closeCrmImageModalBtn){
+  closeCrmImageModalBtn.addEventListener('click', ()=> document.getElementById('crmImageOverlay').classList.remove('show'));
+}
+const crmImageOverlayEl = document.getElementById('crmImageOverlay');
+if(crmImageOverlayEl){
+  crmImageOverlayEl.addEventListener('click', (e)=>{ if(e.target === crmImageOverlayEl) crmImageOverlayEl.classList.remove('show'); });
+}
+
+function buildCrmFollowUpMessage(r){
+  const profile = getCurrentSellerProfile();
+  const itemsList = r.items.map(it=> `🟢 ${it.name}`).join('\n');
+  return `سلام ${r.name} عزیز
+وقتتون بخیر 🌹
+از پخش نانو G+Plus ${profile.familyName} هستم.
+حدود یک ماه از خرید قبلی‌تون گذشته. با توجه به محصولاتی که دفعه قبل از ما تهیه کردید، احتمالاً بعضی از اقلامتون به شارژ مجدد نیاز داشته باشه.
+اگر موجودی‌تون رو بفرمایید، می‌تونم لیست شارژ پیشنهادی رو بر اساس خرید قبلی‌تون براتون آماده کنم تا فقط موارد موردنیاز رو انتخاب کنید. ✅
+${itemsList}
+اگر نیاز دارید، همینجا فقط بنویسید «شارژ» تا براتون هماهنگ کنم. ✅
+پخش نانو G+Plus ${profile.familyName}
+📞 ${profile.sellerPhone}`;
+}
+
+const crmListEl = document.getElementById('crmList');
+if(crmListEl){
+  crmListEl.addEventListener('click', (e)=>{
+    const btn = e.target.closest('button[data-action]');
+    const action = btn ? btn.dataset.action : null;
+    if(!action) return;
+    const card = e.target.closest('.crm-card');
+    if(!card) return;
+    const id = card.dataset.id;
+    let list = loadCRM();
+    if(action === 'view'){
+      const rec = list.find(r=> r.id === id);
+      if(rec) showCrmReceiptImage(rec);
+      return;
+    }
+    if(action === 'copytext'){
+      const rec = list.find(r=> r.id === id);
+      if(!rec) return;
+      const text = buildCrmFollowUpMessage(rec);
+      const originalLabel = btn.textContent;
+      navigator.clipboard.writeText(text).then(()=>{
+        btn.textContent = "✅ کپی شد";
+        setTimeout(()=>{ btn.textContent = originalLabel; }, 2000);
+      }).catch(()=>{
+        window.prompt('این متن رو کپی کن:', text);
+      });
+      return;
+    }
+    if(action === 'done'){
+      const rec = list.find(r=> r.id === id);
+      if(rec){
+        if(!confirm(`ثبت شه که "${rec.name}" رو دوباره پیگیری کردی؟`)) return;
+        rec.followedUp = true;
+      }
+    } else if(action === 'del'){
+      const rec = list.find(r=> r.id === id);
+      if(!confirm(`مشتری "${rec ? rec.name : ''}" از CRM حذف بشه؟`)) return;
+      list = list.filter(r=> r.id !== id);
+    }
+    saveCRM(list);
+    renderCRM();
+  });
+}
+
+document.querySelectorAll('.crm-filter').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.crm-filter').forEach(b=> b.classList.remove('active'));
+    btn.classList.add('active');
+    crmFilter = btn.dataset.filter;
+    renderCRM();
+  });
+});
+
+const crmExportBtn = document.getElementById('crmExportBtn');
+if(crmExportBtn){
+  crmExportBtn.addEventListener('click', ()=>{
+    const all = loadCRM();
+    if(!all.length){ alert('هنوز مشتری‌ای در CRM ثبت نشده'); return; }
+    if(typeof XLSX === 'undefined'){
+      alert('امکان ساخت اکسل در دسترس نیست — اتصال اینترنت رو چک کن و دوباره تلاش کن');
+      return;
+    }
+    const now = Date.now();
+    const rows = all.map(r=>{
+      const daysLeft = Math.ceil((r.followUpAt - now) / (24*60*60*1000));
+      let status;
+      if(r.followedUp) status = 'پیگیری شده';
+      else if(daysLeft <= 0) status = `${Math.abs(daysLeft)} روز از موعد گذشته`;
+      else status = `${daysLeft} روز تا موعد`;
+      return {
+        'نام مشتری': r.name,
+        'تلفن': r.phone || '',
+        'آدرس': r.address || '',
+        'شماره فاکتور': r.invoiceNumber || '',
+        'تاریخ خرید': r.purchaseJalali || '',
+        'کالاهای خریداری‌شده': r.items.map(it=> `${it.name} ×${it.qty}`).join('، '),
+        'جمع کل (تومان)': r.subtotal,
+        'وضعیت پیگیری': status
+      };
+    });
+    const ws = XLSX.utils.json_to_sheet(rows);
+    ws['!cols'] = [{wch:18},{wch:14},{wch:22},{wch:14},{wch:16},{wch:40},{wch:14},{wch:20}];
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'مشتریان');
+    XLSX.writeFile(wb, `crm-remyshop-${todayJalaliString().replace(/\s+/g,'-')}.xlsx`);
+  });
+}
+
+/* ================= INVOICE COLOR PICKER ================= */
+(function(){
+  const themes = [
+    { key:'blue',   name:'آبی',    drop:'#0a4fdb', drop2:'#0035a6' },
+    { key:'green',  name:'سبز',    drop:'#16a34a', drop2:'#0e7a3b' },
+    { key:'purple', name:'بنفش',   drop:'#7c3aed', drop2:'#4c1d95' },
+    { key:'black',  name:'مشکی',   drop:'#3f3f46', drop2:'#18181b' },
+    { key:'orange', name:'نارنجی', drop:'#f7931e', drop2:'#d9740a' },
+    { key:'pink',   name:'صورتی',  drop:'#ec4899', drop2:'#be185d' }
+  ];
+
+  function hexToRgb(hex){
+    const h = hex.replace('#','');
+    const r = parseInt(h.substring(0,2),16);
+    const g = parseInt(h.substring(2,4),16);
+    const b = parseInt(h.substring(4,6),16);
+    return r+','+g+','+b;
+  }
+
+  const printArea = document.getElementById('invoicePrintArea');
+
+  function applyInvoiceTheme(t){
+    if(!printArea) return;
+    const style = printArea.style;
+    if(t.key === 'blue'){
+      /* پیش‌فرض همون آبیه — پاک کردن override یعنی از رنگ اصلی سایت استفاده کنه */
+      style.removeProperty('--drop');
+      style.removeProperty('--drop-2');
+      style.removeProperty('--drop-rgb');
+      style.removeProperty('--drop-2-rgb');
+      style.removeProperty('--gold');
+    }else{
+      style.setProperty('--drop', t.drop);
+      style.setProperty('--drop-2', t.drop2);
+      style.setProperty('--drop-rgb', hexToRgb(t.drop));
+      style.setProperty('--drop-2-rgb', hexToRgb(t.drop2));
+      style.setProperty('--gold', t.drop);
+    }
+    document.querySelectorAll('.invoice-color-swatch').forEach(sw=>{
+      sw.classList.toggle('active', sw.dataset.key === t.key);
+    });
+  }
+
+  const swatchWrap = document.getElementById('invoiceColorSwatches');
+  if(swatchWrap){
+    themes.forEach(t=>{
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'invoice-color-swatch';
+      btn.dataset.key = t.key;
+      btn.title = t.name;
+      btn.style.background = `linear-gradient(135deg, ${t.drop}, ${t.drop2})`;
+      btn.addEventListener('click', ()=> applyInvoiceTheme(t));
+      swatchWrap.appendChild(btn);
+    });
+  }
+
+  applyInvoiceTheme(themes[0]); /* پیش‌فرض: آبی */
+})();
+
+populateInvoiceProductSelect();
+
+syncInvoiceCustomFieldVisibility(false);
+syncInvoiceUnitPriceField();
+resetInvoiceForm(false);
+
+renderStats();
+renderTabs();
+renderGrid();
+renderBestSellers();
+renderWholesaleTabs();
+renderWholesaleTables();
+renderCRM();
+
+const footerWholesaleLink = document.getElementById('footerWholesaleLink');
+if(footerWholesaleLink){
+  footerWholesaleLink.addEventListener('click', (e)=>{
+    e.preventDefault();
+    modeWholesaleBtn.click();
+  });
+}
+
+/* ---------- اشتراک‌گذاری محصول ----------
+   برای هر محصول یه لینک اختصاصی می‌سازه (?p=نام محصول) که وقتی باز بشه
+   همون محصول به‌صورت خودکار توی مودال باز می‌شه. */
+function productShareUrl(p){
+  const base = window.location.origin + window.location.pathname;
+  return `${base}?p=${encodeURIComponent(p.name)}`;
+}
+
+function findProductByName(name){
+  return products.find(pr => pr.name === name) || null;
+}
+
+shareBtn.addEventListener('click', async ()=>{
+  if(!currentModalProduct) return;
+  const url = productShareUrl(currentModalProduct);
+  const shareData = {
+    title: `${currentModalProduct.name} | رمی شاپ`,
+    text: `ویدیوی تست واقعی ${currentModalProduct.name} رو ببین:`,
+    url
+  };
+  if (navigator.share){
+    try{ await navigator.share(shareData); return; } catch(e){ /* کاربر لغو کرد یا خطا، برو سراغ کپی */ }
+  }
+  try{
+    await navigator.clipboard.writeText(url);
+    const original = shareBtnLabel.textContent;
+    shareBtnLabel.textContent = "لینک کپی شد ✅";
+    setTimeout(()=>{ shareBtnLabel.textContent = original; }, 2000);
+  }catch(e){
+    window.prompt("این لینک رو کپی کن:", url);
+  }
+});
+
+/* اگه لینک با ?p=... باز شده باشه، همون محصول رو خودکار باز می‌کنه */
+(function openFromShareLink(){
+  const params = new URLSearchParams(window.location.search);
+  const pName = params.get('p');
+  if (!pName) return;
+  const product = findProductByName(pName);
+  if (product) openModal(product);
+})();
+
+</script>
 
 </body>
 </html>

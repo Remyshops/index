@@ -874,6 +874,23 @@
     line-height:1.9;
   }
   .invoice-customer{ display:flex; flex-direction:column; gap:10px; }
+  .lead-field{
+    display:block;
+    width:100%;
+    height:48px;
+    box-sizing:border-box;
+    background:var(--surface);
+    border:1px solid var(--line);
+    color:var(--text);
+    padding:0 16px;
+    border-radius:12px;
+    font-family:inherit;
+    font-size:14px;
+    outline:none;
+    transition:border-color .2s, box-shadow .2s;
+  }
+  .lead-field::placeholder{ color:var(--muted); }
+  .lead-field:focus{ border-color:var(--drop); box-shadow:0 0 0 3px rgba(var(--drop-rgb),0.12); }
   .invoice-customer .lead-field{ margin-bottom:0; }
   .invoice-info-row{ display:flex; align-items:center; gap:6px; margin-bottom:8px; }
   .invoice-info-row:last-child{ margin-bottom:0; }
@@ -1898,8 +1915,8 @@
       <button class="close-btn" id="closeInvoicePassModal">×</button>
     </div>
     <p style="font-size:13px; color:var(--muted); margin-bottom:14px;">برای دسترسی به صدور فاکتور، نام کاربری و رمز رو وارد کن</p>
-    <input type="text" id="invoiceUserInput" class="lead-field" placeholder="نام کاربری" autocomplete="off" style="text-align:center; margin-bottom:10px;">
-    <input type="password" id="invoicePassInput" class="lead-field" placeholder="رمز عبور" inputmode="numeric" style="text-align:center; letter-spacing:6px; font-size:18px;">
+    <input type="text" id="invoiceUserInput" class="lead-field" placeholder="نام کاربری" autocomplete="off" style="text-align:center; margin-bottom:12px; letter-spacing:1px;">
+    <input type="password" id="invoicePassInput" class="lead-field" placeholder="رمز عبور" inputmode="numeric" style="text-align:center; letter-spacing:3px;">
     <div class="lead-msg" id="invoicePassMsg"></div>
     <button type="button" id="invoicePassSubmit" class="lead-submit" style="margin-top:10px;">ورود</button>
   </div>

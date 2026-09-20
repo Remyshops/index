@@ -1804,6 +1804,7 @@
       <button type="button" id="invoiceImageBtn" class="invoice-action-btn image">📷 خروجی عکس</button>
       <button type="button" id="invoiceCopyBtn" class="invoice-action-btn copy">📋 کپی متن فاکتور</button>
       <button type="button" id="invoiceCRMBtn" class="invoice-action-btn copy">📇 ثبت در CRM</button>
+      <button type="button" id="invoiceProfitBtn" class="invoice-action-btn copy" style="display:none;">📊 ارسال به محاسبه سود</button>
       <button type="button" id="invoiceResetBtn" class="invoice-action-btn reset">🗑 فاکتور جدید</button>
     </div>
     <div class="invoice-copy-msg no-print" id="invoiceCopyMsg"></div>
@@ -2494,6 +2495,8 @@ function applyModeButtonPermissions(profile){
   const perms = (profile && profile.permissions) || {};
   modeProfitBtn.style.display = perms.profit ? '' : 'none';
   modeCRMBtn.style.display = perms.crm ? '' : 'none';
+  const invProfitBtn = document.getElementById('invoiceProfitBtn');
+  if(invProfitBtn) invProfitBtn.style.display = perms.profit ? '' : 'none';
 }
 
 /* پروفایل کاربری که الان لاگینه رو برمی‌گردونه (برای پیام پیگیری و امثالش) */
@@ -3215,6 +3218,31 @@ if(invoiceCopyBtn){
       return;
     }
     setTimeout(()=>{ invoiceCopyMsg.textContent = ""; }, 2500);
+  });
+}
+
+/* ================= ارسال فاکتور به «محاسبه سود» =================
+   اقلام فاکتور (نام، تعداد، قیمت واحد + تخفیف) داخل آدرس صفحه‌ی محاسبه سود
+   گذاشته می‌شه و همون‌جا خودکار لود می‌شه؛ فقط تامین‌کننده باید انتخاب بشه. */
+const PROFIT_PAGE_URL = 'https://remyshops.github.io/Mohasebe_sood/';
+const invoiceProfitBtn = document.getElementById('invoiceProfitBtn');
+if(invoiceProfitBtn){
+  invoiceProfitBtn.addEventListener('click', ()=>{
+    if(!invoiceItems.length){ alert('اول حداقل یک کالا به فاکتور اضافه کن'); return; }
+    let owner = 'ali';
+    try{ if(sessionStorage.getItem('remyInvoiceProfile') === 'sister') owner = 'maryam'; }catch(e){ /* بی‌خیال */ }
+    const payload = {
+      v: 1,
+      owner,
+      customer: customerNameInput.value.trim(),
+      number: invoiceNumberInput.value,
+      date: invoiceDateInput.value,
+      discount: Math.max(0, parseFloat(invoiceDiscountInput.value) || 0),
+      items: invoiceItems.map(it=> ({n: it.name, q: it.qty, p: it.unitPrice}))
+    };
+    const b64 = btoa(unescape(encodeURIComponent(JSON.stringify(payload))))
+      .replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+    window.open(PROFIT_PAGE_URL + '#inv=' + b64, '_blank', 'noopener');
   });
 }
 

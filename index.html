@@ -1188,6 +1188,17 @@
     .invoice-topbar{ flex-direction:column; align-items:flex-end; gap:6px; }
   }
 
+
+  .saved-inv{ margin-top:22px; border:1px solid var(--line,#e2e8f0); border-radius:14px; padding:12px; background:#fff; }
+  .saved-inv-title{ font-weight:800; margin-bottom:8px; display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+  .saved-inv-row{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; padding:9px 4px; border-top:1px solid #eef2f7; font-size:13px; }
+  .saved-inv-row:first-child{ border-top:none; }
+  .saved-inv-info{ flex:1; min-width:170px; }
+  .saved-inv-info small{ color:#64748b; display:block; }
+  .saved-inv-sent{ color:#15803d; font-weight:700; font-size:12px; }
+  .saved-inv-btn{ border:1px solid #cbd5e1; background:#f8fafc; border-radius:8px; padding:6px 10px; font-family:inherit; font-size:12px; cursor:pointer; }
+  .saved-inv-btn:hover{ background:#eef2f7; }
+  .saved-inv-btn.del{ color:#b91c1c; }
   @media print{
     body *{ visibility:hidden; }
     #invoicePrintArea, #invoicePrintArea *{ visibility:visible; }
@@ -1804,10 +1815,17 @@
       <button type="button" id="invoiceImageBtn" class="invoice-action-btn image">📷 خروجی عکس</button>
       <button type="button" id="invoiceCopyBtn" class="invoice-action-btn copy">📋 کپی متن فاکتور</button>
       <button type="button" id="invoiceCRMBtn" class="invoice-action-btn copy">📇 ثبت در CRM</button>
+      <button type="button" id="invoiceSaveBtn" class="invoice-action-btn image">💾 ذخیره فاکتور</button>
+      <button type="button" id="invoiceLoadFileBtn" class="invoice-action-btn reset">📂 لود فاکتور از فایل</button>
+      <input type="file" id="invoiceLoadFile" accept=".json,application/json" style="display:none">
       <button type="button" id="invoiceProfitBtn" class="invoice-action-btn copy" style="display:none;">📊 ارسال به محاسبه سود</button>
       <button type="button" id="invoiceResetBtn" class="invoice-action-btn reset">🗑 فاکتور جدید</button>
     </div>
     <div class="invoice-copy-msg no-print" id="invoiceCopyMsg"></div>
+    <div class="saved-inv no-print" id="savedInvBox" style="display:none;">
+      <div class="saved-inv-title"><span>🗂 فاکتورهای ذخیره‌شده <span id="savedInvCount"></span></span><button type="button" class="saved-inv-btn" id="savedInvExportAll" style="margin-inline-start:auto;">📥 دانلود همه</button></div>
+      <div id="savedInvList"></div>
+    </div>
   </div>
 
   <!-- ================= CRM / پیگیری مشتری ================= -->
@@ -2497,6 +2515,7 @@ function applyModeButtonPermissions(profile){
   modeCRMBtn.style.display = perms.crm ? '' : 'none';
   const invProfitBtn = document.getElementById('invoiceProfitBtn');
   if(invProfitBtn) invProfitBtn.style.display = perms.profit ? '' : 'none';
+  if(typeof renderSavedInvoices === 'function') renderSavedInvoices();
 }
 
 /* پروفایل کاربری که الان لاگینه رو برمی‌گردونه (برای پیام پیگیری و امثالش) */
@@ -3225,24 +3244,209 @@ if(invoiceCopyBtn){
    اقلام فاکتور (نام، تعداد، قیمت واحد + تخفیف) داخل آدرس صفحه‌ی محاسبه سود
    گذاشته می‌شه و همون‌جا خودکار لود می‌شه؛ فقط تامین‌کننده باید انتخاب بشه. */
 const PROFIT_PAGE_URL = 'https://remyshops.github.io/Mohasebe_sood/';
+function currentOwner(){
+  try{ if(sessionStorage.getItem('remyInvoiceProfile') === 'sister') return 'maryam'; }catch(e){ /* بی‌خیال */ }
+  return 'ali';
+}
+function sendToProfit(inv){
+  const payload = {
+    v: 1,
+    owner: inv.owner || 'ali',
+    customer: inv.customer || '',
+    number: inv.number || '',
+    date: inv.date || '',
+    discount: Math.max(0, Number(inv.discount) || 0),
+    items: inv.items.map(it=> ({n: it.name, q: it.qty, p: it.unitPrice}))
+  };
+  const b64 = btoa(unescape(encodeURIComponent(JSON.stringify(payload))))
+    .replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+  window.open(PROFIT_PAGE_URL + '#inv=' + b64, '_blank', 'noopener');
+}
+function currentInvoiceSnapshot(){
+  return {
+    number: invoiceNumberInput.value,
+    date: invoiceDateInput.value,
+    customer: customerNameInput.value.trim(),
+    phone: customerPhoneInput.value.trim(),
+    address: (customerAddressInput && customerAddressInput.value.trim()) || '',
+    discount: Math.max(0, parseFloat(invoiceDiscountInput.value) || 0),
+    owner: currentOwner(),
+    items: invoiceItems.map(it=> ({name: it.name, qty: it.qty, unitPrice: it.unitPrice}))
+  };
+}
+
 const invoiceProfitBtn = document.getElementById('invoiceProfitBtn');
 if(invoiceProfitBtn){
   invoiceProfitBtn.addEventListener('click', ()=>{
     if(!invoiceItems.length){ alert('اول حداقل یک کالا به فاکتور اضافه کن'); return; }
-    let owner = 'ali';
-    try{ if(sessionStorage.getItem('remyInvoiceProfile') === 'sister') owner = 'maryam'; }catch(e){ /* بی‌خیال */ }
-    const payload = {
-      v: 1,
-      owner,
-      customer: customerNameInput.value.trim(),
-      number: invoiceNumberInput.value,
-      date: invoiceDateInput.value,
-      discount: Math.max(0, parseFloat(invoiceDiscountInput.value) || 0),
-      items: invoiceItems.map(it=> ({n: it.name, q: it.qty, p: it.unitPrice}))
+    sendToProfit(currentInvoiceSnapshot());
+  });
+}
+
+/* ---------- ذخیره‌ی فاکتور (روی همین مرورگر) و ارسال بعدی به محاسبه سود ---------- */
+const SAVED_INV_KEY = 'remySavedInvoices';
+function loadSavedInvoices(){
+  try{ const a = JSON.parse(localStorage.getItem(SAVED_INV_KEY) || '[]'); return Array.isArray(a) ? a : []; }
+  catch(e){ return []; }
+}
+function storeSavedInvoices(list){
+  try{ localStorage.setItem(SAVED_INV_KEY, JSON.stringify(list.slice(0, 300))); return true; }
+  catch(e){ alert('ذخیره انجام نشد (حافظه‌ی مرورگر پر است یا در دسترس نیست).'); return false; }
+}
+function invTotal(inv){
+  const sub = inv.items.reduce((sum,it)=> sum + it.qty*it.unitPrice, 0);
+  return Math.max(0, sub - (Number(inv.discount)||0));
+}
+function renderSavedInvoices(){
+  const box = document.getElementById('savedInvBox');
+  const listEl = document.getElementById('savedInvList');
+  if(!box || !listEl) return;
+  const list = loadSavedInvoices();
+  box.style.display = list.length ? '' : 'none';
+  document.getElementById('savedInvCount').textContent = list.length ? '(' + list.length + ')' : '';
+  let canProfit = false;
+  try{ canProfit = !!getCurrentSellerProfile().permissions.profit; }catch(e){ /* بی‌خیال */ }
+  listEl.innerHTML = '';
+  list.forEach(inv=>{
+    const row = document.createElement('div');
+    row.className = 'saved-inv-row';
+    const info = document.createElement('div');
+    info.className = 'saved-inv-info';
+    const title = document.createElement('div');
+    title.textContent = (inv.customer || 'بدون نام') + ' — ' + (inv.number || '');
+    const sub = document.createElement('small');
+    sub.textContent = (inv.date || '') + ' · ' + inv.items.length + ' قلم · ' + formatPrice(invTotal(inv));
+    info.appendChild(title); info.appendChild(sub);
+    row.appendChild(info);
+    if(inv.sentToProfit){
+      const badge = document.createElement('span');
+      badge.className = 'saved-inv-sent'; badge.textContent = '✓ به محاسبه سود رفته';
+      row.appendChild(badge);
+    }
+    function mk(label, cls, fn){
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'saved-inv-btn' + (cls ? ' ' + cls : ''); b.textContent = label;
+      b.addEventListener('click', fn); row.appendChild(b);
+    }
+    if(canProfit) mk('📊 محاسبه سود', '', ()=>{
+      sendToProfit(inv);
+      const all = loadSavedInvoices(); const t = all.find(x=> x.id === inv.id);
+      if(t){ t.sentToProfit = true; storeSavedInvoices(all); renderSavedInvoices(); }
+    });
+    mk('✏️ باز کردن', '', ()=>{
+      if(invoiceItems.length && !confirm('فاکتور فعلی با این فاکتور جایگزین بشه؟')) return;
+      invoiceItems = inv.items.map(it=> ({name: it.name, qty: it.qty, unitPrice: it.unitPrice}));
+      invoiceNumberInput.value = inv.number || '';
+      invoiceDateInput.value = inv.date || '';
+      customerNameInput.value = inv.customer || '';
+      customerPhoneInput.value = inv.phone || '';
+      if(customerAddressInput) customerAddressInput.value = inv.address || '';
+      invoiceDiscountInput.value = inv.discount || 0;
+      renderInvoiceTable();
+      window.scrollTo({top: invoiceSectionOffset(), behavior:'smooth'});
+    });
+    mk('🗑 حذف', 'del', ()=>{
+      if(!confirm('این فاکتور ذخیره‌شده حذف بشه؟')) return;
+      storeSavedInvoices(loadSavedInvoices().filter(x=> x.id !== inv.id));
+      renderSavedInvoices();
+    });
+    listEl.appendChild(row);
+  });
+}
+const invoiceSaveBtn = document.getElementById('invoiceSaveBtn');
+if(invoiceSaveBtn){
+  invoiceSaveBtn.addEventListener('click', ()=>{
+    if(!invoiceItems.length){ alert('اول حداقل یک کالا به فاکتور اضافه کن'); return; }
+    const snap = currentInvoiceSnapshot();
+    const list = loadSavedInvoices();
+    const i = snap.number ? list.findIndex(x=> x.number === snap.number) : -1;   // همان شماره = همان فاکتور، به‌روز می‌شود
+    if(i >= 0){ snap.id = list[i].id; snap.sentToProfit = false; snap.savedAt = Date.now(); list[i] = snap; }
+    else { snap.id = 'i' + Date.now() + Math.floor(Math.random()*1000); snap.sentToProfit = false; snap.savedAt = Date.now(); list.unshift(snap); }
+    if(!storeSavedInvoices(list)) return;
+    renderSavedInvoices();
+    downloadJSON('فاکتور_' + (safeFileName(snap.customer) || 'بدون_نام') + '_' + safeFileName(snap.number) + '.json',
+      {app: 'remy-invoice', version: 1, savedAt: new Date().toISOString(), invoices: [snap]});
+    invoiceCopyMsg.textContent = (i >= 0 ? '✅ فاکتور به‌روز شد' : '✅ فاکتور ذخیره شد') + ' و فایلش روی سیستم دانلود شد';
+    setTimeout(()=>{ invoiceCopyMsg.textContent = ''; }, 3500);
+  });
+}
+renderSavedInvoices();
+
+/* ---------- ذخیره روی سیستم (فایل JSON) و لود دوباره از فایل ---------- */
+function downloadJSON(filename, obj){
+  const blob = new Blob([JSON.stringify(obj, null, 2)], {type:'application/json;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=> URL.revokeObjectURL(url), 1500);
+}
+function safeFileName(str){ return String(str||'').replace(/[\\/:*?"<>|]/g,'_').trim().slice(0,60); }
+
+const savedInvExportAll = document.getElementById('savedInvExportAll');
+if(savedInvExportAll){
+  savedInvExportAll.addEventListener('click', ()=>{
+    const list = loadSavedInvoices();
+    if(!list.length) return;
+    downloadJSON('فاکتورهای_ذخیره_شده.json', {app: 'remy-invoice', version: 1, savedAt: new Date().toISOString(), invoices: list});
+  });
+}
+
+function sanitizeImportedInvoice(x){
+  if(!x || !Array.isArray(x.items)) return null;
+  const items = x.items.map(it=> ({
+    name: String((it && (it.name != null ? it.name : it.n)) || '').slice(0, 200),
+    qty: Math.max(1, Math.round(Number(it && (it.qty != null ? it.qty : it.q)) || 0)),
+    unitPrice: Math.max(0, Number(it && (it.unitPrice != null ? it.unitPrice : it.p)) || 0)
+  })).filter(it=> it.name && (it.qty > 0));
+  if(!items.length) return null;
+  return {
+    id: 'i' + Date.now() + Math.floor(Math.random()*100000),
+    number: String(x.number || '').slice(0, 40),
+    date: String(x.date || '').slice(0, 40),
+    customer: String(x.customer || '').slice(0, 120),
+    phone: String(x.phone || '').slice(0, 40),
+    address: String(x.address || '').slice(0, 300),
+    discount: Math.max(0, Number(x.discount) || 0),
+    owner: x.owner === 'maryam' ? 'maryam' : 'ali',
+    items,
+    sentToProfit: !!x.sentToProfit,
+    savedAt: Date.now()
+  };
+}
+const invoiceLoadFileBtn = document.getElementById('invoiceLoadFileBtn');
+const invoiceLoadFile = document.getElementById('invoiceLoadFile');
+if(invoiceLoadFileBtn && invoiceLoadFile){
+  invoiceLoadFileBtn.addEventListener('click', ()=> invoiceLoadFile.click());
+  invoiceLoadFile.addEventListener('change', (e)=>{
+    const file = e.target.files && e.target.files[0];
+    e.target.value = '';
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = ()=>{
+      try{
+        const data = JSON.parse(reader.result);
+        const arr = Array.isArray(data.invoices) ? data.invoices : (Array.isArray(data.items) ? [data] : null);
+        if(!arr) throw new Error('bad');
+        const list = loadSavedInvoices();
+        let added = 0, updated = 0;
+        arr.forEach(raw=>{
+          const inv = sanitizeImportedInvoice(raw);
+          if(!inv) return;
+          const i = inv.number ? list.findIndex(x=> x.number === inv.number) : -1;
+          if(i >= 0){ inv.id = list[i].id; list[i] = inv; updated++; }
+          else { list.unshift(inv); added++; }
+        });
+        if(!added && !updated) throw new Error('empty');
+        if(!storeSavedInvoices(list)) return;
+        renderSavedInvoices();
+        invoiceCopyMsg.textContent = '✅ ' + added + ' فاکتور اضافه و ' + updated + ' فاکتور به‌روز شد؛ در بخش «فاکتورهای ذخیره‌شده» ببین';
+        setTimeout(()=>{ invoiceCopyMsg.textContent = ''; }, 5000);
+      }catch(err){
+        alert('این فایل فاکتور معتبر نیست.');
+      }
     };
-    const b64 = btoa(unescape(encodeURIComponent(JSON.stringify(payload))))
-      .replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
-    window.open(PROFIT_PAGE_URL + '#inv=' + b64, '_blank', 'noopener');
+    reader.readAsText(file, 'UTF-8');
   });
 }
 

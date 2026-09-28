@@ -724,6 +724,26 @@
   table.wholesale-table td.buy-price{ color:var(--drop); font-weight:800; }
   table.wholesale-table td.sell-price{ color:var(--green); font-weight:700; }
 
+  .wholesale-export-btn{
+    display:flex; align-items:center; justify-content:center; gap:6px;
+    width:100%;
+    margin-top:12px;
+    padding:10px 14px;
+    border:none;
+    border-radius:10px;
+    background:linear-gradient(135deg, #6d28d9, #4c1d95);
+    color:#ffffff;
+    font-family:inherit;
+    font-size:12.5px;
+    font-weight:700;
+    cursor:pointer;
+    transition:transform .15s ease;
+  }
+  .wholesale-export-btn:hover{ transform:translateY(-2px); }
+  .wholesale-export-btn:disabled{ opacity:.6; cursor:default; transform:none; }
+  .wholesale-block.capturing-image{ padding-bottom:16px; }
+  .wholesale-block.capturing-image .wholesale-export-btn{ display:none; }
+
   /* ---------- invoice (فاکتور) view ---------- */
   .invoice-view{ display:none; }
   .invoice-view.show{ display:block; }
@@ -1688,14 +1708,14 @@
   <!-- ================= WHOLESALE (قیمت عمده) ================= -->
   <div class="wholesale-view" id="wholesaleView">
     <div class="section-title" id="wholesaleSection"><span class="drop"></span><h2>لیست قیمت عمده</h2><span class="line"></span></div>
-    <div class="section-sub">قیمت خرید عمده و حداقل قیمت مجاز فروش در بازار — 🟢 اختلاف این دو ستون، سود شماست. سفارش بر اساس تعداد کارتن</div>
+    <div class="section-sub">قیمت خرید عمده و قیمت فروش در بازار — 🟢 اختلاف این دو ستون، سود شماست. سفارش بر اساس تعداد کارتن</div>
 
     <div class="cat-tabs" id="wholesaleCatTabs"></div>
 
     <div id="wholesaleTablesWrap"></div>
 
     <div class="wholesale-disclaimer">
-      ⚠️ حداقل قیمت فروش درج‌شده در جدول، کمترین قیمت مجاز برای عرضه محصول در بازار است؛ فروش کمتر از این مبلغ مجاز نیست، اما فروش با قیمت بالاتر بلامانع است.
+      ⚠️ قیمت فروش درج‌شده در جدول، قیمت پیشنهادی برای عرضه محصول در بازار است.
     </div>
 
     <a href="https://eitaa.com/EZGAMETV" target="_blank" rel="noopener" class="basalam-box" style="background:linear-gradient(135deg, var(--orange), var(--orange-2)); margin-bottom:8px;">
@@ -1948,13 +1968,13 @@
    لینک هر ویدیو رو با آدرس واقعی (یوتیوب/آپارات/درایو) جایگزین کنید.
 ========================================================= */
 const products = [
-  { name:"نانو چند منظوره خانگی", price:285000, cat:"خانگی", buyUrl:"https://basalam.com/editor/product/41543803", img:"home-multi-cleaner.webp", videos:[
+  { name:"نانو چند منظوره خانگی", price:342000, cat:"خانگی", buyUrl:"https://basalam.com/editor/product/41543803", img:"home-multi-cleaner.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://www.aparat.com/v/sva419y"},
     {label:"ویدیوی تست ۲", url:"https://www.aparat.com/v/mfq9184"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/jcs280x"},
     {label:"ویدیوی تست ۴", url:"https://aparat.com/v/wjmg0qy"}
   ]},
-  { name:"پاک کننده گاز", price:280000, cat:"خانگی", buyUrl:"https://basalam.com/editor/product/42580333", img:"gas-stove-cleaner.webp", videos:[
+  { name:"پاک کننده گاز", price:336000, cat:"خانگی", buyUrl:"https://basalam.com/editor/product/42580333", img:"gas-stove-cleaner.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/gzrk14y"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/jdcm071"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/xulf06h"},
@@ -1962,7 +1982,7 @@ const products = [
     {label:"ویدیوی تست ۵", url:"https://www.aparat.com/v/ytrk65j"},
     {label:"ویدیوی تست ۶", url:"https://aparat.com/v/via8xqj"}
   ]},
-  { name:"پاک کننده سینک و شیر آلات", price:276500, cat:"خانگی", buyUrl:"https://basalam.com/editor/product/42580846", img:"sink-faucet-cleaner.webp", videos:[
+  { name:"پاک کننده سینک و شیر آلات", price:332000, cat:"خانگی", buyUrl:"https://basalam.com/editor/product/42580846", img:"sink-faucet-cleaner.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/pvj4ouv"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/rhcb4ko"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/wmv7rt5"},
@@ -1972,7 +1992,7 @@ const products = [
     {label:"ویدیوی تست ۷", url:"https://aparat.com/v/sxmx2bh"},
     {label:"ویدیوی تست ۸", url:"https://aparat.com/v/vko9q15"}
   ]},
-  { name:"پاک کننده مبل، فرش و پارچه", price:278000, cat:"خانگی", buyUrl:"https://basalam.com/editor/product/42619107", img:"sofa-carpet-cleaner.webp", videos:[
+  { name:"پاک کننده مبل، فرش و پارچه", price:333500, cat:"خانگی", buyUrl:"https://basalam.com/editor/product/42619107", img:"sofa-carpet-cleaner.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/nrhp775"},
     {label:"ویدیوی تست ۲", url:"https://www.aparat.com/v/dgw87vw"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/kbgzbo9"},
@@ -1981,50 +2001,50 @@ const products = [
     {label:"ویدیوی تست ۶", url:"https://www.aparat.com/v/zju3eu2"},
     {label:"ویدیوی تست ۷", url:"https://www.aparat.com/v/lrs7eug"}
   ]},
-  { name:"پاک کننده ال ای دی و صفحه نمایش", price:270000, cat:"خانگی", buyUrl:"https://basalam.com/editor/product/44743589", img:"led-screen-cleaner.webp", videos:[
+  { name:"پاک کننده ال ای دی و صفحه نمایش", price:324000, cat:"خانگی", buyUrl:"https://basalam.com/editor/product/44743589", img:"led-screen-cleaner.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/zwal0vo"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/mric64p"},
     {label:"ویدیوی تست ۳", url:"https://www.aparat.com/v/zojwtss"}
   ]},
-  { name:"پاک کننده کاغذ دیواری", price:270000, cat:"خانگی", buyUrl:"https://basalam.com/editor/product/42619327", img:"wallpaper-cleaner.webp", videos:[
+  { name:"پاک کننده کاغذ دیواری", price:324000, cat:"خانگی", buyUrl:"https://basalam.com/editor/product/42619327", img:"wallpaper-cleaner.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/pkbssva"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/ehf1x23"}
   ]},
-  { name:"پاک کننده پارکت و سرامیک", price:275000, cat:"خانگی", buyUrl:"https://basalam.com/editor/product/42619670", img:"tile-ceramic-cleaner.webp", videos:[
+  { name:"پاک کننده پارکت و سرامیک", price:330000, cat:"خانگی", buyUrl:"https://basalam.com/editor/product/42619670", img:"tile-ceramic-cleaner.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/vqaspq1"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/xxi4uu9"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/hcnyubl"},
     {label:"ویدیوی تست ۴", url:"https://aparat.com/v/rgq0r6r"},
     {label:"ویدیوی تست ۵", url:"https://aparat.com/v/ridvud3"}
   ]},
-  { name:"واکس مات کننده لاستیک", price:345000, cat:"واکس", buyUrl:"https://basalam.com/editor", img:"tire-matte.webp", videos:[
+  { name:"واکس مات کننده لاستیک", price:414300, cat:"واکس", buyUrl:"https://basalam.com/editor", img:"tire-matte.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/kssq96r"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/zaubx68"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/smu8d4q"},
     {label:"ویدیوی تست ۴", url:"https://aparat.com/v/kqo7a41"},
     {label:"ویدیوی تست ۵", url:"https://aparat.com/v/wxx97h8"}
   ]},
-  { name:"واکس براق کننده لاستیک ( براق شاین)", price:370000, cat:"واکس", buyUrl:"https://basalam.com/editor/", img:"black-shine.webp", videos:[
+  { name:"واکس براق کننده لاستیک ( براق شاین)", price:510000, cat:"واکس", buyUrl:"https://basalam.com/editor/", img:"black-shine.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/lnsddtl"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/mygqm4i"}
   ]},
-  { name:"واکس داشبورد سیلیکونی", price:300000, cat:"واکس", buyUrl:"https://basalam.com/editor", img:"dashboard-silicon-wax.webp", videos:[
+  { name:"واکس داشبورد سیلیکونی", price:410500, cat:"واکس", buyUrl:"https://basalam.com/editor", img:"dashboard-silicon-wax.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/gdz1dho"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/ntzk4v2"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/taeax83"}
   ]},
-  { name:"واکس داشبورد غیر سیلیکونی", price:335000, cat:"واکس", buyUrl:"https://basalam.com/editor", img:"dashboard-wax.webp", videos:[
+  { name:"واکس داشبورد غیر سیلیکونی", price:402300, cat:"واکس", buyUrl:"https://basalam.com/editor", img:"dashboard-wax.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://www.aparat.com/v/bla205b"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/phk64x2"}
   ]},
-  { name:"واکس سه کاره لاستیک داشبورد", price:359000, cat:"واکس", buyUrl:"https://basalam.com/editor/product/44746616", img:"tire-dashboard-pro-wax.webp", videos:[
+  { name:"واکس سه کاره لاستیک داشبورد", price:430500, cat:"واکس", buyUrl:"https://basalam.com/editor/product/44746616", img:"tire-dashboard-pro-wax.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/gpiaci8"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/jvz4214"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/uzou08s"},
     {label:"ویدیوی تست ۴", url:"https://aparat.com/v/cops4l1"},
     {label:"ویدیوی تست ۵", url:"https://www.aparat.com/v/merqvd1"}
   ]},
-  { name:"صفر شوی", price:300000, cat:"خودرویی", buyUrl:"https://basalam.com/editor", img:"zero-car-wash.webp", videos:[
+  { name:"صفر شوی", price:410300, cat:"خودرویی", buyUrl:"https://basalam.com/editor", img:"zero-car-wash.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://www.aparat.com/v/hbj049k"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/uee58ek"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/txol3r7"},
@@ -2035,50 +2055,50 @@ const products = [
     {label:"ویدیوی تست ۸", url:"https://aparat.com/v/ewm1o5w"},
     {label:"ویدیوی تست ۹", url:"https://aparat.com/v/cnog75c"}
   ]},
-  { name:"موتور شوی", price:300000, cat:"خودرویی", buyUrl:"https://basalam.com/editor", img:"engine-cleaner.webp", videos:[
+  { name:"موتور شوی", price:410600, cat:"خودرویی", buyUrl:"https://basalam.com/editor", img:"engine-cleaner.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://www.aparat.com/v/whc79m4"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/zzjjg65"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/wyz8k3k"},
     {label:"ویدیوی تست ۴", url:"https://aparat.com/v/xym0oe3"}
   ]},
-  { name:"رینگ شوی", price:259000, cat:"خودرویی", buyUrl:"https://basalam.com/editor/product/45139589", img:"rim-cleaner.webp", videos:[
+  { name:"رینگ شوی", price:361400, cat:"خودرویی", buyUrl:"https://basalam.com/editor/product/45139589", img:"rim-cleaner.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/osdeza7"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/bvb1n02"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/afvpo38"},
     {label:"ویدیوی تست ۴", url:"https://aparat.com/v/fsl0h32"}
   ]},
-  { name:"پاک کننده چند منظوره خودرو", price:300000, cat:"خودرویی", buyUrl:"https://basalam.com/editor/product/41546837", img:"car-multi-cleaner.webp", videos:[
+  { name:"پاک کننده چند منظوره خودرو", price:410200, cat:"خودرویی", buyUrl:"https://basalam.com/editor/product/41546837", img:"car-multi-cleaner.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/abso38f"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/ild383c"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/jci2528"},
     {label:"ویدیوی تست ۴", url:"https://aparat.com/v/ajgi3pr"},
     {label:"ویدیوی تست ۵", url:"https://aparat.com/v/ucka454"}
   ]},
-  { name:"شیشه شوی", price:275000, cat:"خودرویی", buyUrl:"https://basalam.com/editor/product/45139055", img:"windshield-cleaner.webp", videos:[
+  { name:"شیشه شوی", price:380700, cat:"خودرویی", buyUrl:"https://basalam.com/editor/product/45139055", img:"windshield-cleaner.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/wab9wg9"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/owrkriv"}
   ]},
-  { name:"شامپو بدنه", price:275000, cat:"خودرویی", buyUrl:"https://basalam.com/editor/product/44745609", img:"car-shampoo.webp", videos:[
+  { name:"شامپو بدنه", price:450000, cat:"خودرویی", buyUrl:"https://basalam.com/editor/product/44745609", img:"car-shampoo.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/vrr7v3g"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/ycq93tk"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/nwg6by3"},
     {label:"ویدیوی تست ۴", url:"https://aparat.com/v/ookw75z"},
     {label:"ویدیوی تست ۵", url:"https://aparat.com/v/lzcm1va"}
   ]},
-  { name:"براق کننده بدنه", price:300000, cat:"خودرویی", buyUrl:"https://basalam.com/editor/product/44746229", img:"body-polish.webp", videos:[
+  { name:"براق کننده بدنه", price:410300, cat:"خودرویی", buyUrl:"https://basalam.com/editor/product/44746229", img:"body-polish.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/dkl8p3k"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/who3822"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/sur87s4"},
     {label:"ویدیوی تست ۴", url:"https://aparat.com/v/nyu9c48"},
     {label:"ویدیوی تست ۵", url:"https://aparat.com/v/asp5fdq"}
   ]},
-  { name:"براق کننده چراغ", price:300000, cat:"خودرویی", buyUrl:"https://basalam.com/editor/product/41545678", img:"headlight-polish.webp", videos:[
+  { name:"براق کننده چراغ", price:410300, cat:"خودرویی", buyUrl:"https://basalam.com/editor/product/41545678", img:"headlight-polish.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/ver9e1y"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/bdywd36"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/syaky9v"},
     {label:"ویدیوی تست ۴", url:"https://aparat.com/v/mpp598q"}
   ]},
-  { name:"بلک مجیک", price:345000, cat:"خودرویی", buyUrl:"https://basalam.com/editor/product/51881795", img:"black-magic.webp", videos:[
+  { name:"بلک مجیک", price:450000, cat:"خودرویی", buyUrl:"https://basalam.com/editor/product/51881795", img:"black-magic.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/mvz4qd5"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/qza45e0"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/zzmo12s"},
@@ -2093,24 +2113,24 @@ const simpleCategories = [
   { title:"عطر", buyUrl:"https://basalam.com/editor", introLabel:"معرفی عطر", catImg:"perfume-set.webp", videoUrls:[
     "https://aparat.com/v/gcn0onx"
   ], items:[
-    {name:"عطر با رایحه دانهیل", price:300000},{name:"عطر با رایحه ایفوریا", price:300000},{name:"عطر با رایحه باس من", price:300000},
-    {name:"عطر با رایحه مادام بیوتی", price:300000},{name:"عطر با رایحه لوندر", price:300000},{name:"عطر با رایحه کول فرش", price:300000}
+    {name:"عطر با رایحه دانهیل", price:397000},{name:"عطر با رایحه ایفوریا", price:397000},{name:"عطر با رایحه باس من", price:397000},
+    {name:"عطر با رایحه مادام بیوتی", price:397000},{name:"عطر با رایحه لوندر", price:397000},{name:"عطر با رایحه کول فرش", price:397000}
   ]},
   { title:"ادکلن", buyUrl:"https://basalam.com/editor", introLabel:"معرفی ادکلن", catImg:"cologne-set.webp", videoUrls:[
     "https://aparat.com/v/myx2f11","https://aparat.com/v/negc5ae"
   ], items:[
-    {name:"ادکلن زنانه همراز", price:930000},{name:"ادکلن مردانه کایرا", price:930000}
+    {name:"ادکلن زنانه همراز", price:1219000},{name:"ادکلن مردانه کایرا", price:1219000}
   ]},
   { title:"خوشبو کننده", buyUrl:"https://basalam.com/editor", introLabel:"معرفی خوشبو کننده", catImg:"air-freshener-set.webp", videoUrls:[
     "https://aparat.com/v/ejelu90","https://aparat.com/v/ezjv82d","https://aparat.com/v/phaxsff"
   ], items:[
-    {name:"اسپری خوشبوکننده هوا رایحه باس من", price:318000},{name:"اسپری خوشبوکننده هوا رایحه مادام بیوتی", price:318000},
-    {name:"اسپری خوشبوکننده هوا رایحه لاوندر", price:318000},{name:"اسپری خوشبوکننده هوا رایحه کول فرش", price:318000}
+    {name:"اسپری خوشبوکننده هوا رایحه باس من", price:369000},{name:"اسپری خوشبوکننده هوا رایحه مادام بیوتی", price:369000},
+    {name:"اسپری خوشبوکننده هوا رایحه لاوندر", price:369000},{name:"اسپری خوشبوکننده هوا رایحه کول فرش", price:369000}
   ]},
   { title:"واکس چرم", buyUrl:"https://basalam.com/editor", introLabel:"معرفی واکس چرم جی پلاس", catImg:"leather-wax.webp", videoUrls:[
     "https://aparat.com/v/rsslhf2"
   ], items:[
-    {name:"نانو چرم کیف و کفش بدون جعبه", price:275000},{name:"نانو چرم کیف و کفش با جعبه", price:295000}
+    {name:"نانو چرم کیف و کفش بدون جعبه", price:359000},{name:"نانو چرم کیف و کفش با جعبه", price:389000}
   ]}
 ];
 
@@ -2122,52 +2142,52 @@ const categories = ["همه","خانگی","خودرویی","واکس","عطر","
 ========================================================= */
 const wholesaleCategories = [
   { key:"home", tab:"خانگی", title:"خانگی ۵۰۰ سی‌سی", note:"حداقل سفارش: ۱ کارتن = ۲۰ عدد", cartonQty:20, items:[
-    {name:"پاک کننده چند منظوره", en:"MULTI CLEANER", volume:500, buy:189700, sell:285000},
-    {name:"پاک کننده گاز", en:"STOVE CLEANER", volume:500, buy:184000, sell:280000},
-    {name:"پاک کننده سینک و شیر آلات", en:"SINK & FAUCET CLEANER", volume:500, buy:183000, sell:276500},
-    {name:"پاک کننده مبل، فرش و پارچه", en:"SOFA CLEANER", volume:500, buy:186500, sell:278000},
-    {name:"پاک کننده ال‌ای‌دی و صفحه نمایش", en:"SCREEN CLEANER", volume:500, buy:180000, sell:270000},
-    {name:"پاک کننده کاغذ دیواری", en:"WALLPAPER CLEANER", volume:500, buy:184000, sell:270000},
-    {name:"پاک کننده پارکت و سرامیک", en:"PARQUET & CERAMIC CLEANER", volume:500, buy:183000, sell:275000}
+    {name:"پاک کننده چند منظوره", en:"MULTI CLEANER", volume:500, buy:246000, sell:342000},
+    {name:"پاک کننده گاز", en:"STOVE CLEANER", volume:500, buy:239000, sell:336000},
+    {name:"پاک کننده سینک و شیر آلات", en:"SINK & FAUCET CLEANER", volume:500, buy:238000, sell:332000},
+    {name:"پاک کننده مبل، فرش و پارچه", en:"SOFA CLEANER", volume:500, buy:238000, sell:334000},
+    {name:"پاک کننده ال‌ای‌دی و صفحه نمایش", en:"SCREEN CLEANER", volume:500, buy:232000, sell:324000},
+    {name:"پاک کننده کاغذ دیواری", en:"WALLPAPER CLEANER", volume:500, buy:232000, sell:324000},
+    {name:"پاک کننده پارکت و سرامیک", en:"PARQUET & CERAMIC CLEANER", volume:500, buy:237000, sell:330000}
   ]},
   { key:"auto", tab:"خودرویی", title:"نانو خودرویی ۵۰۰ سی‌سی", note:"حداقل سفارش: ۱ کارتن = ۲۰ عدد", cartonQty:20, items:[
-    {name:"واکس مات کننده لاستیک", en:"TIRE MATTE", volume:500, buy:179500, sell:345000},
-    {name:"واکس براق کننده لاستیک", en:"TIRE SHINE", volume:500, buy:199500, sell:370000},
-    {name:"واکس داشبورد سیلیکونی", en:"SILICON DASHBOARD", volume:500, buy:211500, sell:300000},
-    {name:"واکس داشبورد غیر سیلیکونی", en:"DASHBOARD WAX", volume:500, buy:194500, sell:335000},
-    {name:"واکس سه‌کاره لاستیک داشبورد", en:"PRO WAX", volume:500, buy:208000, sell:359000},
-    {name:"صفر شوی", en:"ZERO CARWASH", volume:500, buy:194500, sell:300000},
-    {name:"موتور شوی", en:"ENGINE CLEANER", volume:500, buy:186500, sell:300000},
-    {name:"رینگ شوی", en:"RIM CLEANER", volume:500, buy:169000, sell:259000},
-    {name:"پاک کننده چند منظوره خودرو", en:"MULTI CLEANER", volume:500, buy:209500, sell:300000},
-    {name:"شیشه شوی", en:"WINDSHIELD CLEANER", volume:500, buy:164000, sell:275000},
-    {name:"شامپو بدنه", en:"CAR SHAMPOO", volume:500, buy:220000, sell:275000},
-    {name:"براق کننده بدنه", en:"BODY POLISH", volume:500, buy:182000, sell:300000},
-    {name:"براق کننده چراغ", en:"HEADLIGHT POLISH", volume:500, buy:182000, sell:300000},
-    {name:"واکس براق کننده لاستیک ( براق شاین)", en:"BLACK SHINE", volume:500, buy:241000, sell:345000},
-    {name:"بلک مجیک", en:"BLACK MAGIC", volume:500, buy:219000, sell:335000}
+    {name:"واکس مات کننده لاستیک", en:"TIRE MATTE", volume:500, buy:228000, sell:419000},
+    {name:"واکس براق کننده لاستیک", en:"TIRE SHINE", volume:500, buy:258000, sell:449000},
+    {name:"واکس داشبورد سیلیکونی", en:"SILICON DASHBOARD", volume:500, buy:270000, sell:409000},
+    {name:"واکس داشبورد غیر سیلیکونی", en:"DASHBOARD WAX", volume:500, buy:261000, sell:399000},
+    {name:"واکس سه‌کاره لاستیک داشبورد", en:"PRO WAX", volume:500, buy:270000, sell:429000},
+    {name:"صفر شوی", en:"ZERO CARWASH", volume:500, buy:246000, sell:409000},
+    {name:"موتور شوی", en:"ENGINE CLEANER", volume:500, buy:246000, sell:409000},
+    {name:"رینگ شوی", en:"RIM CLEANER", volume:500, buy:246000, sell:359000},
+    {name:"پاک کننده چند منظوره خودرو", en:"MULTI CLEANER", volume:500, buy:279000, sell:429000},
+    {name:"شیشه شوی", en:"WINDSHIELD CLEANER", volume:500, buy:211000, sell:379000},
+    {name:"شامپو بدنه", en:"CAR SHAMPOO", volume:500, buy:320000, sell:449000},
+    {name:"براق کننده بدنه", en:"BODY POLISH", volume:500, buy:204000, sell:409000},
+    {name:"براق کننده چراغ", en:"HEADLIGHT POLISH", volume:500, buy:204000, sell:409000},
+    {name:"واکس براق کننده لاستیک ( براق شاین)", en:"BLACK SHINE", volume:500, buy:285000, sell:509000},
+    {name:"بلک مجیک", en:"BLACK MAGIC", volume:500, buy:246000, sell:449000}
   ]},
   { key:"freshener", tab:"خوشبو کننده هوا", title:"اسپری خوشبوکننده هوا ۱۲۵ سی‌سی", note:"حداقل سفارش: ۱ کارتن = ۲۵ عدد", cartonQty:25, items:[
-    {name:"اسپری خوشبوکننده هوا رایحه باس من", volume:125, buy:194000, sell:254000},
-    {name:"اسپری خوشبوکننده هوا رایحه مادام بیوتی", volume:125, buy:194000, sell:254000},
-    {name:"اسپری خوشبوکننده هوا رایحه لاوندر", volume:125, buy:194000, sell:254000},
-    {name:"اسپری خوشبوکننده هوا رایحه کول فرش", volume:125, buy:194000, sell:254000}
+    {name:"اسپری خوشبوکننده هوا رایحه باس من", volume:125, buy:252000, sell:369000},
+    {name:"اسپری خوشبوکننده هوا رایحه مادام بیوتی", volume:125, buy:245000, sell:369000},
+    {name:"اسپری خوشبوکننده هوا رایحه لاوندر", volume:125, buy:245000, sell:369000},
+    {name:"اسپری خوشبوکننده هوا رایحه کول فرش", volume:125, buy:245000, sell:369000}
   ]},
   { key:"cologne", tab:"ادکلن", title:"ادکلن ۵۰ سی‌سی", note:"حداقل سفارش: ۱ کارتن = ۶ عدد (همراز و کایرا به دلخواه)", cartonQty:6, items:[
-    {name:"ادکلن زنانه همراز", volume:50, buy:481500, sell:561000},
-    {name:"ادکلن مردانه کایرا", volume:50, buy:481500, sell:561000}
+    {name:"ادکلن زنانه همراز", volume:50, buy:586000, sell:1219000},
+    {name:"ادکلن مردانه کایرا", volume:50, buy:586000, sell:1219000}
   ]},
   { key:"leatherwax", tab:"واکس (نانو چرم)", title:"نانو چرم کیف و کفش", note:"تعداد در کارتن بسته به مدل: ۲۵ عددی (بدون جعبه) یا ۱۲ عددی (با جعبه)", items:[
-    {name:"نانو چرم کیف و کفش بدون جعبه", volume:125, buy:200000, sell:250000, cartonQty:25},
-    {name:"نانو چرم کیف و کفش با جعبه", volume:125, buy:222000, sell:272000, cartonQty:12}
+    {name:"نانو چرم کیف و کفش بدون جعبه", volume:125, buy:260000, sell:359000, cartonQty:25},
+    {name:"نانو چرم کیف و کفش با جعبه", volume:125, buy:287000, sell:389000, cartonQty:12}
   ]},
   { key:"perfume", tab:"عطر", title:"عطر جی‌پلاس ۳۰ سی‌سی", note:"حداقل سفارش: ۱ کارتن = ۲۴ عدد", cartonQty:24, items:[
-    {name:"عطر با رایحه دانهیل", en:"DUNHILL", volume:30, buy:236000, sell:286000},
-    {name:"عطر با رایحه ایفوریا", en:"EUPHORIA", volume:30, buy:236000, sell:286000},
-    {name:"عطر با رایحه باس من", en:"BOSS MAN", volume:30, buy:236000, sell:286000},
-    {name:"عطر با رایحه مادام بیوتی", en:"MADAM BEAUTY", volume:30, buy:236000, sell:286000},
-    {name:"عطر با رایحه لاوندر", en:"LAVENDER", volume:30, buy:236000, sell:286000},
-    {name:"عطر با رایحه کول فرش", en:"COOL FRESH", volume:30, buy:236000, sell:286000}
+    {name:"عطر با رایحه دانهیل", en:"DUNHILL", volume:30, buy:281000, sell:397000},
+    {name:"عطر با رایحه ایفوریا", en:"EUPHORIA", volume:30, buy:281000, sell:397000},
+    {name:"عطر با رایحه باس من", en:"BOSS MAN", volume:30, buy:281000, sell:397000},
+    {name:"عطر با رایحه مادام بیوتی", en:"MADAM BEAUTY", volume:30, buy:281000, sell:397000},
+    {name:"عطر با رایحه لاوندر", en:"LAVENDER", volume:30, buy:281000, sell:397000},
+    {name:"عطر با رایحه کول فرش", en:"COOL FRESH", volume:30, buy:281000, sell:397000}
   ]}
 ];
 
@@ -2321,11 +2341,51 @@ function openWholesaleTest(itemName){
   input.scrollIntoView({behavior:'smooth', block:'center'});
 }
 
-wholesaleTablesWrap.addEventListener('click', (e)=>{
+wholesaleTablesWrap.addEventListener('click', async (e)=>{
+  const exportBtn = e.target.closest('.wholesale-export-btn');
+  if(exportBtn){
+    await exportWholesaleBlockImage(exportBtn);
+    return;
+  }
   const icon = e.target.closest('.wtest-icon');
   if(!icon) return;
   openWholesaleTest(icon.dataset.name);
 });
+
+async function exportWholesaleBlockImage(btn){
+  const block = btn.closest('.wholesale-block');
+  if(!block) return;
+  if(typeof html2canvas === 'undefined'){
+    alert('امکان ساخت عکس در دسترس نیست — اتصال اینترنت رو چک کن و دوباره تلاش کن');
+    return;
+  }
+  const originalLabel = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = "⏳ در حال ساخت عکس...";
+  block.classList.add('capturing-image');
+  try{
+    if(document.fonts && document.fonts.ready){
+      try{
+        await document.fonts.load('700 16px Vazirmatn');
+        await document.fonts.load('800 16px Vazirmatn');
+        await document.fonts.load('400 16px Vazirmatn');
+        await document.fonts.ready;
+      }catch(fontErr){ /* اگه لود فونت خطا داد، با فونت پیش‌فرض ادامه بده */ }
+    }
+    const canvas = await html2canvas(block, {backgroundColor:'#ffffff', scale:4, useCORS:true, imageTimeout:0});
+    const link = document.createElement('a');
+    const safeName = (btn.dataset.cat || 'wholesale').replace(/[^\w-]/g, '');
+    link.download = `qeymat-omde-${safeName}.png`;
+    link.href = canvas.toDataURL('image/png', 1.0);
+    link.click();
+  }catch(err){
+    alert('ساخت عکس با خطا مواجه شد، دوباره تلاش کن');
+  }finally{
+    block.classList.remove('capturing-image');
+    btn.disabled = false;
+    btn.textContent = originalLabel;
+  }
+}
 
 function renderWholesaleTables(){
   wholesaleTablesWrap.innerHTML = "";
@@ -2348,7 +2408,7 @@ function renderWholesaleTables(){
           <td class="sell-price">${formatPrice(it.sell)}</td>
         </tr>`;
       }).join("");
-      const sellHeader = (cat.key === "home" || cat.key === "auto") ? "قیمت فروش" : "حداقل فروش";
+      const sellHeader = "قیمت فروش";
       block.innerHTML = `
         <h3><span class="drop"></span>${cat.title}</h3>
         <div class="wholesale-note">${cat.note}</div>
@@ -2359,7 +2419,8 @@ function renderWholesaleTables(){
             </tr></thead>
             <tbody>${rows}</tbody>
           </table>
-        </div>`;
+        </div>
+        <button type="button" class="wholesale-export-btn" data-cat="${cat.key}">📸 خروجی عکس همین جدول</button>`;
       wholesaleTablesWrap.appendChild(block);
     });
 }

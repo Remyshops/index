@@ -741,6 +741,7 @@
   }
   .wholesale-export-btn:hover{ transform:translateY(-2px); }
   .wholesale-export-btn:disabled{ opacity:.6; cursor:default; transform:none; }
+  .wholesale-export-btn.retail{ background:linear-gradient(135deg, #16a34a, #166534); margin-top:8px; }
   .wholesale-block.capturing-image{ padding-bottom:16px; }
   .wholesale-block.capturing-image .wholesale-export-btn{ display:none; }
 
@@ -2342,6 +2343,11 @@ function openWholesaleTest(itemName){
 }
 
 wholesaleTablesWrap.addEventListener('click', async (e)=>{
+  const retailExportBtn = e.target.closest('.wholesale-export-btn.retail');
+  if(retailExportBtn){
+    await exportRetailPriceImage(retailExportBtn);
+    return;
+  }
   const exportBtn = e.target.closest('.wholesale-export-btn');
   if(exportBtn){
     await exportWholesaleBlockImage(exportBtn);
@@ -2387,6 +2393,70 @@ async function exportWholesaleBlockImage(btn){
   }
 }
 
+/* خروجی عکس قیمت تک‌فروشی: فقط نام کالا + قیمت فروش (بدون قیمت خرید) — کیفیت بالا */
+async function exportRetailPriceImage(btn){
+  const cat = wholesaleCategories.find(c => c.key === btn.dataset.cat);
+  if(!cat) return;
+  if(typeof html2canvas === 'undefined'){
+    alert('امکان ساخت عکس در دسترس نیست — اتصال اینترنت رو چک کن و دوباره تلاش کن');
+    return;
+  }
+  const originalLabel = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = "⏳ در حال ساخت عکس...";
+  const esc = t => String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const fa = n => Number(n).toLocaleString('en-US').replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+  const FONT = "'Vazirmatn','Vazir','IRANSans','Tahoma','Segoe UI',sans-serif";
+  const rows = cat.items.map((it,i)=>`
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 22px;background:${i%2 ? '#f1f6ff' : '#ffffff'};border-bottom:${i === cat.items.length-1 ? 'none' : '1.5px solid #dbe5f7'};">
+      <div style="flex:1;font-size:21px;font-weight:700;line-height:1.7;color:#0f172a;text-align:right;">${esc(it.name)}</div>
+      <div style="flex:none;white-space:nowrap;font-size:22px;font-weight:800;color:#15803d;background:#e8f8ee;border:1.5px solid #bfe9cd;border-radius:12px;padding:6px 16px;">
+        ${fa(it.sell)} <span style="font-size:15px;font-weight:700;color:#166534;">تومان</span>
+      </div>
+    </div>`).join("");
+  const wrap = document.createElement('div');
+  wrap.style.cssText = `position:fixed;left:-99999px;top:0;width:760px;background:#ffffff;padding:26px;direction:rtl;font-family:${FONT};color:#0f172a;box-sizing:border-box;-webkit-font-smoothing:antialiased;`;
+  wrap.innerHTML = `
+    <div style="background:linear-gradient(135deg,#0a4fdb,#0035a6);border-radius:18px 18px 0 0;padding:22px 24px;color:#ffffff;">
+      <div style="font-size:26px;font-weight:800;line-height:1.6;">${esc(cat.title)}</div>
+      <div style="font-size:15px;font-weight:600;opacity:.9;margin-top:2px;">لیست قیمت فروش</div>
+    </div>
+    <div style="border:1.5px solid #c6d6f3;border-top:none;border-radius:0 0 18px 18px;overflow:hidden;">
+      <div style="display:flex;justify-content:space-between;padding:12px 22px;background:#dbe8ff;font-size:15px;font-weight:800;color:#0035a6;">
+        <span>نام محصول</span><span>قیمت فروش</span>
+      </div>
+      ${rows}
+    </div>`;
+  document.body.appendChild(wrap);
+  try{
+    if(document.fonts && document.fonts.ready){
+      try{
+        await document.fonts.load('600 16px Vazirmatn');
+        await document.fonts.load('700 16px Vazirmatn');
+        await document.fonts.load('800 16px Vazirmatn');
+        await document.fonts.ready;
+      }catch(fontErr){ /* با فونت پیش‌فرض ادامه بده */ }
+    }
+    await new Promise(r => requestAnimationFrame(()=>requestAnimationFrame(r)));
+    /* بالاترین کیفیتی که مرورگر (مخصوصاً گوشی) تحمل می‌کنه */
+    const w = wrap.offsetWidth, h = wrap.offsetHeight;
+    const maxPixels = 14000000;
+    const scale = Math.max(2, Math.min(5, Math.sqrt(maxPixels / (w * h))));
+    const canvas = await html2canvas(wrap, {backgroundColor:'#ffffff', scale:scale, useCORS:true, imageTimeout:0, logging:false});
+    const link = document.createElement('a');
+    const safeName = (btn.dataset.cat || 'retail').replace(/[^\w-]/g, '');
+    link.download = `qeymat-tak-${safeName}.png`;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  }catch(err){
+    alert('ساخت عکس با خطا مواجه شد، دوباره تلاش کن');
+  }finally{
+    wrap.remove();
+    btn.disabled = false;
+    btn.textContent = originalLabel;
+  }
+}
+
 function renderWholesaleTables(){
   wholesaleTablesWrap.innerHTML = "";
   wholesaleCategories
@@ -2420,7 +2490,8 @@ function renderWholesaleTables(){
             <tbody>${rows}</tbody>
           </table>
         </div>
-        <button type="button" class="wholesale-export-btn" data-cat="${cat.key}">📸 خروجی عکس همین جدول</button>`;
+        <button type="button" class="wholesale-export-btn" data-cat="${cat.key}">📸 خروجی عکس همین جدول</button>
+        <button type="button" class="wholesale-export-btn retail" data-cat="${cat.key}">🛍 خروجی عکس قیمت تک‌فروشی (نام + قیمت فروش)</button>`;
       wholesaleTablesWrap.appendChild(block);
     });
 }

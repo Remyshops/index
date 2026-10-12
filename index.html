@@ -1182,6 +1182,60 @@
     color:#fff;
     transition:transform .2s;
   }
+  .pay-msg-box{
+    margin-top:14px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:14px;
+  }
+  .pay-msg-head{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    font-size:13.5px; font-weight:700; margin-bottom:10px;
+  }
+  .pay-msg-link{
+    background:none; border:none; color:var(--drop);
+    font-family:inherit; font-size:12.5px; cursor:pointer;
+  }
+  .pay-plat-row{
+    display:flex; align-items:center; flex-wrap:wrap; gap:8px;
+    margin-bottom:10px;
+  }
+  .pay-plat-label{ font-size:12.5px; color:var(--muted); }
+  .pay-plat{ cursor:pointer; }
+  .pay-plat input{ position:absolute; opacity:0; pointer-events:none; }
+  .pay-plat span{
+    display:inline-block;
+    background:#fff;
+    border:1px solid var(--line);
+    color:var(--muted);
+    padding:6px 14px;
+    border-radius:100px;
+    font-size:13px;
+    transition:border-color .2s, background .2s, color .2s;
+  }
+  .pay-plat input:checked + span{
+    background:linear-gradient(135deg, var(--drop), var(--drop-2));
+    border-color:var(--drop);
+    color:#fff;
+    font-weight:700;
+  }
+  .pay-plat input:checked + span::before{ content:'✓ '; }
+  .pay-msg-text{
+    width:100%;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:12px 14px;
+    font-family:inherit;
+    font-size:14px;
+    line-height:1.9;
+    color:var(--text);
+    resize:vertical;
+    outline:none;
+    margin-bottom:10px;
+  }
+  .pay-msg-text:focus{ border-color:var(--drop); }
   .invoice-action-btn:hover{ transform:translateY(-2px); }
   .invoice-action-btn.print{ background:linear-gradient(135deg, var(--drop), var(--drop-2)); }
   .invoice-action-btn.image{ background:linear-gradient(135deg, #6d28d9, #4c1d95); }
@@ -1835,6 +1889,7 @@
       <button type="button" id="invoicePrintBtn" class="invoice-action-btn print">🖨 چاپ / ذخیره PDF</button>
       <button type="button" id="invoiceImageBtn" class="invoice-action-btn image">📷 خروجی عکس</button>
       <button type="button" id="invoiceCopyBtn" class="invoice-action-btn copy">📋 کپی متن فاکتور</button>
+      <button type="button" id="invoicePayMsgBtn" class="invoice-action-btn copy">💬 پیام پرداخت</button>
       <button type="button" id="invoiceCRMBtn" class="invoice-action-btn copy">📇 ثبت در CRM</button>
       <button type="button" id="invoiceSaveBtn" class="invoice-action-btn image">💾 ذخیره فاکتور</button>
       <button type="button" id="invoiceLoadFileBtn" class="invoice-action-btn reset">📂 لود فاکتور از فایل</button>
@@ -1843,6 +1898,22 @@
       <button type="button" id="invoiceResetBtn" class="invoice-action-btn reset">🗑 فاکتور جدید</button>
     </div>
     <div class="invoice-copy-msg no-print" id="invoiceCopyMsg"></div>
+    <div class="pay-msg-box no-print" id="payMsgBox" style="display:none;">
+      <div class="pay-msg-head">
+        <span>💬 پیام پرداخت (قابل ویرایش)</span>
+        <button type="button" class="pay-msg-link" id="payMsgRefresh">🔄 بازسازی از فاکتور</button>
+      </div>
+      <div class="pay-plat-row">
+        <span class="pay-plat-label">ارسال رسید در:</span>
+        <label class="pay-plat"><input type="radio" name="payPlatform" value="ایتا" checked><span>ایتا</span></label>
+        <label class="pay-plat"><input type="radio" name="payPlatform" value="روبیکا"><span>روبیکا</span></label>
+        <label class="pay-plat"><input type="radio" name="payPlatform" value="بله"><span>بله</span></label>
+        <label class="pay-plat"><input type="radio" name="payPlatform" value="واتساپ"><span>واتساپ</span></label>
+        <label class="pay-plat"><input type="radio" name="payPlatform" value="تلگرام"><span>تلگرام</span></label>
+      </div>
+      <textarea id="payMsgText" class="pay-msg-text" rows="8" dir="rtl"></textarea>
+      <button type="button" id="payMsgCopy" class="invoice-action-btn copy" style="width:100%;">📋 کپی پیام</button>
+    </div>
     <div class="saved-inv no-print" id="savedInvBox" style="display:none;">
       <div class="saved-inv-title"><span>🗂 فاکتورهای ذخیره‌شده <span id="savedInvCount"></span></span><button type="button" class="saved-inv-btn" id="savedInvExportAll" style="margin-inline-start:auto;">📥 دانلود همه</button></div>
       <div id="savedInvList"></div>
@@ -3140,6 +3211,7 @@ function updateInvoiceTotals(){
   if(wordsEl){
     wordsEl.textContent = grand > 0 ? (numberToPersianWords(grand) + ' تومان') : '';
   }
+  try{ if(typeof syncPayMsgWithInvoice === 'function') syncPayMsgWithInvoice(); }catch(e){ /* بی‌خیال */ }
 }
 
 function renderInvoiceTable(){
@@ -3369,6 +3441,112 @@ if(invoiceCopyBtn){
       return;
     }
     setTimeout(()=>{ invoiceCopyMsg.textContent = ""; }, 2500);
+  });
+}
+
+/* ================= کپی پیام پرداخت (مبلغ فاکتور + شماره کارت و نام صاحب حساب) =================
+   مبلغ از «مبلغ قابل پرداخت» همین فاکتور و کارت/نام از بخش «اطلاعات حساب» (پروفایل فروشنده‌ی لاگین) خونده می‌شه. */
+function toFaDigits(str){
+  return String(str).replace(/[0-9]/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+}
+function currentPayAmountFa(){
+  const subtotal = invoiceItems.reduce((s, it)=> s + it.qty*it.unitPrice, 0);
+  const discount = Math.max(0, parseFloat(invoiceDiscountInput.value) || 0);
+  const grand = Math.max(0, subtotal - discount);
+  return toFaDigits(grand.toLocaleString('en-US')) + ' تومان';
+}
+function selectedPayPlatform(){
+  const r = document.querySelector('input[name="payPlatform"]:checked');
+  return r ? r.value : 'ایتا';
+}
+let lastPayPlatform = 'ایتا';
+let lastPayAmountFa = '';
+function buildInvoicePayMessage(){
+  const amountFa = currentPayAmountFa();
+  lastPayAmountFa = amountFa;
+  const rawCard = (document.getElementById('invoiceBankCard').value || '').replace(/\D/g,'');
+  const cardFa = rawCard.length === 16
+    ? toFaDigits(rawCard.match(/.{4}/g).join('-'))
+    : toFaDigits(document.getElementById('invoiceBankCard').value.trim());
+  const holder = (document.getElementById('invoiceBankName').value || '').trim();
+  return `سلام، وقتتون بخیر 🌹
+مبلغ فاکتور سفارش شما ${amountFa} هست.
+💳 شماره کارت:
+${cardFa}
+👤 به نام: ${holder}
+لطفاً پس از واریز، رسید پرداخت رو در ${selectedPayPlatform()} برام ارسال بفرمایید.
+ممنون از اعتماد و خریدتون 🙏`;
+}
+const invoicePayMsgBtn = document.getElementById('invoicePayMsgBtn');
+const payMsgBox = document.getElementById('payMsgBox');
+const payMsgText = document.getElementById('payMsgText');
+const payMsgCopy = document.getElementById('payMsgCopy');
+const payMsgRefresh = document.getElementById('payMsgRefresh');
+
+/* وقتی اقلام یا تخفیف فاکتور عوض بشه، فقط مبلغ داخل متن به‌روز می‌شه (ویرایش‌های دستی حفظ می‌شن) */
+function syncPayMsgWithInvoice(){
+  if(!payMsgBox || payMsgBox.style.display === 'none') return;
+  if(!invoiceItems.length){ payMsgBox.style.display = 'none'; return; }
+  const newAmount = currentPayAmountFa();
+  if(lastPayAmountFa && payMsgText.value.indexOf(lastPayAmountFa) !== -1){
+    payMsgText.value = payMsgText.value.split(lastPayAmountFa).join(newAmount);
+  }
+  lastPayAmountFa = newAmount;
+}
+/* انتخاب پیام‌رسان: فقط اسم پیام‌رسان داخل متن عوض می‌شه (ویرایش‌های دستی حفظ می‌شن) */
+document.querySelectorAll('input[name="payPlatform"]').forEach(r=>{
+  r.addEventListener('change', ()=>{
+    const np = selectedPayPlatform();
+    if(payMsgText.value.indexOf('در ' + lastPayPlatform) !== -1){
+      payMsgText.value = payMsgText.value.split('در ' + lastPayPlatform).join('در ' + np);
+    }
+    lastPayPlatform = np;
+    try{ localStorage.setItem('remyPayPlatform', np); }catch(e){ /* بی‌خیال */ }
+  });
+});
+(function restorePayPlatform(){
+  try{
+    const saved = localStorage.getItem('remyPayPlatform');
+    if(!saved) return;
+    document.querySelectorAll('input[name="payPlatform"]').forEach(r=>{
+      if(r.value === saved){ r.checked = true; lastPayPlatform = saved; }
+    });
+  }catch(e){ /* بی‌خیال */ }
+})();
+function fillPayMsg(){
+  if(!invoiceItems.length){ alert('اول حداقل یک کالا به فاکتور اضافه کن'); return false; }
+  payMsgText.value = buildInvoicePayMessage();
+  lastPayPlatform = selectedPayPlatform();
+  payMsgBox.style.display = '';
+  return true;
+}
+if(invoicePayMsgBtn){
+  invoicePayMsgBtn.addEventListener('click', ()=>{
+    if(payMsgBox.style.display !== 'none'){ payMsgBox.style.display = 'none'; return; }
+    if(fillPayMsg()){
+      payMsgBox.scrollIntoView({behavior:'smooth', block:'nearest'});
+      payMsgText.focus();
+    }
+  });
+}
+if(payMsgRefresh){
+  payMsgRefresh.addEventListener('click', ()=>{
+    if(payMsgText.value.trim() && !confirm('متنی که ویرایش کردی با متن تازه جایگزین بشه؟')) return;
+    fillPayMsg();
+  });
+}
+if(payMsgCopy){
+  payMsgCopy.addEventListener('click', async ()=>{
+    const text = payMsgText.value;
+    const original = payMsgCopy.textContent;
+    try{
+      await navigator.clipboard.writeText(text);
+    }catch(e){
+      payMsgText.focus(); payMsgText.select();
+      try{ document.execCommand('copy'); }catch(e2){ window.prompt('این متن رو کپی کن:', text); return; }
+    }
+    payMsgCopy.textContent = '✅ کپی شد';
+    setTimeout(()=>{ payMsgCopy.textContent = original; }, 2000);
   });
 }
 

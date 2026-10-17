@@ -1684,6 +1684,7 @@
   <div class="mode-tabs">
     <button class="mode-tab active" id="modeRetailBtn" type="button">🛍 خرده‌فروشی (تکی)</button>
     <button class="mode-tab" id="modeWholesaleBtn" type="button">📦 قیمت عمده</button>
+    <button class="mode-tab" id="modeBulkBtn" type="button">🚛 خرید عمده حجمی ۱۷۰ کارتن به بالا</button>
     <button class="mode-tab" id="modeInvoiceBtn" type="button" style="display:none;">🧾 صدور فاکتور</button>
     <button class="mode-tab" id="modeProfitBtn" type="button" style="display:none;">📊 محاسبه سود</button>
     <button class="mode-tab" id="modeCRMBtn" type="button" style="display:none;">🧑‍🤝‍🧑 پیگیری مشتری</button>
@@ -2263,7 +2264,109 @@ const wholesaleCategories = [
   ]}
 ];
 
-const wholesaleTabList = ["همه", ...wholesaleCategories.map(c=>c.tab)];
+/* =========================================================
+   خرید حجمی عمده — ویژه سفارش ۱۷۰ کارتن به بالا
+   قیمت هر عدد = قیمت خرید مهر ۱۴۰۵ (دفتر مشترک غیاث) + BULK_MARKUP
+   برای تغییر مبلغ اضافه، فقط BULK_MARKUP رو عوض کنید.
+========================================================= */
+const BULK_MIN_CARTONS = 170;
+const BULK_MARKUP = 40000; /* پیش‌فرض؛ ۲۰ لیتری‌ها +۵۰۰٬۰۰۰ و نانو چرم +۳۰٬۰۰۰ (markup روی گروه/آیتم) */
+const BULK_TAB = "خرید حجمی عمده";
+const COMPARE_TAB = "مقایسه قیمت‌ها";
+const bulkGroups = [
+  { key:"bulk-gal-auto", title:"خودرویی ۲۰ لیتری", gallon:true, markup:500000, items:[
+    {name:"واکس مات کننده الستیک", base:1388000},
+    {name:"واکس براق کننده الستیک", base:2340000},
+    {name:"واکس داشبورد سیلیکونی", base:2316000},
+    {name:"واکس داشبورد غیر سیلیکونی", base:1836000},
+    {name:"واکس سه‌کاره", base:2268000},
+    {name:"صفر شوی", base:1579800},
+    {name:"موتور شوی", base:1555000},
+    {name:"رینگ شوی", base:1278700},
+    {name:"پاک کننده چندمنظوره خودرویی", base:2279500},
+    {name:"شیشه شوی", base:960000},
+    {name:"شامپو بدنه", base:2160000},
+    {name:"براق کننده بدنه", base:1316000},
+    {name:"براق کننده چراغ", base:1368000},
+    {name:"کنستانتره موتورشوی", base:1238500},
+    {name:"بلک شاین", base:3600000},
+    {name:"بلک مجیک", base:2880000}
+  ]},
+  { key:"bulk-gal-home", title:"خانگی ۲۰ لیتری", gallon:true, markup:500000, items:[
+    {name:"پاک کننده چندمنظوره خانگی", base:1105000},
+    {name:"پاک کننده گاز", base:997000},
+    {name:"پاک کننده سینک و شیرآلات", base:975500},
+    {name:"پاک کننده مبل، فرش و پارچه", base:986500},
+    {name:"پاک کننده ال‌ای‌دی و صفحه نمایش", base:921500},
+    {name:"پاک کننده کاغذ دیواری", base:996500},
+    {name:"پاک کننده پارکت و سرامیک", base:975500}
+  ]},
+  { key:"bulk-gal-industrial", title:"صنعتی ۲۰ لیتری", gallon:true, markup:500000, items:[
+    {name:"پاک کننده سطوح سیمانی و بتنی صنعتی", base:1267000},
+    {name:"پاک کننده چندمنظوره صنعتی", base:1457500},
+    {name:"شامپو نانو صنعتی", base:1569500},
+    {name:"پاک کننده و روان کننده دستگاه صنعتی", base:1371000},
+    {name:"پاک کننده روغن و چربی‌های صنعتی", base:1388000},
+    {name:"پاک کننده سطوح سنگی و سرامیکی صنعتی", base:1319000}
+  ]},
+  { key:"bulk-home", title:"خانگی ۵۰۰ سی‌سی", cartonQty:20, items:[
+    {name:"پاک کننده چند منظوره", base:131500},
+    {name:"پاک کننده گاز", base:125000},
+    {name:"پاک کننده سینک و شیر آلات", base:123500},
+    {name:"پاک کننده مبل، فرش و پارچه", base:124500},
+    {name:"پاک کننده ال‌ای‌دی و صفحه نمایش", base:120000},
+    {name:"پاک کننده کاغذ دیواری", base:125000},
+    {name:"پاک کننده پارکت و سرامیک", base:123500}
+  ]},
+  { key:"bulk-auto", title:"نانو خودرویی ۵۰۰ سی‌سی", cartonQty:20, items:[
+    {name:"واکس مات کننده لاستیک", base:119500},
+    {name:"واکس براق کننده لاستیک", base:143500},
+    {name:"واکس داشبورد سیلیکونی", base:158000},
+    {name:"واکس داشبورد غیر سیلیکونی", base:137500},
+    {name:"واکس سه‌کاره لاستیک داشبورد", base:153500},
+    {name:"صفر شوی", base:137500},
+    {name:"موتور شوی", base:128000},
+    {name:"رینگ شوی", base:107000},
+    {name:"پاک کننده چند منظوره خودرو", base:155500},
+    {name:"شیشه شوی", base:101000},
+    {name:"شامپو بدنه", base:168000},
+    {name:"براق کننده بدنه", base:122500},
+    {name:"براق کننده چراغ", base:122500},
+    {name:"واکس براق کننده لاستیک ( براق شاین)", base:192000},
+    {name:"بلک مجیک", base:167000}
+  ]},
+  { key:"bulk-freshener", title:"اسپری خوشبوکننده هوا ۱۲۵ سی‌سی", cartonQty:25, items:[
+    {name:"اسپری خوشبوکننده هوا رایحه باس من", base:137000},
+    {name:"اسپری خوشبوکننده هوا رایحه مادام بیوتی", base:137000},
+    {name:"اسپری خوشبوکننده هوا رایحه لاوندر", base:137000},
+    {name:"اسپری خوشبوکننده هوا رایحه کول فرش", base:137000}
+  ]},
+  { key:"bulk-tissue", title:"دستمال نانو ۳۰×۳۰", cartonQty:36, cartonNote:"هر کارتن = ۶ جین (۳۶ عدد)", items:[
+    {name:"دستمال شیشه", base:105000},
+    {name:"دستمال سرامیک بدنه", base:106000},
+    {name:"دستمال سطوح و شیشه چهارخانه طوسی", base:104000},
+    {name:"دستمال سطوح و شیشه آبی", base:102500},
+    {name:"دستمال سطوح و شیشه سبز", base:101000}
+  ]},
+  { key:"bulk-cologne", title:"ادکلن ۵۰ سی‌سی", cartonQty:6, items:[
+    {name:"ادکلن زنانه همراز", base:407500},
+    {name:"ادکلن مردانه کایرا", base:407500}
+  ]},
+  { key:"bulk-leather", title:"نانو چرم کیف و کفش", cartonNote:"بدون جعبه: ۲۵ عددی — با جعبه: ۱۲ عددی", items:[
+    {name:"نانو چرم کیف و کفش بدون جعبه", base:150000, cartonQty:25, markup:30000},
+    {name:"نانو چرم کیف و کفش با جعبه", base:176500, cartonQty:12, markup:30000}
+  ]},
+  { key:"bulk-perfume", title:"عطر جی‌پلاس ۳۰ سی‌سی", cartonQty:24, items:[
+    {name:"عطر با رایحه دانهیل", base:187500},
+    {name:"عطر با رایحه ایفوریا", base:187500},
+    {name:"عطر با رایحه باس من", base:187500},
+    {name:"عطر با رایحه مادام بیوتی", base:187500},
+    {name:"عطر با رایحه لاوندر", base:187500},
+    {name:"عطر با رایحه کول فرش", base:187500}
+  ]}
+];
+
+const wholesaleTabList = ["همه", ...wholesaleCategories.map(c=>c.tab), BULK_TAB, COMPARE_TAB];
 let activeWholesaleTab = "همه";
 
 /* پرفروش‌ترین‌ها — دقیقاً باید با name محصول در آرایه products بالا یکی باشه.
@@ -2321,6 +2424,7 @@ const invoiceViewEl = document.getElementById('invoiceView');
 const crmViewEl = document.getElementById('crmView');
 const modeRetailBtn = document.getElementById('modeRetailBtn');
 const modeWholesaleBtn = document.getElementById('modeWholesaleBtn');
+const modeBulkBtn = document.getElementById('modeBulkBtn');
 const modeInvoiceBtn = document.getElementById('modeInvoiceBtn');
 const modeProfitBtn = document.getElementById('modeProfitBtn');
 const modeCRMBtn = document.getElementById('modeCRMBtn');
@@ -2361,6 +2465,7 @@ function renderWholesaleTabs(){
       activeWholesaleTab = t;
       renderWholesaleTabs();
       renderWholesaleTables();
+      setActiveMode('wholesale');
     });
     wholesaleCatTabsEl.appendChild(btn);
   });
@@ -2528,6 +2633,89 @@ async function exportRetailPriceImage(btn){
   }
 }
 
+/* ترتیب نمایش خرید حجمی دقیقاً مثل جدول‌های قیمت عمده؛ مورد‌هایی که در لیست عمده نیستند (دستمال، ۲۰ لیتری‌ها) آخر میان */
+const bulkOrder = ["bulk-home","bulk-auto","bulk-freshener","bulk-cologne","bulk-leather","bulk-perfume","bulk-tissue","bulk-gal-auto","bulk-gal-home","bulk-gal-industrial"];
+bulkGroups.sort((x,y)=> bulkOrder.indexOf(x.key) - bulkOrder.indexOf(y.key));
+
+/* ---------- مقایسه قیمت‌ها: فروش بازار / عمده / خرید حجمی کنار هم ---------- */
+const compareKeyMap = {"bulk-home":"home","bulk-auto":"auto","bulk-freshener":"freshener","bulk-cologne":"cologne","bulk-leather":"leatherwax","bulk-perfume":"perfume"};
+function renderCompareBlocks(){
+  const fa = n => Number(n).toLocaleString('en-US');
+  const dash = '<span style="color:var(--muted)">—</span>';
+  const intro = document.createElement('div');
+  intro.className = "wholesale-block";
+  intro.innerHTML = `
+    <h3><span class="drop"></span>${COMPARE_TAB}</h3>
+    <div class="wholesale-note">قیمت‌ها به تومان — قیمت فروش بازار، قیمت عمده (۱ کارتن به بالا) و خرید حجمی (${BULK_MIN_CARTONS} کارتن به بالا) کنار هم</div>`;
+  wholesaleTablesWrap.appendChild(intro);
+  bulkGroups.forEach(g=>{
+    const wc = wholesaleCategories.find(c => c.key === compareKeyMap[g.key]);
+    const rows = g.items.map((it,i)=>{
+      const bulk = it.base + (it.markup ?? g.markup ?? BULK_MARKUP);
+      const w = wc && wc.items[i];
+      const sell = w ? fa(w.sell) : dash;
+      const buy  = w ? fa(w.buy)  : dash;
+      const diff = w ? fa(w.buy - bulk) : dash;
+      return `<tr>
+        <td class="pname-cell"><div class="pname-inner"><span class="pname-text">${it.name}</span></div></td>
+        <td>${sell}</td>
+        <td class="buy-price">${buy}</td>
+        <td class="sell-price" style="font-weight:800">${fa(bulk)}</td>
+        <td>${diff}</td>
+      </tr>`;
+    }).join("");
+    const block = document.createElement('div');
+    block.className = "wholesale-block";
+    block.innerHTML = `
+      <h3><span class="drop"></span>${g.title}</h3>
+      <div class="wholesale-table-wrap">
+        <table class="wholesale-table">
+          <thead><tr><th>نام محصول</th><th>فروش بازار</th><th>عمده</th><th>حجمی ${BULK_MIN_CARTONS}+</th><th>تفاوت عمده و حجمی</th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+      <button type="button" class="wholesale-export-btn" data-cat="compare-${g.key}">📸 خروجی عکس همین جدول</button>`;
+    wholesaleTablesWrap.appendChild(block);
+  });
+}
+
+function renderBulkBlocks(){
+  const fa = n => Number(n).toLocaleString('en-US');
+  const intro = document.createElement('div');
+  intro.className = "wholesale-block";
+  intro.innerHTML = `
+    <h3><span class="drop"></span>${BULK_TAB}</h3>
+    <div class="wholesale-note">ویژه سفارش ${BULK_MIN_CARTONS} کارتن به بالا — قیمت‌ها برای هر عدد و هر کارتن (تومان)</div>`;
+  wholesaleTablesWrap.appendChild(intro);
+  bulkGroups.forEach(g=>{
+    const rows = g.items.map(it=>{
+      const qty = it.cartonQty || g.cartonQty;
+      const unit = it.base + (it.markup ?? g.markup ?? BULK_MARKUP);
+      const cartonCell = g.gallon ? "" : `
+        <td class="sell-price">${fa(unit*qty)} تومان<br><span style="color:var(--muted);font-size:10.5px;font-weight:500">${qty} عددی</span></td>`;
+      return `<tr>
+        <td class="pname-cell"><div class="pname-inner"><span class="pname-text">${it.name}</span></div></td>
+        <td class="buy-price">${fa(unit)} تومان</td>${cartonCell}
+      </tr>`;
+    }).join("");
+    const note = g.gallon ? (BULK_MIN_CARTONS + " کارتن به بالا · قیمت هر گالن ۲۰ لیتری") : (BULK_MIN_CARTONS + " کارتن به بالا · " + (g.cartonNote || ("هر کارتن = " + g.cartonQty + " عدد")));
+    const head = g.gallon ? "<th>نام محصول</th><th>قیمت هر گالن</th>" : "<th>نام محصول</th><th>قیمت هر عدد</th><th>قیمت هر کارتن</th>";
+    const block = document.createElement('div');
+    block.className = "wholesale-block";
+    block.innerHTML = `
+      <h3><span class="drop"></span>${BULK_TAB} — ${g.title}</h3>
+      <div class="wholesale-note">${note}</div>
+      <div class="wholesale-table-wrap">
+        <table class="wholesale-table">
+          <thead><tr>${head}</tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+      <button type="button" class="wholesale-export-btn" data-cat="${g.key}">📸 خروجی عکس همین جدول</button>`;
+    wholesaleTablesWrap.appendChild(block);
+  });
+}
+
 function renderWholesaleTables(){
   wholesaleTablesWrap.innerHTML = "";
   wholesaleCategories
@@ -2565,6 +2753,8 @@ function renderWholesaleTables(){
         <button type="button" class="wholesale-export-btn retail" data-cat="${cat.key}">🛍 خروجی عکس قیمت تک‌فروشی (نام + قیمت فروش)</button>`;
       wholesaleTablesWrap.appendChild(block);
     });
+  if(activeWholesaleTab === "همه" || activeWholesaleTab === BULK_TAB) renderBulkBlocks();
+  if(activeWholesaleTab === COMPARE_TAB) renderCompareBlocks();
 }
 
 function wholesaleSectionOffset(){
@@ -2584,7 +2774,9 @@ function crmSectionOffset(){
 
 function setActiveMode(mode){
   modeRetailBtn.classList.toggle('active', mode === 'retail');
-  modeWholesaleBtn.classList.toggle('active', mode === 'wholesale');
+  const bulkOn = (mode === 'wholesale' && activeWholesaleTab === BULK_TAB);
+  modeWholesaleBtn.classList.toggle('active', mode === 'wholesale' && !bulkOn);
+  modeBulkBtn.classList.toggle('active', bulkOn);
   modeInvoiceBtn.classList.toggle('active', mode === 'invoice');
   modeCRMBtn.classList.toggle('active', mode === 'crm');
   retailViewEl.classList.toggle('hide', mode !== 'retail');
@@ -2598,6 +2790,18 @@ modeRetailBtn.addEventListener('click', ()=>{
   window.scrollTo({top:0, behavior:'smooth'});
 });
 modeWholesaleBtn.addEventListener('click', ()=>{
+  if(activeWholesaleTab === BULK_TAB){
+    activeWholesaleTab = "همه";
+    renderWholesaleTabs();
+    renderWholesaleTables();
+  }
+  setActiveMode('wholesale');
+  window.scrollTo({top: wholesaleSectionOffset(), behavior:'smooth'});
+});
+modeBulkBtn.addEventListener('click', ()=>{
+  activeWholesaleTab = BULK_TAB;
+  renderWholesaleTabs();
+  renderWholesaleTables();
   setActiveMode('wholesale');
   window.scrollTo({top: wholesaleSectionOffset(), behavior:'smooth'});
 });

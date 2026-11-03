@@ -1625,6 +1625,17 @@
   }
   .invoice-color-swatch:hover{ transform:scale(1.12); }
   .invoice-color-swatch.active{ outline:2px solid var(--text); }
+
+  /* ---------- all tests (ویدیوهای تست) ---------- */
+  .tests-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:14px; margin-bottom:10px; }
+  .test-card{ background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:14px; }
+  .test-card .thumb{ width:100%; aspect-ratio:1/1; max-height:150px; border-radius:10px; overflow:hidden; background:#fff; margin-bottom:10px; display:flex; align-items:center; justify-content:center; }
+  .test-card .thumb img{ width:100%; height:100%; object-fit:contain; display:block; }
+  .test-card .tname{ font-size:14.5px; font-weight:700; margin-bottom:4px; text-align:center; }
+  .test-card .tcount{ font-size:12px; color:var(--muted); text-align:center; margin-bottom:10px; }
+  .test-links{ display:flex; flex-wrap:wrap; gap:6px; justify-content:center; }
+  .test-links a{ background:#fff; border:1px solid var(--line); color:var(--drop); padding:5px 10px; border-radius:100px; font-size:12px; text-decoration:none; font-weight:600; }
+  .test-links a:hover{ background:var(--drop); color:#fff; border-color:var(--drop); }
 </style>
 <!-- برای خروجی عکس از فاکتور -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -1675,7 +1686,7 @@
     </div>
 
     <div class="hero-ctas">
-      <a href="#catalogSection" class="btn-cta blue">🎥 مشاهده همه تست‌ها</a>
+      <a href="#allTestsSection" class="btn-cta blue" id="heroTestsLink">🎥 ویدیوهای تست</a>
       <a href="#orderSection" class="btn-cta green">🛒 ثبت سفارش</a>
     </div>
   </header>
@@ -1683,6 +1694,7 @@
   <!-- ================= MODE TABS: خرده‌فروشی / عمده ================= -->
   <div class="mode-tabs">
     <button class="mode-tab active" id="modeRetailBtn" type="button">🛍 خرده‌فروشی (تکی)</button>
+    <button class="mode-tab" id="modeTestsBtn" type="button">🎥 ویدیوهای تست</button>
     <button class="mode-tab" id="modeWholesaleBtn" type="button">📦 قیمت عمده</button>
     <button class="mode-tab" id="modeBulkBtn" type="button">🚛 خرید عمده حجمی ۱۷۰ کارتن به بالا</button>
     <button class="mode-tab" id="modeInvoiceBtn" type="button" style="display:none;">🧾 صدور فاکتور</button>
@@ -1758,6 +1770,12 @@
 
   <!-- ================= SIMPLE LIST CATEGORIES ================= -->
   <div id="simpleCatsWrap"></div>
+
+  <!-- ================= ALL TESTS (ویدیوهای تست) ================= -->
+  <div class="section-title" id="allTestsSection"><span class="drop"></span><h2>ویدیوهای تست</h2><span class="line"></span></div>
+  <div class="section-sub">همه‌ی ویدیوهای تست هر محصول — روی شماره‌ی تست بزنید تا همین‌جا پخش شود</div>
+  <div class="cat-tabs" id="testsTabs"></div>
+  <div class="tests-grid" id="testsGrid"></div>
 
   </div><!-- /retailView -->
 
@@ -1957,6 +1975,7 @@
     <div class="footer-links">
       <a href="tel:09389561367">📞 تماس مستقیم</a>
       <a href="https://eitaa.com/EZGAMETV" target="_blank" rel="noopener">💬 پیام در ایتا</a>
+      <a href="#allTestsSection">🎥 ویدیوهای تست</a>
       <a href="#" id="footerWholesaleLink">📦 خرید عمده</a>
       <a href="#header">📍 درباره رمی شاپ</a>
     </div>
@@ -4440,6 +4459,61 @@ shareBtn.addEventListener('click', async ()=>{
   var pick = pool.length ? pool[Math.floor(Math.random()*pool.length)] : {id:'sva419y', name:'نانو چند منظوره خانگی'};
   f.src='https://www.aparat.com/video/video/embed/videohash/'+pick.id+'/vt/frame';
   if(l) l.textContent='🎥 نمونه تست واقعی «'+pick.name+'» — همین الان ببینید';
+})();
+</script>
+<script>
+/* بخش «ویدیوهای تست»: همه‌ی محصولات با عکس و اسم و لینک مستقیم ویدیوها (از روی آرایه‌های products و simpleCategories ساخته میشه) */
+(function(){
+  var tabs=document.getElementById('testsTabs'), grid=document.getElementById('testsGrid');
+  if(!tabs||!grid) return;
+  var items=[];
+  try{
+    products.forEach(function(p){ items.push({name:p.name, cat:p.cat, img:p.img, urls:p.videos.map(function(v){return v.url;})}); });
+    simpleCategories.forEach(function(c){ items.push({name:c.title, cat:c.title, img:c.catImg, urls:c.videoUrls}); });
+  }catch(e){ return; }
+  var cats=['همه'];
+  items.forEach(function(it){ if(cats.indexOf(it.cat)<0) cats.push(it.cat); });
+  var active='همه';
+  function esc(t){ return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }
+  function render(){
+    tabs.innerHTML='';
+    cats.forEach(function(c){
+      var b=document.createElement('button'); b.type='button';
+      b.className='cat-tab'+(c===active?' active':''); b.textContent=c;
+      b.onclick=function(){ active=c; render(); };
+      tabs.appendChild(b);
+    });
+    grid.innerHTML=items.filter(function(it){return active==='همه'||it.cat===active;}).map(function(it){
+      var links=it.urls.map(function(u,i){
+        return '<a href="'+esc(u)+'" data-name="'+esc(it.name)+'" data-n="'+(i+1)+'">▶ تست '+(i+1)+'</a>';
+      }).join('');
+      var img=it.img?'<div class="thumb"><img src="'+esc(it.img)+'" alt="'+esc(it.name)+'" loading="lazy" decoding="async"></div>':'';
+      return '<div class="test-card">'+img+'<div class="tname">'+esc(it.name)+'</div><div class="tcount">'+it.urls.length+' ویدیو</div><div class="test-links">'+links+'</div></div>';
+    }).join('');
+  }
+  render();
+  /* کلیک روی هر تست: ویدیو توی همین صفحه (همون پنجره‌ی پخش ویدیو) باز میشه */
+  grid.addEventListener('click', function(e){
+    var a=e.target.closest('a[data-n]'); if(!a) return;
+    e.preventDefault();
+    openVideo(a.getAttribute('href'), a.getAttribute('data-name')+' — ویدیوی تست '+a.getAttribute('data-n'));
+  });
+  /* دکمه‌های بالای سایت: مستقیم میره به همین بخش (اگه تو حالت عمده بود اول برمیگرده به خرده‌فروشی) */
+  function goTests(e){
+    if(e) e.preventDefault();
+    var r=document.getElementById('modeRetailBtn');
+    if(document.getElementById('retailView').classList.contains('hide') && r) r.click();
+    setTimeout(function(){
+      var t=document.getElementById('allTestsSection');
+      if(t) t.scrollIntoView({behavior:'smooth', block:'start'});
+    }, 60);
+  }
+  ['modeTestsBtn','heroTestsLink'].forEach(function(id){
+    var el=document.getElementById(id); if(el) el.addEventListener('click', goTests);
+  });
+  document.querySelectorAll('a[href="#allTestsSection"]').forEach(function(el){
+    if(el.id!=='heroTestsLink') el.addEventListener('click', goTests);
+  });
 })();
 </script>
 </body>

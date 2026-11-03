@@ -1669,9 +1669,9 @@
     <!-- پیش‌نمایش ویدیو همین بالای صفحه، بدون نیاز به اسکرول یا کلیک -->
     <div class="hero-video">
       <div class="hero-video-frame">
-        <iframe src="https://www.aparat.com/video/video/embed/videohash/sva419y/vt/frame" allow="autoplay; fullscreen" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe>
+        <iframe id="heroFrame" allow="autoplay; fullscreen" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe>
       </div>
-      <div class="hero-video-label">🎥 نمونه تست واقعی «نانو چند منظوره خانگی» — همین الان ببینید</div>
+      <div class="hero-video-label" id="heroLabel">🎥 نمونه تست واقعی «نانو چند منظوره خانگی» — همین الان ببینید</div>
     </div>
 
     <div class="hero-ctas">
@@ -2045,7 +2045,26 @@ const products = [
     {label:"ویدیوی تست ۱", url:"https://www.aparat.com/v/sva419y"},
     {label:"ویدیوی تست ۲", url:"https://www.aparat.com/v/mfq9184"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/jcs280x"},
-    {label:"ویدیوی تست ۴", url:"https://aparat.com/v/wjmg0qy"}
+    {label:"ویدیوی تست ۴", url:"https://aparat.com/v/wjmg0qy"},
+    {label:"ویدیوی تست 5", url:"https://aparat.com/v/nembrb1"},
+    {label:"ویدیوی تست 6", url:"https://aparat.com/v/frwj0mg"},
+    {label:"ویدیوی تست 7", url:"https://aparat.com/v/lsb1c9s"},
+    {label:"ویدیوی تست 8", url:"https://aparat.com/v/ixpaf21"},
+    {label:"ویدیوی تست 9", url:"https://aparat.com/v/udsqsu7"},
+    {label:"ویدیوی تست 10", url:"https://aparat.com/v/lrz93x7"},
+    {label:"ویدیوی تست 11", url:"https://aparat.com/v/qka0k52"},
+    {label:"ویدیوی تست 12", url:"https://aparat.com/v/ruo4lw0"},
+    {label:"ویدیوی تست 13", url:"https://aparat.com/v/tzk66l3"},
+    {label:"ویدیوی تست 14", url:"https://aparat.com/v/zxbl41w"},
+    {label:"ویدیوی تست 15", url:"https://aparat.com/v/kgq5w97"},
+    {label:"ویدیوی تست 16", url:"https://aparat.com/v/rbvlya4"},
+    {label:"ویدیوی تست 17", url:"https://aparat.com/v/mbuhedi"},
+    {label:"ویدیوی تست 18", url:"https://aparat.com/v/pau0a0k"},
+    {label:"ویدیوی تست 19", url:"https://aparat.com/v/woom059"},
+    {label:"ویدیوی تست 20", url:"https://aparat.com/v/wax6k40"},
+    {label:"ویدیوی تست 21", url:"https://aparat.com/v/nkw997q"},
+    {label:"ویدیوی تست 22", url:"https://aparat.com/v/lbbl2ys"},
+    {label:"ویدیوی تست 23", url:"https://aparat.com/v/fkb095d"}
   ]},
   { name:"پاک کننده گاز", price:336000, cat:"خانگی", buyUrl:"https://basalam.com/editor/product/42580333", img:"gas-stove-cleaner.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/gzrk14y"},
@@ -2053,7 +2072,10 @@ const products = [
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/xulf06h"},
     {label:"ویدیوی تست ۴", url:"https://www.aparat.com/v/ulax9a9"},
     {label:"ویدیوی تست ۵", url:"https://www.aparat.com/v/ytrk65j"},
-    {label:"ویدیوی تست ۶", url:"https://aparat.com/v/via8xqj"}
+    {label:"ویدیوی تست ۶", url:"https://aparat.com/v/via8xqj"},
+    {label:"ویدیوی تست 7", url:"https://aparat.com/v/ukxaup2"},
+    {label:"ویدیوی تست 8", url:"https://aparat.com/v/mtu663x"},
+    {label:"ویدیوی تست 9", url:"https://aparat.com/v/movb5fr"}
   ]},
   { name:"پاک کننده سینک و شیر آلات", price:332000, cat:"خانگی", buyUrl:"https://basalam.com/editor/product/42580846", img:"sink-faucet-cleaner.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/pvj4ouv"},
@@ -2072,7 +2094,16 @@ const products = [
     {label:"ویدیوی تست ۴", url:"https://aparat.com/v/dwa5c36"},
     {label:"ویدیوی تست ۵", url:"https://aparat.com/v/kudri5q"},
     {label:"ویدیوی تست ۶", url:"https://www.aparat.com/v/zju3eu2"},
-    {label:"ویدیوی تست ۷", url:"https://www.aparat.com/v/lrs7eug"}
+    {label:"ویدیوی تست ۷", url:"https://www.aparat.com/v/lrs7eug"},
+    {label:"ویدیوی تست 8", url:"https://aparat.com/v/fff72k1"},
+    {label:"ویدیوی تست 9", url:"https://aparat.com/v/ybn0992"},
+    {label:"ویدیوی تست 10", url:"https://aparat.com/v/gzwd7y7"},
+    {label:"ویدیوی تست 11", url:"https://aparat.com/v/oazg570"},
+    {label:"ویدیوی تست 12", url:"https://aparat.com/v/ybkejrl"},
+    {label:"ویدیوی تست 13", url:"https://aparat.com/v/mti7vt3"},
+    {label:"ویدیوی تست 14", url:"https://aparat.com/v/icpi5ej"},
+    {label:"ویدیوی تست 15", url:"https://aparat.com/v/deraoxg"},
+    {label:"ویدیوی تست 16", url:"https://aparat.com/v/rkm33px"}
   ]},
   { name:"پاک کننده ال ای دی و صفحه نمایش", price:324000, cat:"خانگی", buyUrl:"https://basalam.com/editor/product/44743589", img:"led-screen-cleaner.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/zwal0vo"},
@@ -2081,7 +2112,9 @@ const products = [
   ]},
   { name:"پاک کننده کاغذ دیواری", price:324000, cat:"خانگی", buyUrl:"https://basalam.com/editor/product/42619327", img:"wallpaper-cleaner.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/pkbssva"},
-    {label:"ویدیوی تست ۲", url:"https://aparat.com/v/ehf1x23"}
+    {label:"ویدیوی تست ۲", url:"https://aparat.com/v/ehf1x23"},
+    {label:"ویدیوی تست 3", url:"https://aparat.com/v/puo91r6"},
+    {label:"ویدیوی تست 4", url:"https://aparat.com/v/vks2s0h"}
   ]},
   { name:"پاک کننده پارکت و سرامیک", price:330000, cat:"خانگی", buyUrl:"https://basalam.com/editor/product/42619670", img:"tile-ceramic-cleaner.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/vqaspq1"},
@@ -2126,13 +2159,16 @@ const products = [
     {label:"ویدیوی تست ۶", url:"https://aparat.com/v/eagwb4x"},
     {label:"ویدیوی تست ۷", url:"https://aparat.com/v/rsozp22"},
     {label:"ویدیوی تست ۸", url:"https://aparat.com/v/ewm1o5w"},
-    {label:"ویدیوی تست ۹", url:"https://aparat.com/v/cnog75c"}
+    {label:"ویدیوی تست ۹", url:"https://aparat.com/v/cnog75c"},
+    {label:"ویدیوی تست 10", url:"https://aparat.com/v/qgg29h5"},
+    {label:"ویدیوی تست 11", url:"https://aparat.com/v/xawlse9"}
   ]},
   { name:"موتور شوی", price:409000, cat:"خودرویی", buyUrl:"https://basalam.com/editor", img:"engine-cleaner.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://www.aparat.com/v/whc79m4"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/zzjjg65"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/wyz8k3k"},
-    {label:"ویدیوی تست ۴", url:"https://aparat.com/v/xym0oe3"}
+    {label:"ویدیوی تست ۴", url:"https://aparat.com/v/xym0oe3"},
+    {label:"ویدیوی تست 5", url:"https://aparat.com/v/gut1m7q"}
   ]},
   { name:"رینگ شوی", price:359000, cat:"خودرویی", buyUrl:"https://basalam.com/editor/product/45139589", img:"rim-cleaner.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/osdeza7"},
@@ -2145,7 +2181,8 @@ const products = [
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/ild383c"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/jci2528"},
     {label:"ویدیوی تست ۴", url:"https://aparat.com/v/ajgi3pr"},
-    {label:"ویدیوی تست ۵", url:"https://aparat.com/v/ucka454"}
+    {label:"ویدیوی تست ۵", url:"https://aparat.com/v/ucka454"},
+    {label:"ویدیوی تست 6", url:"https://aparat.com/v/rud391r"}
   ]},
   { name:"شیشه شوی", price:379000, cat:"خودرویی", buyUrl:"https://basalam.com/editor/product/45139055", img:"windshield-cleaner.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/wab9wg9"},
@@ -2169,13 +2206,16 @@ const products = [
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/ver9e1y"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/bdywd36"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/syaky9v"},
-    {label:"ویدیوی تست ۴", url:"https://aparat.com/v/mpp598q"}
+    {label:"ویدیوی تست ۴", url:"https://aparat.com/v/mpp598q"},
+    {label:"ویدیوی تست 5", url:"https://aparat.com/v/lgcj26i"},
+    {label:"ویدیوی تست 6", url:"https://aparat.com/v/pog6896"}
   ]},
   { name:"بلک مجیک", price:450000, cat:"خودرویی", buyUrl:"https://basalam.com/editor/product/51881795", img:"black-magic.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/mvz4qd5"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/qza45e0"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/zzmo12s"},
-    {label:"ویدیوی تست ۴", url:"https://aparat.com/v/ljvoi0j"}
+    {label:"ویدیوی تست ۴", url:"https://aparat.com/v/ljvoi0j"},
+    {label:"ویدیوی تست 5", url:"https://aparat.com/v/tcq180g"}
   ]},
 ];
 
@@ -2195,7 +2235,7 @@ const simpleCategories = [
     {name:"ادکلن زنانه همراز", price:1219000},{name:"ادکلن مردانه کایرا", price:1219000}
   ]},
   { title:"خوشبو کننده", buyUrl:"https://basalam.com/editor", introLabel:"معرفی خوشبو کننده", catImg:"air-freshener-set.webp", videoUrls:[
-    "https://aparat.com/v/ejelu90","https://aparat.com/v/ezjv82d","https://aparat.com/v/phaxsff"
+    "https://aparat.com/v/ejelu90","https://aparat.com/v/ezjv82d","https://aparat.com/v/phaxsff","https://aparat.com/v/szx9qt2"
   ], items:[
     {name:"اسپری خوشبوکننده هوا رایحه باس من", price:369000},{name:"اسپری خوشبوکننده هوا رایحه مادام بیوتی", price:369000},
     {name:"اسپری خوشبوکننده هوا رایحه لاوندر", price:369000},{name:"اسپری خوشبوکننده هوا رایحه کول فرش", price:369000}
@@ -4385,5 +4425,22 @@ shareBtn.addEventListener('click', async ()=>{
 
 </script>
 
+<script>
+/* ویدیوی بالای سایت: هر بار که صفحه باز میشه یک ویدیوی تصادفی از بین همه‌ی تست‌ها نشون داده میشه */
+(function(){
+  var f=document.getElementById('heroFrame'), l=document.getElementById('heroLabel');
+  if(!f) return;
+  var pool=[];
+  try{
+    products.forEach(function(p){ p.videos.forEach(function(v){
+      var m=v.url.match(/aparat\.com\/v\/([A-Za-z0-9]+)/);
+      if(m) pool.push({id:m[1], name:p.name});
+    });});
+  }catch(e){}
+  var pick = pool.length ? pool[Math.floor(Math.random()*pool.length)] : {id:'sva419y', name:'نانو چند منظوره خانگی'};
+  f.src='https://www.aparat.com/video/video/embed/videohash/'+pick.id+'/vt/frame';
+  if(l) l.textContent='🎥 نمونه تست واقعی «'+pick.name+'» — همین الان ببینید';
+})();
+</script>
 </body>
 </html>

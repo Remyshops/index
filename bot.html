@@ -27,6 +27,10 @@ header p{margin:3px 0 0;color:var(--muted);font-size:12.5px;line-height:1.6}
 .user a{color:#fff}
 .cta{display:inline-block;background:var(--brand);color:#fff !important;padding:8px 14px;border-radius:10px;text-decoration:none;word-break:normal}
 .typing{align-self:flex-start;color:var(--muted);font-size:15px;padding:0 10px;letter-spacing:2px}
+.addbar{display:flex;padding:8px 12px 0;background:#fff;border-top:1px solid var(--line)}
+.addbtn{font:inherit;font-weight:600;font-size:13px;color:var(--brand);background:#fff;border:1.5px dashed var(--brand);border-radius:10px;padding:6px 14px;cursor:pointer}
+.addbtn:hover{background:var(--brand);color:#fff}
+.addbar+.composer{border-top:0;padding-top:8px}
 .composer{display:flex;gap:8px;padding:12px;background:#fff;border-top:1px solid var(--line)}
 .composer input{flex:1;font:inherit;font-size:14.5px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--paper);color:var(--ink)}
 .composer input:focus{border-color:var(--brand);background:#fff;outline:none}
@@ -100,6 +104,7 @@ header p{margin:3px 0 0;color:var(--muted);font-size:12.5px;line-height:1.6}
     <p>دستیار هوش‌مصنوعی پخش نانو جی‌پلاس. قیمت‌ها به تومان است و همکاران انسانی هم درخواست‌ها را پیگیری می‌کنند.</p>
   </header>
   <main id="chat" aria-live="polite"></main>
+  <div class="addbar"><button type="button" class="addbtn" id="addBtn">➕ افزودن محصول</button></div>
   <form class="composer" id="form" autocomplete="off">
     <input id="input" type="text" placeholder="پیامت رو بنویس…" aria-label="پیام شما">
     <button type="submit">ارسال</button>
@@ -2588,7 +2593,7 @@ function handle(text) {
   if (S.ask && RX.yes.test(n)) return askYes();
   if (S.ask && RX.no.test(n)) { S.ask = null; return say('باشه، هر وقت خواستی بگو.'); }
   if (S.ask === 'order') {
-    if (RX.chWa.test(n)) return setChannel('whatsapp');
+    if (RX.chWa.test(n)) return say('فعلاً سفارش‌ها از ایتا و باسلام ثبت می‌شه.', channelAsk());
     if (/ایتا(?!لی)|eitaa/.test(n)) return setChannel('eitaa');
     if (RX.chBas.test(n)) return setChannel('basalam');
     if (/اضافه|یهچیزدیگه|محصولدیگه|بقیه/.test(n)) return addMoreToOrder();
@@ -2597,7 +2602,7 @@ function handle(text) {
   if (RX.no.test(n)) return say('باشه، هر وقت خواستی بگو.');
   if (RX.greet.test(n)) return say('سلام! خوش اومدی.', startChoices('کسب‌وکارت چیه یا دنبال کدوم محصولی؟'));
   if (RX.ai.test(n)) return say(AI_TEXT);
-  if (RX.phone.test(n)) return say({ text: PHONE_TEXT, link: { label: 'پیام در ایتا', href: CONFIG.EITAA_URL } }, { link: { label: 'گفتگو در واتساپ', href: 'https://wa.me/' + CONFIG.WHATSAPP } });
+  if (RX.phone.test(n)) return say({ text: PHONE_TEXT, link: { label: 'پیام در ایتا', href: CONFIG.EITAA_URL } });
   if (RX.human.test(n)) return startLead('حتماً. نام و نام خانوادگی‌ت چیه؟');
   if (RX.complaint.test(n)) return startLead('متأسفم که اینطور شده. برای اینکه همکارم پیگیری کنه، نام و نام خانوادگی‌ت چیه؟', 'شکایت یا نارضایتی از محصول', 'complaint');
   if (RX.support.test(n)) return say('پشتیبانی بعد از فروش داریم؛ اگه بعد از خرید به راهنمایی نیاز داشتی، بهت مشاوره می‌دیم.');
@@ -2699,8 +2704,8 @@ const S = { step: null, lead: {}, ask: null, biz: null, product: null, qty: null
 /* ===== انتخاب روش خرید: باسلام یا واتساپ ===== */
 function channelAsk() {
   return {
-    text: 'می‌خوای سفارشت رو از باسلام ثبت کنی، یا از واتساپ یا ایتا؟ اگه چیز دیگه‌ای هم لازم داری، قبل از ثبت اضافه‌ش کن.',
-    choices: [{ key: 'basalam', label: 'باسلام' }, { key: 'whatsapp', label: 'واتساپ' }, { key: 'eitaa', label: 'ایتا' }, { key: 'more', label: 'افزودن محصول بیشتر' }],
+    text: 'می‌خوای سفارشت رو از باسلام ثبت کنی یا همین‌جا برای همکارم ثبت کنم؟ اگه چیز دیگه‌ای هم لازم داری، قبل از ثبت اضافه‌ش کن.',
+    choices: [{ key: 'basalam', label: 'باسلام' }, { key: 'order', label: 'ثبت سفارش' }, { key: 'more', label: 'افزودن محصول بیشتر' }],
     onChoice: setChannel
   };
 }
@@ -2720,7 +2725,7 @@ function setChannel(key) {
       if (noLink.length) parts.push({ text: noLink.map(x => x.it.short).join('، ') + ' لینک اختصاصی ندارن؛ توی غرفه‌ی رمی شاپ در باسلام پیداشون می‌کنی.', link: { label: 'غرفه‌ی رمی شاپ در باسلام', href: CONFIG.BOOTH_URL } });
       return say(...parts);
     }
-    return startLead('خوبه، سفارش رو از ' + (key === 'eitaa' ? 'ایتا' : 'واتساپ') + ' ثبت می‌کنیم. چند تا سؤال کوتاه می‌پرسم تا همکارم راحت پیگیری کنه. نام و نام خانوادگی‌ت چیه؟');
+    return startLead('خوبه، سفارش رو ثبت می‌کنیم. چند تا سؤال کوتاه می‌پرسم تا همکارم راحت پیگیری کنه. نام و نام خانوادگی‌ت چیه؟');
   }
   S.channel = key;
   S.ask = null;
@@ -2730,7 +2735,7 @@ function setChannel(key) {
     if (it) return say({ text: 'عالیه! ' + it.name + ' لینک اختصاصی نداره؛ توی غرفه‌ی رمی شاپ در باسلام اسمش رو سرچ کن.', link: { label: 'غرفه‌ی رمی شاپ در باسلام', href: CONFIG.BOOTH_URL } });
     return say({ text: 'عالیه! محصولاتمون توی غرفه‌ی رمی شاپ در باسلام هستن.', link: { label: 'غرفه‌ی رمی شاپ در باسلام', href: CONFIG.BOOTH_URL } }, 'کدوم محصول رو می‌خوای؟');
   }
-  startLead('خوبه، سفارش رو از ' + (key === 'eitaa' ? 'ایتا' : 'واتساپ') + ' ثبت می‌کنیم. چند تا سؤال کوتاه می‌پرسم تا همکارم راحت پیگیری کنه. نام و نام خانوادگی‌ت چیه؟');
+  startLead('خوبه، سفارش رو ثبت می‌کنیم. چند تا سؤال کوتاه می‌پرسم تا همکارم راحت پیگیری کنه. نام و نام خانوادگی‌ت چیه؟');
 }
 
 function detectBiz(n) {
@@ -3037,7 +3042,7 @@ function leadStep(text) {
 }
 
 /* متن نهایی که مشتری برای همکار می‌فرستد (واتساپ/ایتا) */
-function buildLeadMessage(L) {
+function buildLeadMessage(L, closing) {
   const has = v => v && String(v).trim() && String(v).trim() !== 'نامشخص';
   const complaint = L.kind === 'complaint';
   const need = String(L.need || '') + (has(L.qty) && String(L.need || '').indexOf(L.qty) === -1 ? ' (' + L.qty + ')' : '');
@@ -3049,25 +3054,34 @@ function buildLeadMessage(L) {
   if (!complaint && has(L.buy)) r.push('✅ نوع خرید: ' + L.buy);
   if (has(L.address)) r.push('✅ آدرس: ' + L.address);
   if (has(L.postal)) r.push('✅ کدپستی: ' + L.postal);
-  r.push('', complaint ? 'لطفاً پیگیری کنید و نتیجه رو به من خبر بدید. ممنون ✅' : 'لطفاً برای تأیید سفارش و هماهنگی پرداخت و ارسال با من در ارتباط باشید. ممنون ✅');
+  r.push('', complaint ? 'لطفاً پیگیری کنید و نتیجه رو به من خبر بدید. ممنون ✅' : (closing || 'لطفاً با من در ارتباط باشید. ممنون ✅'));
   return r.join('\n');
 }
 
+const CLOSINGS = {
+  stock: 'موجود دارید؟ قیمتش چند می‌شه؟ ممنون ✅',
+  invoice: 'لطفاً فاکتور این اجناس رو برام بزنید. ممنون ✅',
+  both: 'موجود دارید؟ لطفاً فاکتور این اجناس رو برام بزنید. ممنون ✅'
+};
 function finish() {
   S.multi = null;
   const L = S.lead;
-  const eitaa = S.channel === 'eitaa';
-  const summary = buildLeadMessage(L);
   let saved = '';
   if (CONFIG.LEAD_WEBHOOK) { sendLead(L); saved = ' نسخه‌ای از درخواستت هم ثبت شد.'; }
-  if (eitaa) {
-    return say('ممنون ' + L.name + '، درخواستت آماده‌ست.' + saved,
-      { text: 'دکمه‌ی زیر متن درخواستت رو کپی می‌کنه و ایتا باز می‌شه؛ فقط پیست کن و برای همکارم بفرست تا پیگیری کنه. ' + HOURS_TEXT,
+  say('ممنون ' + L.name + '، سفارشت آماده‌ست.' + saved,
+    {
+      text: 'می‌خوای پیامت به همکارم چی بخواد؟ یکی رو انتخاب کن:',
+      choices: [
+        { key: 'stock', label: 'موجودی و قیمت رو بپرس' },
+        { key: 'invoice', label: 'فاکتور بزنن' },
+        { key: 'both', label: 'موجودی + فاکتور' }
+      ],
+      onChoice: key => sendOptions(buildLeadMessage(L, CLOSINGS[key] || CLOSINGS.both))
+    });
+}
+function sendOptions(summary) {
+  say({ text: 'دکمه‌ی زیر متن سفارشت رو کپی می‌کنه و ایتا باز می‌شه؛ فقط پیست کن و برای همکارم بفرست. ' + HOURS_TEXT,
         link: { label: 'ارسال در ایتا', href: CONFIG.EITAA_CHAT || CONFIG.EITAA_URL, onClick: () => copyText(summary) } });
-  }
-  const wa = 'https://wa.me/' + CONFIG.WHATSAPP + '?text=' + encodeURIComponent(summary);
-  say('ممنون ' + L.name + '، درخواستت آماده‌ست.' + saved,
-    { text: 'با دکمه‌ی زیر، همین پیام رو از واتساپ برای همکارم بفرست تا پیگیری کنه. ' + HOURS_TEXT, link: { label: 'ارسال در واتساپ', href: wa } });
 }
 
 function copyText(t) {
@@ -3086,7 +3100,7 @@ function sendLead(L) {
       method: 'POST',
       mode: 'no-cors',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify({ name: L.name, phone: L.phone, postal_code: L.postal, address: L.address, need: L.need, context: L.ctx, business: L.biz, qty: L.qty, purchase: L.buy, channel: (S.channel === 'eitaa' ? 'eitaa' : 'whatsapp'), source: 'website-chat', time: new Date().toISOString() })
+      body: JSON.stringify({ name: L.name, phone: L.phone, postal_code: L.postal, address: L.address, need: L.need, context: L.ctx, business: L.biz, qty: L.qty, purchase: L.buy, channel: 'pending', source: 'website-chat', time: new Date().toISOString() })
     });
   } catch (e) { /* ثبت نباید گفتگو را متوقف کند */ }
 }
@@ -3270,6 +3284,7 @@ function addOrderForm(cfg) {
 }
 
 function multiSubmit(order) {
+  if (S.step) return mergeIntoLead(order);
   S.product = null;
   S.qty = null;
   S.multi = order;
@@ -3290,7 +3305,6 @@ function multiSubmit(order) {
     const sum = x.n * it.retail;
     total += sum;
     lines.push('• ' + it.short + ': ' + fa(x.n) + ' عدد، تقریباً ' + money(sum) + ' خرده');
-    if (it.buy) lines.push('   ↳ اگه کارتنی (' + fa(it.carton) + ' عدد) برداری، هر عدد ' + money(it.buy) + ' درمیاد، به‌جای ' + money(it.retail));
   });
   const summary = 'سفارشت این شد:\n' + lines.join('\n') + (bulk.length ? '' : '\nجمع تقریبی: ' + money(total));
   if (bulk.length) {
@@ -3300,6 +3314,31 @@ function multiSubmit(order) {
   S.ask = 'order';
   say(summary, channelAsk());
 }
+
+/* افزودن محصول در هر مرحله‌ای از چت، بدون محدودیت */
+function addProductAnytime() {
+  const cur = S.multi || [];
+  const pre = cur.length ? cur.map(x => ({ id: x.it.id })) : (S.product ? [{ id: S.product.id }] : []);
+  orderMenu(pre, undefined, cur.map(x => ({ id: x.it.id, n: x.n, unit: x.unit })), 'هر محصولی لازم داری تیک بزن و تعدادش رو بنویس، بعد «ادامه» رو بزن. هر چند تا محصول بخوای می‌تونی اضافه کنی.');
+}
+const LEAD_REASK = {
+  name: 'نام و نام خانوادگی‌ت چیه؟',
+  phone: 'شماره موبایل‌ت رو بنویس (مثلاً ۰۹۱۲۳۴۵۶۷۸۹).',
+  postal: 'کدپستی‌ت رو بنویس (۱۰ رقم).',
+  address: 'آدرس کامل‌ت رو بنویس (شهر، خیابان، کوچه و پلاک).'
+};
+function mergeIntoLead(order) {
+  S.multi = order;
+  const M = multiSummary();
+  const L = S.lead;
+  L.ctx = M.names; L.qty = M.qty; L.need = M.need; L.buy = M.buy;
+  S.ask = null;
+  if (LEAD_REASK[S.step]) return say('محصول‌ها به سفارشت اضافه شد ✅', LEAD_REASK[S.step]);
+  S.step = 'confirm';
+  say('محصول‌ها به سفارشت اضافه شد ✅');
+  confirmLead();
+}
+document.getElementById('addBtn').addEventListener('click', addProductAnytime);
 
 function multiSummary() {
   const M = S.multi;

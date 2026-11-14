@@ -40,6 +40,26 @@ header p{margin:3px 0 0;color:var(--muted);font-size:12.5px;line-height:1.6}
 .chip{font:inherit;font-weight:600;font-size:14px;background:#fff;color:var(--brand);border:1.5px solid var(--brand);border-radius:12px;padding:9px 20px;cursor:pointer}
 .chip:hover{background:var(--brand);color:#fff}
 .chip:focus-visible{outline:3px solid #7FB7C4;outline-offset:2px}
+.oform{max-width:96%;align-self:flex-start;padding:10px 10px 12px}
+.oform.done{opacity:.65}
+.olist{max-height:360px;overflow-y:auto;border:1px solid var(--line);border-radius:10px;background:var(--paper)}
+.ogroup{position:sticky;top:0;z-index:1;font-size:12px;font-weight:600;color:var(--brand);background:#fff;padding:7px 10px 5px;border-bottom:1px solid var(--line)}
+.orow{background:#fff;padding:8px 10px;border-bottom:1px solid var(--line)}
+.otop{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13.5px;line-height:1.7}
+.otop input[type=checkbox]{width:18px;height:18px;flex:0 0 auto;margin:0;accent-color:var(--brand);cursor:pointer}
+.oname{flex:1;font-weight:600}
+.oprice{font-size:12px;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+.oqty{display:flex;align-items:center;gap:8px;padding-inline-start:26px;margin-top:6px;font-size:12.5px}
+.oqty[hidden]{display:none}
+.oqty input{width:76px;font:inherit;padding:5px 8px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink)}
+.oqty select{font:inherit;padding:5px 8px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink)}
+.ofoot{display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+.ocount{flex:1;font-size:12.5px;color:var(--muted);min-width:120px}
+.obtn{font:inherit;font-weight:600;font-size:13.5px;border:1.5px solid var(--brand);border-radius:10px;padding:7px 16px;background:var(--brand);color:#fff;cursor:pointer}
+.obtn.ghost{background:#fff;color:var(--brand)}
+.obtn:disabled{opacity:.45;cursor:default}
+.oerr{min-height:0;color:#B3261E;font-size:12.5px;margin-top:6px}
+.oform button:focus-visible,.oform input:focus-visible,.oform select:focus-visible{outline:3px solid #7FB7C4;outline-offset:2px}
 </style>
 </head>
 <body>
@@ -1097,6 +1117,7 @@ function addBot(part) {
     });
   }
   if (part.picker) addPicker(part.picker.items, part.picker.onPick);
+  if (part.orderForm) addOrderForm(part.orderForm);
   if (part.choices) addChoices(part.choices, part.onChoice);
   scrollDown();
 }
@@ -1171,7 +1192,7 @@ async function play(parts) {
   for (const p of parts) {
     const part = typeof p === 'string' ? { text: p } : p;
     const t = addTyping();
-    await wait(Math.min(1400, 450 + (part.text || '').length * 18));
+    await wait(Math.min(500, 150 + (part.text || '').length * 5));
     t.remove();
     addBot(part);
   }
@@ -1183,14 +1204,14 @@ function respond(text) { busy = busy.then(() => handle(text)); }
 /* ===== تشخیص نیاز ===== */
 const RX = {
   greet: /^(سلام|سلامعلیکم|درود|صبحبخیر|ظهربخیر|عصربخیر|شببخیر|وقتبخیر|های|هلو|هی|hi|hey|hello)$/,
-  yes: /^(آره|اره|بله|باشه|حتما|اوکی|ok|میخوام|میخوامم|آرهلطفا|بلهلطفا|لطفا|بفرست|بفرستش|ثبتکن|آرهثبتکن|بلهثبتکن)$/,
+  yes: /^(?:آره|اره|بله|باشه|حتما|اوکی|ok|میخوام|لطفا|بفرست|بفرستش|ثبتکن|بپرس|بپرسید|بگیر|اوهوم|حله|بزنبریم|درسته|دقیقا)(?:آره|اره|بله|لطفا|ثبتکن|بفرست|بفرستش|بپرس|بپرسید|حتما|دیگه|ممنون)*$/,
   no: /^(نه|نخیر|خیر|نمیخوام|نهممنون|نمیخوامم)$/,
   thanks: /ممنون|مرسی|متشکر|سپاس|تشکر|دمتگرم|عالیه|عالی/,
   ai: /ربات|هوشمصنوعی|آدمهستی|آدمی|انسانهستی|چتبات|bot/,
   human: /همکار(?!ی)|اپراتور|مدیر|مسئول|با(?:آدم|انسان)(?!(?:حرف|صحبت)(?:میزنم|میکنم))|تماسبگیر|شمارهتماس|شمارهتلفن|شمارهموبایل|شمارهپشتیبان/,
   complaint: /شکایت|نارضایت|ناراضی|مرجوع|تقلبی|بهدردنخورد|پولمو?پس|کیفیتپایین|خراببود|خرابه/,
   support: /پسازفروش|گارانتی|بعدازخرید/,
-  contact: /ایتا|اینستا|instagram|eitaa|پیج/,
+  contact: /ایتا(?!لی)|اینستا|instagram|eitaa|پیج|کانال|چنل|channel|تلگرام|telegram|روبیکا|rubika|فالو|عضو/,
   phone: /شمارهتماس|شمارهتلفن|شمارهموبایل|شمارهواتساپ|واتساپدارین|تلفندارین|شمارهتون|شمارتون/,
   hours: /ساعتکار|ساعتپاسخ|چهساعتی|تاکیپاسخ|ساعتچند/,
   stock: /موجودی/,
@@ -2346,7 +2367,7 @@ function trainNB(rows) {
   return { cls, feat, tot, V: vocab.size, N: rows.length };
 }
 const NB_MODEL = trainNB(NLU_ROWS.concat(NLU_ROWS_V2.map(([t, y]) => [mask(t), y])));
-function classify(text) {
+function classifyNB(text) {
   const g = grams(mask(text));
   const logs = {};
   Object.keys(NB_MODEL.cls).forEach(y => {
@@ -2361,6 +2382,19 @@ function classify(text) {
   let best = null;
   Object.keys(ex).forEach(y => { if (best === null || ex[y] > ex[best]) best = y; });
   return { intent: best, p: ex[best] / z };
+}
+
+function tri(t) { const s = '^' + t + '$', o = new Set(); for (let i = 0; i + 3 <= s.length; i++) o.add(s.substr(i, 3)); return o; }
+const KNN = NLU_ROWS.concat(NLU_ROWS_V2.map(([t, y]) => [mask(t), y])).map(([t, y]) => ({ y: y, g: tri(t) }));
+const NEED = { no_carton: /تکی|کارتو?ن|عدد|دونه/, qty_cartons: /کارتو?ن|\d|تا/, qty_pieces: /عدد|دونه|\d|تا|تکی/ };
+/* فقط وقتی جواب بده که جمله‌ی خیلی شبیهی تو داده‌ی آموزشی باشه و هر دو روش هم‌نظر باشن؛ وگرنه «نفهمیدم» */
+function classify(text) {
+  const nb = classifyNB(text), q = tri(mask(text));
+  let best = 0, by = null;
+  KNN.forEach(r => { let k = 0; q.forEach(x => { if (r.g.has(x)) k++; }); const sc = 2 * k / ((q.size + r.g.size) || 1); if (sc > best) { best = sc; by = r.y; } });
+  if (nb.intent !== by || best < 0.5) return { intent: null, p: 0 };
+  if (NEED[nb.intent] && !NEED[nb.intent].test(norm(text))) return { intent: null, p: 0 };
+  return nb;
 }
 
 /* ===== فهم پیام: قواعد دقیق برای موارد حساس + دسته‌بند آموزش‌دیده برای بقیه ===== */
@@ -2394,34 +2428,62 @@ const START_CHOICES = [
   { key: 'sofa', label: 'مبل‌شویی و خشک‌شویی' },
   { key: 'digital', label: 'کامپیوتر و موبایل' },
   { key: 'home', label: 'مصرف خانگی' },
+  { key: 'multi', label: 'سفارش چند محصول' },
   { key: 'browse', label: 'دیدن محصولات' }
 ];
-function startPick(key) { return key === 'browse' ? browseAnswer() : recAnswer(key); }
+function startPick(key) { return key === 'multi' ? orderMenu() : key === 'browse' ? browseAnswer() : recAnswer(key); }
 function startChoices(text) { return { text: text, choices: START_CHOICES, onChoice: startPick }; }
 
 function browseAnswer() {
   say({ text: 'این‌ها پرفروش‌ترین‌های ماست. روی هر کدوم بزنی، قیمتش رو می‌گم.', picker: pickerFor(BEST_IDS, pickProduct) }, { text: 'کاتالوگ‌های PDF رو هم اینجا گذاشتم؛ با لمس هر کدوم باز می‌شه:', files: true }, { text: 'ویدیوی تست همه‌ی محصولات توی کاتالوگ آنلاین هست:', link: { label: 'کاتالوگ آنلاین', href: CONFIG.CATALOG_URL } }, 'اگه بگی کسب‌وکارت چیه، پیشنهاد دقیق‌تری می‌دم.');
 }
 
+/* ===== سوال‌های پرتکرار: برای اضافه کردن، یک خط [عبارت, جواب] به FAQ اضافه کن (عبارت روی متن بدون فاصله چک می‌شه) ===== */
+const PHONE_TEXT = 'شماره‌ی ما توی همه‌ی پلتفرم‌ها یکیه: ۰۹۳۸۹۵۶۱۳۶۷. اگه می‌خوای سریع‌تر جواب بگیری، توی ایتا پیام بده؛ در خدمتیم.';
+const FAQ = [
+  [/فامیل|نامخانوادگی|صاحبفروشگاه|مدیرفروشگاه|مدیرکیه/, 'فروشگاه رمی‌شاپ با مدیریت آقای مدرسی هست.'],
+  [/(?:کدوم|کجا|چه)(?:شهر|استان)|شهرتون|مبدا|ازیزد/, 'ارسال از یزد انجام می‌شه.'],
+  [/چندروز|چهزمان|کیمیرسه|زمانرسیدن|مدتارسال|زمانارسال|تاکیمیرسه|چندروزهمیرسه/, 'بسته به تعطیل بودن روزها فرق می‌کنه؛ معمولاً از ۷۲ ساعت تا حداکثر ۱ هفته می‌رسه.'],
+  [/چهپستی|باچهپست|پستیمیفرست|دکاپست|پستایران|تیپاکس|کدومباربری|چهباربری/, 'معمولاً با دکاپست ارسال می‌کنیم؛ با تیپاکس و پست ایران هم کار می‌کنیم.']
+];
+function faqAnswer(n, text) {
+  if (/(?:^| )(?:تو|توی|در|با|از|به) بله(?: |$)|پیامرسانبله/.test(normSp(text))) { say({ text: PHONE_TEXT, link: { label: 'پیام در ایتا', href: CONFIG.EITAA_URL } }); return true; }
+  const hit = FAQ.find(f => f[0].test(n));
+  if (!hit) return false;
+  say(hit[1]); return true;
+}
+
+function contactAnswer(n) {
+  const e = /ایتا(?!لی)|eitaa/.test(n), i = /اینستا|instagram|پیج/.test(n), other = /تلگرام|telegram|روبیکا|rubika/.test(n);
+  const parts = [];
+  if (other) parts.push('فعلاً توی تلگرام و روبیکا نیستیم؛ این‌جاها هستیم:');
+  if (e || !i) parts.push({ text: 'کانال ایتای ما؛ با دکمه‌ی زیر عضو شو:', link: { label: 'عضویت در کانال ایتا', href: CONFIG.EITAA_URL } });
+  if (i || !e) parts.push({ text: 'اینستاگرام ما:', link: { label: 'پیج اینستاگرام', href: CONFIG.INSTAGRAM_URL } });
+  say(...parts);
+}
+
 function handle(text) {
   const n = norm(text);
   if (!n) return;
+  S.prevMiss = S.misses || 0; S.misses = 0;
 
   if (S.step) return leadStep(text);
+  if (S.ask !== 'order' && S.ask !== 'handoff') S.multi = null;
 
   if (S.ask && RX.yes.test(n)) return askYes();
   if (S.ask && RX.no.test(n)) { S.ask = null; return say('باشه، هر وقت خواستی بگو.'); }
   if (S.ask === 'order') {
     if (RX.chWa.test(n)) return setChannel('whatsapp');
     if (RX.chBas.test(n)) return setChannel('basalam');
+    if (/اضافه|یهچیزدیگه|محصولدیگه|بقیه/.test(n)) return addMoreToOrder();
   }
 
   if (RX.no.test(n)) return say('باشه، هر وقت خواستی بگو.');
   if (RX.greet.test(n)) return say('سلام! خوش اومدی.', startChoices('کسب‌وکارت چیه یا دنبال کدوم محصولی؟'));
   if (RX.ai.test(n)) return say(AI_TEXT);
-  if (RX.phone.test(n)) return say({ text: 'واتساپ ما ۰۹۳۸۹۵۶۱۳۶۷ هست. اگه بخوای، من هم درخواستت رو برای همکارم آماده می‌کنم.', link: { label: 'گفتگو در واتساپ', href: 'https://wa.me/' + CONFIG.WHATSAPP } });
-  if (RX.human.test(n)) return startLead('حتماً. اسمت چیه؟');
-  if (RX.complaint.test(n)) return startLead('متأسفم که اینطور شده. برای اینکه همکارم پیگیری کنه، اسمت چیه؟', 'شکایت یا نارضایتی از محصول', 'complaint');
+  if (RX.phone.test(n)) return say({ text: PHONE_TEXT, link: { label: 'پیام در ایتا', href: CONFIG.EITAA_URL } }, { link: { label: 'گفتگو در واتساپ', href: 'https://wa.me/' + CONFIG.WHATSAPP } });
+  if (RX.human.test(n)) return startLead('حتماً. نام و نام خانوادگی‌ت چیه؟');
+  if (RX.complaint.test(n)) return startLead('متأسفم که اینطور شده. برای اینکه همکارم پیگیری کنه، نام و نام خانوادگی‌ت چیه؟', 'شکایت یا نارضایتی از محصول', 'complaint');
   if (RX.support.test(n)) return say('پشتیبانی بعد از فروش داریم؛ اگه بعد از خرید به راهنمایی نیاز داشتی، بهت مشاوره می‌دیم.');
   if (RX.safety.test(normSp(text))) return say(SAFE_TEXT);
 
@@ -2429,7 +2491,8 @@ function handle(text) {
   if (/(?:^| )(?:چک|کارتخوان|پوز|حواله|ساتنا|پایا)(?: |$)/.test(normSp(text))) return say(PAY_TEXT);
 
   if (RX.bye.test(n)) return say('موفق باشی! هر وقت خواستی برگرد.');
-  if (RX.contact.test(n)) return say({ text: 'ما توی ایتا و اینستاگرام هم هستیم:\n' + CONFIG.EITAA_URL + '\n' + CONFIG.INSTAGRAM_URL });
+  if (faqAnswer(n, text)) return;
+  if (RX.contact.test(n)) return contactAnswer(n);
   if (RX.hours.test(n)) return say('همکارای انسانی ما از ۸ صبح تا ۴ عصر پاسخ‌گو هستن.');
   if (RX.stock.test(n)) return unknownAnswer('موجودی رو همکارم دقیق اعلام می‌کنه.');
   if (/تست|ویدیو|ویدئو|فیلم|آپارات|اپارات|کلیپ|نمونهکار|چطورکارمیکنه|کارشرومیبینم|ببینمکارش/.test(n) && !/آنلاین/.test(n)) {
@@ -2440,11 +2503,12 @@ function handle(text) {
     return say({ text: 'ویدیوی تست کدوم محصول رو می‌خوای؟ روی عکسش بزن.', picker: pickerFor(BEST_IDS, videoAnswer) });
   }
   if (/کاتالوگ|کاتالگ|catalog|pdf|پیدیاف|بروشور|لیستقیمت/.test(n) && !/آنلاین/.test(n)) return say({ text: 'این‌ها کاتالوگ‌های ما هستن؛ با لمس هر کدوم باز می‌شه:', files: true }, 'اگه بگی کسب‌وکارت چیه، پیشنهاد دقیق‌تری می‌دم.');
-  if (RX.tissue.test(n)) { const t = matchTissue(n); return t ? pickTissue({ id: t }) : tissueAnswer(); }
+  if (RX.tissue.test(n)) return tissueAnswer(matchTissue(n));
   if (RX.gallon.test(n)) return gallonAnswer(n);
 
   let found = prefer(matchItems(n));
   if (found.length === 1) S.product = found[0];
+  if (RXM.multi.test(n) || (RXM.order.test(n) && !found.length)) return orderMenu(found.length ? found : (S.product ? [S.product] : []), n);
 
   if (/^\d+$/.test(n) && (S.ask === 'qty' || S.product)) {
     const num = Number(n);
@@ -2453,7 +2517,7 @@ function handle(text) {
   }
   const q = parseQty(n) || parseQtyWords(text);
   if (q) return handleQty(q.n, q.unit);
-  if (RX.noCarton.test(normSp(text)) || /تکی|تکیی|تکتک/.test(n)) { S.unitPref = 'عدد'; S.ask = 'qty'; return say('پس تکی حساب می‌کنم. چند عدد لازمه؟'); }
+  if (RX.noCarton.test(normSp(text)) || /تکی|تکیی|تکتک/.test(n)) return orderMenu(S.product ? [S.product] : []);
 
   const c = classify(text);
   let intent = c.p >= CLS_MIN ? c.intent : null;
@@ -2481,14 +2545,10 @@ function act(intent, found, n, text) {
   if (intent === 'yes') return say('اگه سؤال دیگه‌ای داری، بپرس.');
   if (intent === 'no') return say('باشه، هر وقت خواستی بگو.');
   if (intent === 'link') return productLink();
-  if (intent === 'where') { S.ask = 'order'; return say('می‌تونی از باسلام یا از واتساپ سفارش بدی.', channelAsk()); }
+  if (intent === 'where') return orderMenu(found);
   if (intent === 'usage') return usageAnswer(n);
-  if (intent === 'qty_pieces' || intent === 'qty_cartons') {
-    S.ask = 'qty';
-    return say(intent === 'qty_cartons' ? 'چند کارتن لازم داری؟ هر کارتن معمولاً ۲۰ تا ۲۵ عدده.' : 'چند عدد لازمه؟');
-  }
-  if (intent === 'no_carton') { S.unitPref = 'عدد'; S.ask = 'qty'; return say('پس تکی حساب می‌کنم. چند عدد لازمه؟'); }
-  if (intent && intent.indexOf('biz_') === 0) return recAnswer(intent.slice(4));
+  if (intent === 'qty_pieces' || intent === 'qty_cartons' || intent === 'no_carton') return orderMenu(found);
+  if (intent && intent.indexOf('biz_') === 0) return recAnswer(intent.slice(4));  if (intent && intent.indexOf('biz_') === 0) return recAnswer(intent.slice(4));
   if (intent === 'gallon') return gallonAnswer(n);
   if (intent === 'tissue') return tissueAnswer();
   if (intent === 'wholesale') return wholesaleAnswer();
@@ -2500,7 +2560,7 @@ function act(intent, found, n, text) {
   if (intent === 'pick') return S.biz ? say('اسمش رو بگو تا قیمتش رو کامل بگم. مثلاً همون اسمی که بالا آوردم.') : browseAnswer();
   if (intent === 'image_issue') return say(IMG_TEXT);
   if (intent === 'ai') return say(AI_TEXT);
-  if (intent === 'human') return startLead('حتماً. اسمت چیه؟');
+  if (intent === 'human') return startLead('حتماً. نام و نام خانوادگی‌ت چیه؟');
   if (intent === 'safety') return say(SAFE_TEXT);
   if (intent === 'price' || intent === 'product') {
     if (found.length === 1) return productAnswer(found[0], false);
@@ -2512,22 +2572,40 @@ function act(intent, found, n, text) {
   if (found.length === 1) return productAnswer(found[0], RX.question.test(text) && !(found[0].id === 'h_led' && /مانیتور|نمایشگر|تلویزیون|تبلت|موبایل|گوشی|لپتاپ|آینه|آیینه|اینه|شیشه|نمایش/.test(n)));
   if (found.length > 1) return say({ text: 'منظورت کدومه؟', picker: pickerFor(found.slice(0, 6).map(x => x.id), pickProduct) });
   if (RX.question.test(text)) return unknownAnswer('این رو دقیق نمی‌دونم و نمی‌خوام اشتباه بگم.');
-  say('ببخشید، منظورت رو کامل نفهمیدم. می‌تونی بگی کسب‌وکارت چیه یا اسم محصول رو بنویسی؟');
+  S.misses = (S.prevMiss || 0) + 1;
+  if (S.misses >= 2) { S.misses = 0; S.ask = 'handoff'; return say('ببخشید، هنوز درست نفهمیدم. می‌خوای درخواستت رو برای همکارم ثبت کنم تا خودش جواب بده؟'); }
+  say(startChoices('ببخشید، منظورت رو کامل نفهمیدم. کسب‌وکارت رو انتخاب کن یا اسم محصول رو بنویس:'));
 }
 
 const BEST_IDS = ['h_multi', 'h_sofa', 'c_multi_car', 'c_headlight', 'c_black', 'h_parquet', 'h_sink'];
-const S = { step: null, lead: {}, ask: null, biz: null, product: null, qty: null, channel: null };
+const S = { step: null, lead: {}, ask: null, biz: null, product: null, qty: null, channel: null, multi: null };
 
 /* ===== انتخاب روش خرید: باسلام یا واتساپ ===== */
 function channelAsk() {
   return {
-    text: 'می‌خوای سفارشت رو از باسلام ثبت کنی یا از واتساپ؟',
-    choices: [{ key: 'basalam', label: 'باسلام' }, { key: 'whatsapp', label: 'واتساپ' }],
+    text: 'می‌خوای سفارشت رو از باسلام ثبت کنی یا از واتساپ؟ اگه چیز دیگه‌ای هم لازم داری، قبل از ثبت اضافه‌ش کن.',
+    choices: [{ key: 'basalam', label: 'باسلام' }, { key: 'whatsapp', label: 'واتساپ' }, { key: 'more', label: 'افزودن محصول بیشتر' }],
     onChoice: setChannel
   };
 }
 
 function setChannel(key) {
+  if (key === 'more') return addMoreToOrder();
+  const multi = S.multi && S.multi.length && S.ask === 'order' ? S.multi : null;
+  if (multi) {
+    S.channel = key;
+    S.ask = null;
+    if (key === 'basalam') {
+      S.multi = null;
+      const withLink = multi.filter(x => x.it.link);
+      const noLink = multi.filter(x => !x.it.link);
+      const parts = [{ text: 'عالیه! لینک خرید هر محصول از باسلام. تعداد هر کدوم رو هم همون‌جا انتخاب کن:' }];
+      withLink.forEach(x => parts.push({ link: { label: 'خرید ' + x.it.short, href: x.it.link } }));
+      if (noLink.length) parts.push({ text: noLink.map(x => x.it.short).join('، ') + ' لینک اختصاصی ندارن؛ توی غرفه‌ی رمی شاپ در باسلام پیداشون می‌کنی.', link: { label: 'غرفه‌ی رمی شاپ در باسلام', href: CONFIG.BOOTH_URL } });
+      return say(...parts);
+    }
+    return startLead('خوبه، سفارش رو از واتساپ ثبت می‌کنیم. چند تا سؤال کوتاه می‌پرسم تا همکارم راحت پیگیری کنه. نام و نام خانوادگی‌ت چیه؟');
+  }
   S.channel = key;
   S.ask = null;
   if (key === 'basalam') {
@@ -2536,7 +2614,7 @@ function setChannel(key) {
     if (it) return say({ text: 'عالیه! ' + it.name + ' لینک اختصاصی نداره؛ توی غرفه‌ی رمی شاپ در باسلام اسمش رو سرچ کن.', link: { label: 'غرفه‌ی رمی شاپ در باسلام', href: CONFIG.BOOTH_URL } });
     return say({ text: 'عالیه! محصولاتمون توی غرفه‌ی رمی شاپ در باسلام هستن.', link: { label: 'غرفه‌ی رمی شاپ در باسلام', href: CONFIG.BOOTH_URL } }, 'کدوم محصول رو می‌خوای؟');
   }
-  startLead('خوبه، سفارش رو از واتساپ ثبت می‌کنیم. چند تا سؤال کوتاه می‌پرسم تا همکارم راحت پیگیری کنه. اسمت چیه؟');
+  startLead('خوبه، سفارش رو از واتساپ ثبت می‌کنیم. چند تا سؤال کوتاه می‌پرسم تا همکارم راحت پیگیری کنه. نام و نام خانوادگی‌ت چیه؟');
 }
 
 function detectBiz(n) {
@@ -2556,7 +2634,8 @@ function productLink() {
 function askYes() {
   const a = S.ask;
   S.ask = null;
-  if (a === 'handoff') return startLead('عالیه. اسمت چیه؟');
+  if (a === 'menu') return orderMenu(S.product ? [S.product] : []);
+  if (a === 'handoff') return startLead('عالیه. نام و نام خانوادگی‌ت چیه؟');
   if (a === 'order') return say(channelAsk());
   if (a === 'qty') return say('تعدادش رو بگو تا حساب کنم.');
   if (a === 'gallon') return say('کدوم گروه ۲۰ لیتری رو می‌خوای؟ خانگی، خودرویی یا صنعتی؟');
@@ -2589,7 +2668,7 @@ function usageAnswer(n) {
 }
 function shippingAnswer() {
   S.ask = 'handoff';
-  say('به سراسر ایران ارسال داریم. هزینه‌ی ارسال حدود ۲۰۰ تا ۵۰۰ هزار تومانه. مبلغ دقیق و زمان رسیدن رو همکارم اعلام می‌کنه.', 'می‌خوای ثبتت کنم تا پیگیری بشه؟');
+  say('ارسال سفارش‌ها از یزد انجام می‌شه. معمولاً با دکاپست ارسال می‌کنیم و با تیپاکس و پست ایران هم امکان ارسال داریم. زمان رسیدن بسته، با توجه به تعطیل بودن یا نبودن روزها، معمولاً از ۷۲ ساعت تا حداکثر ۱ هفته است. هزینه‌ی ارسال به مقصد و روش انتخابی بستگی داره و مبلغ دقیقش قبل از ثبت نهایی با همکارمون هماهنگ می‌شه.', 'اگر شهر مقصدت رو بگی، همکارمون هزینه و روش مناسب ارسال رو دقیق‌تر بررسی می‌کنه. می‌خوای درخواستت رو ثبت کنم؟');
 }
 
 function unknownAnswer(first) {
@@ -2600,54 +2679,41 @@ function unknownAnswer(first) {
 function recAnswer(biz) {
   S.biz = biz;
   S.ask = null;
+  S.multi = null;
   const r = REC[biz];
-  say({ text: r.intro, picker: pickerFor(r.ids, pickProduct) }, 'کدومش رو بیشتر لازم داری؟ روی عکسش بزن تا قیمتش رو کامل بگم.');
+  const ids = r.ids.map(id => ({ id: id }));
+  say({ text: r.intro, picker: pickerFor(r.ids, pickProduct) },
+      { text: 'کدومش رو بیشتر لازم داری؟ روی عکسش بزن تا قیمتش رو کامل بگم، یا همه‌شون رو یک‌جا سفارش بده.', choices: [{ key: 'all', label: 'سفارش همه‌ی پیشنهادها' }], onChoice: () => orderMenu(ids) });
 }
 
 function productAnswer(it, asked) {
   S.product = it;
-  S.ask = 'qty';
+  S.multi = null;
+  S.ask = 'menu';
   let p1 = it.name + ': قیمت خرده‌اش ' + money(it.retail) + '.';
   if (it.buy) p1 += ' اگه برای مغازه عمده می‌خری (از ۱ کارتن)، هر عدد ' + money(it.buy) + ' و هر کارتن ' + fa(it.carton) + ' عدده.';
   if (it.bulk) p1 += ' از ' + fa(CONFIG.BULK_MIN) + ' کارتن به بالا هر عدد ' + money(it.bulk) + ' می‌شه.';
   let p2 = USE[it.id] ? 'کاربردش: ' + USE[it.id] + '.' : (it.audience ? 'مخاطب اصلی خریدش: ' + it.audience + '.' : '');
   if (asked) p2 = 'برای کاری که می‌گی دقیق مطمئن نیستم. تو کاتالوگ، کاربردش این‌جوری معرفی شده: ' + (USE[it.id] || 'برای خوشبو کردن هوای فضا') + '.';
-  say(p1, p2, 'معمولاً ماهی چند کارتن یا عدد لازمه؟', VIDEO_OF[it.id] ? 'اگه خواستی تست محصول رو ببینی، بنویس «ویدیو تست».' : null);
+  say(p1, p2, VIDEO_OF[it.id] ? 'اگه خواستی تست محصول رو ببینی، بنویس «ویدیو تست».' : null, {
+    text: 'می‌خوای سفارشش بدی؟ همین محصول توی منو از قبل تیک خورده؛ هر چی دیگه لازم داری رو هم کنارش تیک بزن.',
+    choices: [{ key: 'order', label: 'سفارش این محصول' }],
+    onChoice: () => orderMenu([it])
+  });
 }
 
 function handleQty(num, unit) {
-  S.qty = { n: num, unit: unit, text: fa(num) + ' ' + unit };
-  S.ask = null;
-  if (unit === 'کارتن' && num >= CONFIG.BULK_MIN) {
-    S.ask = 'handoff';
-    return say('این حجم تو خرید حجمیه و قیمتش رو همکارم دقیق اعلام می‌کنه.', 'اگه بخوای همین الان ثبتش کنم تا پیگیری بشه؟');
-  }
-  if (!S.product) return say('خوبه. کدوم محصول رو لازم داری؟');
-  const it = S.product;
-  let line;
-  if (unit === 'کارتن' && it.buy) line = it.name + ': ' + fa(num) + ' کارتن (' + fa(num * it.carton) + ' عدد) تقریباً ' + money(num * it.carton * it.buy) + ' عمده می‌شه.';
-  else line = it.name + ': ' + fa(num) + ' عدد تقریباً ' + money(num * it.retail) + ' خرده می‌شه.';
-  S.ask = 'order';
-  say(line, channelAsk());
+  S.multi = null;
+  S.qty = null;
+  const pre = S.product ? [S.product] : [];
+  orderMenu(pre, undefined, pre.map(p => ({ id: p.id, n: num, unit: unit })),
+    pre.length ? 'تعدادش رو ثبت کردم. هر چی دیگه لازم داری هم تیک بزن، بعد «ادامه» رو بزن.' : undefined);
 }
 
 function wholesaleAnswer() {
-  S.ask = 'qty';
-  say('حداقل خرید عمده ۱ کارتنه و فروش عمده نقدیه. بسته به محصول، معمولاً هر کارتن بین ۶ تا ۲۵ عدده.', 'برای فروشگاه‌ها قیمت همکاری ویژه هم داریم که جزئیاتش رو همکارم می‌گه. خرید حجمی هم از ' + fa(CONFIG.BULK_MIN) + ' کارتن به بالاست. تعداد تقریبی‌ت چقدره؟');
-}
-
-function pickTissue(it) {
-  const t = TISSUE.find(x => x.id === it.id);
-  S.product = null;
-  S.ask = 'qty';
-  say(t.name + ': هر عدد ' + money(t.bulk) + '، هر کارتن ' + fa(t.carton) + ' عدد.', 'حدوداً چند کارتن لازم داری؟');
-}
-
-function pickGallon(it) {
-  const g = GALLON.find(x => x.id === it.id);
-  S.product = null;
-  S.ask = 'qty';
-  say(g.name + ' هر گالن ' + money(g.bulk) + ' می‌شه.', 'این فقط خرید حجمیه، از ' + fa(CONFIG.BULK_MIN) + ' کارتن به بالا. حجمت تقریباً چقدره؟');
+  say({ text: 'حداقل خرید عمده ۱ کارتنه و فروش عمده نقدیه. بسته به محصول، معمولاً هر کارتن بین ۶ تا ۲۵ عدده. برای فروشگاه‌ها قیمت همکاری ویژه هم داریم که جزئیاتش رو همکارم می‌گه. خرید حجمی هم از ' + fa(CONFIG.BULK_MIN) + ' کارتن به بالاست.',
+    choices: [{ key: 'menu', label: 'انتخاب محصول و تعداد' }],
+    onChoice: () => orderMenu([]) });
 }
 
 function matchTissue(n) {
@@ -2659,12 +2725,8 @@ function matchTissue(n) {
   return null;
 }
 
-function tissueAnswer() {
-  const lo = Math.min(...TISSUE.map(t => t.bulk));
-  const hi = Math.max(...TISSUE.map(t => t.bulk));
-  S.ask = 'qty';
-  const items = TISSUE.map(t => ({ id: t.id, name: t.name, img: null, price: money(t.bulk) + ' هر عدد' }));
-  say({ text: 'دستمال نانو ۳۰×۳۰ فقط خرید حجمیه و هر کارتن ۳۶ عدده، از ' + fa(CONFIG.BULK_MIN) + ' کارتن به بالا. کدومش رو می‌خوای؟ (هر عدد بین ' + money(lo) + ' و ' + money(hi) + ')', picker: { items: items, onPick: pickTissue } });
+function tissueAnswer(id) {
+  orderMenu(id ? [{ id: id }] : [], undefined, [], 'دستمال نانو ۳۰×۳۰ فقط خرید حجمیه و هر کارتن ۳۶ عدده، از ' + fa(CONFIG.BULK_MIN) + ' کارتن به بالا. کدومش رو می‌خوای؟ تیک بزن و تعداد کارتن رو بنویس.');
 }
 
 function compareAnswer() {
@@ -2677,74 +2739,165 @@ function compareAnswer() {
       'ولی ارزون و گرون فقط یه بخشه؛ اینکه کدوم به کارت می‌آد به کاربردت بستگی داره. کاربردت چیه؟');
 }
 
+/* ===== گالن ۲۰ لیتری: فقط در منوی سفارش ===== */
 function gallonAnswer(n) {
-  const hit = matchGallon(n);
-  if (hit.length === 1) {
-    S.ask = 'qty';
-    return say(hit[0].name + ' هر گالن ' + money(hit[0].bulk) + ' می‌شه.', 'این فقط خرید حجمیه، از ' + fa(CONFIG.BULK_MIN) + ' کارتن به بالا. حجمت تقریباً چقدره؟');
-  }
-  const grp = GROUPS.find(g => g.re.test(n));
-  if (grp) {
-    S.ask = 'gallon';
-    const items = GALLON.filter(g => g.group === grp.key).map(g => ({ id: g.id, name: g.name, img: null, price: money(g.bulk) + ' هر گالن' }));
-    return say({ text: 'محصولات ۲۰ لیتری ' + grp.label + ' این‌ها هستن. کدومش رو می‌خوای؟', picker: { items: items, onPick: pickGallon } });
-  }
-  S.ask = 'gallon';
-  say('محصولات ۲۰ لیتری فقط در خرید حجمی هستن. سه گروه داریم: خانگی، خودرویی و صنعتی.', 'کدوم گروه برات مهمه؟');
+  const hit = matchGallon(n).map(g => ({ id: g.id }));
+  orderMenu(hit, undefined, [], 'محصولات ۲۰ لیتری فقط در خرید حجمی هستن (از ' + fa(CONFIG.BULK_MIN) + ' کارتن به بالا). کدومش رو می‌خوای؟ تیک بزن و تعدادش رو بنویس.');
 }
 
-/* ===== ثبت درخواست و ارجاع به انسان ===== */
 function startLead(intro, ctxOverride, kind) {
   S.ask = null;
   S.step = 'name';
+  const M = S.multi && S.multi.length ? multiSummary() : null;
   S.lead = {
-    ctx: ctxOverride || (S.product ? S.product.name : (S.biz ? BIZ_LABEL[S.biz] : 'مشاوره‌ی عمومی')),
-    qty: S.qty ? S.qty.text : '',
+    ctx: ctxOverride || (M ? M.names : S.product ? S.product.name : (S.biz ? BIZ_LABEL[S.biz] : 'مشاوره‌ی عمومی')),
+    qty: M ? M.qty : (S.qty ? S.qty.text : ''),
+    need: M ? M.need : '',
     kind: kind || '',
     biz: S.biz ? BIZ_LABEL[S.biz] : 'نامشخص',
-    buy: S.qty ? (S.qty.unit === 'کارتن' ? 'عمده' : 'خرده') : 'نامشخص'
+    buy: M ? M.buy : S.qty ? (S.qty.unit === 'کارتن' ? 'عمده' : 'خرده') : 'نامشخص'
   };
-  say(intro || 'اسمت چیه؟');
+  say(intro || 'نام و نام خانوادگی‌ت چیه؟');
+}
+
+const LEAD_CHOICES = [
+  { key: 'ok', label: 'تأیید و ارسال' },
+  { key: 'name', label: 'ویرایش نام' },
+  { key: 'postal', label: 'ویرایش کدپستی' },
+  { key: 'address', label: 'ویرایش آدرس' },
+  { key: 'need', label: 'ویرایش محصول' },
+  { key: 'qty', label: 'ویرایش تعداد' }
+];
+
+function leadLines(L) {
+  return [
+    'نام: ' + L.name,
+    'نوع کسب‌وکار: ' + L.biz,
+    'کدپستی: ' + L.postal,
+    'آدرس: ' + L.address,
+    'محصول/نیاز: ' + L.need,
+    'حجم تقریبی: ' + (L.qty || 'نامشخص')
+  ];
+}
+
+/* مرحله‌ی تأیید: مشتری اطلاعاتی که فرستاده می‌شه رو می‌بینه و هر کدوم رو می‌تونه عوض کنه */
+function confirmLead() {
+  S.step = 'confirm';
+  const L = S.lead;
+  say({
+    text: 'این اطلاعاته که برای همکارم می‌فرستم:\n' + leadLines(L).join('\n') + '\nاگه درسته تأیید کن؛ اگه چیزی عوض داره، از دکمه‌ها انتخاب کن.',
+    choices: LEAD_CHOICES,
+    onChoice: leadEditPick
+  });
+}
+
+function leadEditPick(key) {
+  if (key === 'ok') { S.step = null; return finish(); }
+  const prompts = {
+    name: 'نام و نام خانوادگی جدید رو بنویس:',
+    postal: 'کدپستی جدید رو بنویس (۱۰ رقم):',
+    address: 'آدرس کامل جدید رو بنویس (شهر، خیابان، کوچه و پلاک):',
+    need: 'محصول یا سفارش رو دوباره بنویس:',
+    qty: 'تعداد تقریبی رو بنویس (مثلاً ۲ کارتن یا ۵ عدد):'
+  };
+  S.step = 'edit_' + key;
+  say(prompts[key]);
 }
 
 function leadStep(text) {
   const L = S.lead;
-  if (S.step === 'name') {
-    L.name = text.slice(0, 80);
-    S.step = 'city';
-    return say('ممنون ' + L.name + '. از کدوم شهری هستی؟');
+  const t = text.trim();
+  const skip = SKIP_RX.test(norm(text));
+
+  if (S.step === 'confirm') {
+    if (/تایید|تأیید|تاییدمیکنم|درسته|اوکی|بله|آره|ارسال|حتما/.test(norm(text))) { S.step = null; return finish(); }
+    return say({ text: 'اگه درسته «تأیید و ارسال» رو بزن؛ اگه چیزی عوض داره، از دکمه‌های زیر انتخاب کن.', choices: LEAD_CHOICES, onChoice: leadEditPick });
   }
-  if (S.step === 'city') {
-    L.city = text.slice(0, 60);
-    if (L.qty && S.product && !L.kind) {
-      L.need = S.product.name + '، ' + L.qty;
-      S.step = null;
-      return finish();
+
+  if (S.step === 'edit_name') {
+    const words = t.split(/\s+/).filter(Boolean);
+    if (words.length < 2 && !L.editNameAsked) {
+      L.editNameAsked = true;
+      return say('نام خانوادگی‌ت رو هم بنویس، لطفاً.');
+    }
+    L.name = t.slice(0, 80);
+    return confirmLead();
+  }
+  if (S.step === 'edit_postal') {
+    const digits = toLatinDigits(text).replace(/[\s\-]/g, '');
+    if (/^\d{10}$/.test(digits)) L.postal = digits;
+    else if (skip) L.postal = 'نامشخص';
+    else return say('کدپستی باید ۱۰ رقم باشه. اگه الان نداری، بنویس «ندارم».');
+    return confirmLead();
+  }
+  if (S.step === 'edit_address') {
+    if (!skip && t.length < 8) return say('آدرس خیلی کوتاهه. لطفاً شهر، خیابان و پلاک رو کامل بنویس.');
+    L.address = skip ? 'نامشخص' : t.slice(0, 300);
+    return confirmLead();
+  }
+  if (S.step === 'edit_need') {
+    L.need = t.slice(0, 300);
+    const ff = matchItems(norm(text));
+    if (ff.length === 1 && L.kind !== 'complaint') L.ctx = ff[0].name;
+    return confirmLead();
+  }
+  if (S.step === 'edit_qty') {
+    L.qty = t.slice(0, 100);
+    if (/کارتن|کارتون/.test(t)) L.buy = 'عمده';
+    else if (/عدد|دونه/.test(t)) L.buy = 'خرده';
+    return confirmLead();
+  }
+
+  if (S.step === 'name') {
+    const words = t.split(/\s+/).filter(Boolean);
+    if (words.length < 2 && !L.nameAsked) {
+      L.nameAsked = true;
+      return say('فقط اسمت رو نوشتی. نام خانوادگی\u200cت رو هم بنویس، لطفاً.');
+    }
+    L.name = t.slice(0, 80);
+    S.step = 'postal';
+    return say('ممنون ' + L.name + '. کدپستی\u200cت رو بنویس (۱۰ رقم).');
+  }
+  if (S.step === 'postal') {
+    const digits = toLatinDigits(text).replace(/[\s\-]/g, '');
+    if (/^\d{10}$/.test(digits)) L.postal = digits;
+    else if (skip) L.postal = 'نامشخص';
+    else return say('کدپستی باید ۱۰ رقم باشه. اگه الان نداری، بنویس «ندارم».');
+    S.step = 'address';
+    return say('آدرس کامل\u200cت رو بنویس (شهر، خیابان، کوچه و پلاک).');
+  }
+  if (S.step === 'address') {
+    if (!skip && t.length < 8 && !L.addrTries) {
+      L.addrTries = 1;
+      return say('آدرس خیلی کوتاهه. لطفاً شهر، خیابان و پلاک رو کامل بنویس.');
+    }
+    L.address = skip ? 'نامشخص' : t.slice(0, 300);
+    if (L.qty && (S.product || L.need) && !L.kind) {
+      if (!L.need) L.need = S.product.name + '، ' + L.qty;
+      return confirmLead();
     }
     S.step = 'need';
-    return say(L.kind === 'complaint' ? 'مشکل یا نارضایتی‌ت رو کوتاه بنویس.' : 'چی می‌خوای سفارش بدی و تقریباً چه تعدادی؟');
+    return say(L.kind === 'complaint' ? 'مشکل یا نارضایتی\u200cت رو کوتاه بنویس.' : 'چی می\u200cخوای سفارش بدی و تقریباً چه تعدادی؟');
   }
   if (S.step === 'need') {
-    L.need = text.slice(0, 300);
+    L.need = t.slice(0, 300);
     const qq = parseQty(norm(text)) || parseQtyWords(text);
     if (qq && !L.qty) { L.qty = fa(qq.n) + ' ' + qq.unit; L.buy = qq.unit === 'کارتن' ? 'عمده' : 'خرده'; }
     const ff = matchItems(norm(text));
     if (ff.length === 1 && L.kind !== 'complaint') L.ctx = ff[0].name;
-    S.step = null;
-    return finish();
+    return confirmLead();
   }
 }
 
 function finish() {
+  S.multi = null;
   const L = S.lead;
-  const chLabel = 'واتساپ';
   const status = L.kind === 'complaint' ? 'نیاز به پیگیری انسانی (شکایت)' : 'نیاز به پیگیری انسانی';
-  const summary = 'سلام، از گفتگوی سایت پخش نانو جی‌پلاس:\nنام: ' + L.name + '\nنوع کسب‌وکار: ' + L.biz + '\nشهر: ' + L.city + '\nمحصول/نیاز: ' + L.need + '\nحجم تقریبی: ' + (L.qty || 'نامشخص') + '\nخرید: ' + L.buy + '\nکانال: ' + chLabel + '\nوضعیت: ' + status + '\nیادداشت: ' + L.ctx;
+  const summary = 'سلام، از گفتگوی سایت پخش نانو جی‌پلاس:\n' + leadLines(L).join('\n') + '\nخرید: ' + L.buy + '\nکانال: واتساپ\nوضعیت: ' + status + '\nیادداشت: ' + L.ctx;
   let saved = '';
   if (CONFIG.LEAD_WEBHOOK) { sendLead(L); saved = ' نسخه‌ای از درخواستت هم ثبت شد.'; }
   const wa = 'https://wa.me/' + CONFIG.WHATSAPP + '?text=' + encodeURIComponent(summary);
-  say('ممنون ' + L.name + '، درخواستت آماده‌ست.' + saved + ' این خلاصه‌ست:',
-    summary,
+  say('ممنون ' + L.name + '، درخواستت آماده‌ست.' + saved,
     { text: 'با دکمه‌ی زیر، همین پیام رو از واتساپ برای همکارم بفرست تا پیگیری کنه. ' + HOURS_TEXT, link: { label: 'ارسال در واتساپ', href: wa } });
 }
 
@@ -2754,12 +2907,230 @@ function sendLead(L) {
       method: 'POST',
       mode: 'no-cors',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify({ name: L.name, city: L.city, need: L.need, context: L.ctx, business: L.biz, qty: L.qty, purchase: L.buy, channel: 'whatsapp', source: 'website-chat', time: new Date().toISOString() })
+      body: JSON.stringify({ name: L.name, postal_code: L.postal, address: L.address, need: L.need, context: L.ctx, business: L.biz, qty: L.qty, purchase: L.buy, channel: 'whatsapp', source: 'website-chat', time: new Date().toISOString() })
     });
   } catch (e) { /* ثبت نباید گفتگو را متوقف کند */ }
 }
 
 /* ===== ورودی ===== */
+/* ===== سفارش چندتایی: منوی تیک‌دار با تعداد هر محصول ===== */
+const RXM = {
+  multi: /چندتا(?:محصول|کالا|جور|نوع|از)|چندمحصول|چندکالا|چندجور|چندنوع|همزمان|سبدخرید/,
+  order: /سفارشبدم|سفارشمیدم|سفارشمیخوام|میخوامسفارش|سفارشدادن|سفارشثبت|ثبتسفارش|میخوامبخرم|میخوامخرید|سفارشمیزارم|سفارشمیذارم/
+};
+const ORDER_GROUPS = [
+  { key: 'h_', label: 'پاک‌کننده‌های خانگی' },
+  { key: 'c_', label: 'محصولات خودرو' },
+  { key: 'f_', label: 'خوشبوکننده‌ی هوا' },
+  { key: 'co_', label: 'ادکلن' },
+  { key: 'pf_', label: 'عطر' },
+  { key: 'lt_', label: 'نانو چرم کیف و کفش' }
+];
+const SKIP_RX = /نمیدونم|ندونم|ندارم|بلدنیستم/;
+const toLatinDigits = s => String(s)
+  .replace(/[۰-۹]/g, c => String('۰۱۲۳۴۵۶۷۸۹'.indexOf(c)))
+  .replace(/[٠-٩]/g, c => String('٠١٢٣٤٥٦٧٨٩'.indexOf(c)));
+
+/* دستمال و گالن فقط حجمی‌اند؛ توی منو هم هستن و قیمتشون رو همکارم اعلام می‌کنه */
+const MENU_EXTRA = [
+  ...TISSUE.map(t => ({ id: t.id, short: t.name, name: t.name, bulkOnly: true, units: ['کارتن'], priceText: money(t.bulk) + ' هر عدد (حجمی)' })),
+  ...GALLON.map(g => ({ id: g.id, short: g.name, name: g.name, bulkOnly: true, units: ['گالن'], priceText: money(g.bulk) + ' هر گالن (حجمی)' }))
+];
+const MENU_BY_ID = Object.fromEntries([...ITEMS, ...MENU_EXTRA].map(x => [x.id, x]));
+const menuPrice = it => it.priceText || priceLabel(it);
+const menuUnits = it => it.units || (it.buy ? ['عدد', 'کارتن'] : ['عدد']);
+
+/* گروه‌های منو: اول پیشنهاد کسب‌وکار، بعد پرفروش‌ها، بعد دسته‌ها، آخر حجمی‌ها */
+function orderGroups() {
+  const rec = S.biz && REC[S.biz] ? REC[S.biz].ids.filter(id => MENU_BY_ID[id]) : [];
+  const best = BEST_IDS.filter(id => rec.indexOf(id) === -1);
+  const used = rec.concat(best);
+  const groups = [];
+  if (rec.length) groups.push({ label: 'پیشنهادی برای کسب‌وکار شما', ids: rec });
+  groups.push({ label: 'پرفروش‌ها', ids: best });
+  ORDER_GROUPS.forEach(g => {
+    const ids = ITEMS.filter(it => it.id.indexOf(g.key) === 0 && used.indexOf(it.id) === -1).map(it => it.id);
+    if (ids.length) groups.push({ label: g.label, ids: ids });
+  });
+  groups.push({ label: 'دستمال نانو (فقط حجمی)', ids: TISSUE.map(t => t.id) });
+  groups.push({ label: 'گالن ۲۰ لیتری (فقط حجمی)', ids: GALLON.map(g => g.id) });
+  return groups;
+}
+
+/* تنها راه سفارش: منوی تیک‌دار. found: محصول‌های از قبل مشخص (آرایه‌ای از {id}) */
+function orderMenu(found, n, preset, intro) {
+  S.multi = null;
+  S.ask = null;
+  const pre = found === undefined ? (S.product ? [S.product.id] : []) : found.map(x => x.id);
+  if (n) ITEMS.forEach(it => {
+    if (pre.indexOf(it.id) === -1 && it.kw.some(k => { const kk = norm(k); return kk.length >= 2 && n.indexOf(kk) !== -1; })) pre.push(it.id);
+  });
+  (preset || []).forEach(p => { if (pre.indexOf(p.id) === -1) pre.push(p.id); });
+  say({
+    text: intro || 'هر چی لازم داری تیک بزن، تعدادش رو بنویس و بعد «ادامه» رو بزن.',
+    orderForm: { groups: orderGroups(), pre: pre, preset: preset || [] }
+  });
+}
+
+function addOrderForm(cfg) {
+  // منوی قبلی که هنوز باز است را غیرفعال می‌کنیم تا دو سفارش همزمان نساخته شود
+  chat.querySelectorAll('.oform:not(.done)').forEach(f => {
+    f.classList.add('done');
+    f.querySelectorAll('input, select, button').forEach(e => { e.disabled = true; });
+  });
+  const presetOf = {};
+  cfg.preset.forEach(p => { presetOf[p.id] = p; });
+
+  const box = document.createElement('div');
+  box.className = 'msg bot oform';
+  const list = document.createElement('div');
+  list.className = 'olist';
+  const rows = [];
+
+  cfg.groups.forEach(g => {
+    const head = document.createElement('div');
+    head.className = 'ogroup';
+    head.textContent = g.label;
+    list.appendChild(head);
+    g.ids.forEach(id => {
+      const it = MENU_BY_ID[id];
+      if (!it) return;
+      const pv = presetOf[id];
+      const row = document.createElement('div');
+      row.className = 'orow';
+      const top = document.createElement('label');
+      top.className = 'otop';
+      const cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.checked = cfg.pre.indexOf(id) !== -1 || !!pv;
+      const nm = document.createElement('span');
+      nm.className = 'oname';
+      nm.textContent = it.short || it.name;
+      const pr = document.createElement('span');
+      pr.className = 'oprice';
+      pr.textContent = menuPrice(it);
+      top.append(cb, nm, pr);
+      const ctl = document.createElement('div');
+      ctl.className = 'oqty';
+      ctl.hidden = !cb.checked;
+      const num = document.createElement('input');
+      num.type = 'text';
+      num.inputMode = 'numeric';
+      num.value = pv ? String(pv.n) : '1';
+      num.setAttribute('aria-label', 'تعداد');
+      const unit = document.createElement('select');
+      unit.setAttribute('aria-label', 'واحد');
+      const units = menuUnits(it);
+      units.forEach(u => unit.add(new Option(u, u)));
+      if (pv && units.indexOf(pv.unit) !== -1) unit.value = pv.unit;
+      ctl.append(num, unit);
+      row.append(top, ctl);
+      list.appendChild(row);
+      rows.push({ it: it, cb: cb, num: num, unit: unit, ctl: ctl });
+    });
+  });
+
+  const err = document.createElement('div');
+  err.className = 'oerr';
+  const foot = document.createElement('div');
+  foot.className = 'ofoot';
+  const count = document.createElement('span');
+  count.className = 'ocount';
+  const cancel = document.createElement('button');
+  cancel.type = 'button';
+  cancel.className = 'obtn ghost';
+  cancel.textContent = 'انصراف';
+  const ok = document.createElement('button');
+  ok.type = 'button';
+  ok.className = 'obtn';
+  ok.textContent = 'ادامه';
+  foot.append(count, cancel, ok);
+  box.append(list, err, foot);
+  chat.appendChild(box);
+
+  const refresh = () => {
+    const n = rows.filter(r => r.cb.checked).length;
+    count.textContent = n ? fa(n) + ' محصول انتخاب شده' : 'هنوز چیزی انتخاب نشده';
+    ok.disabled = n === 0;
+  };
+  rows.forEach(r => r.cb.addEventListener('change', () => {
+    r.ctl.hidden = !r.cb.checked;
+    err.textContent = '';
+    refresh();
+  }));
+  refresh();
+  scrollDown();
+
+  cancel.addEventListener('click', () => {
+    box.remove();
+    S.multi = null;
+    say('باشه، هر وقت خواستی دوباره بگو.');
+  });
+
+  ok.addEventListener('click', () => {
+    const picked = rows.filter(r => r.cb.checked);
+    if (!picked.length) { err.textContent = 'حداقل یک محصول رو تیک بزن.'; return; }
+    const badQty = picked.some(r => { const v = Number(toLatinDigits(r.num.value).trim()); return !Number.isInteger(v) || v < 1; });
+    if (badQty) { err.textContent = 'تعداد هر محصول باید عدد کامل و حداقل ۱ باشه.'; return; }
+    const order = picked.map(r => ({ it: r.it, n: Number(toLatinDigits(r.num.value).trim()), unit: r.unit.value }));
+    box.classList.add('done');
+    box.querySelectorAll('input, select, button').forEach(e => { e.disabled = true; });
+    addUser(order.map(x => (x.it.short || x.it.name) + ' (' + fa(x.n) + ' ' + x.unit + ')').join('، '));
+    busy = busy.then(() => multiSubmit(order));
+  });
+}
+
+function multiSubmit(order) {
+  S.product = null;
+  S.qty = null;
+  S.multi = order;
+  let total = 0;
+  const isBulk = x => x.it.bulkOnly || x.unit === 'گالن' || (x.unit === 'کارتن' && x.n >= CONFIG.BULK_MIN);
+  const bulk = order.filter(isBulk);
+  const lines = [];
+  order.forEach(x => {
+    const it = x.it;
+    if (isBulk(x)) { lines.push('• ' + it.short + ': ' + fa(x.n) + ' ' + x.unit + ' (حجمی، قیمتش رو همکارم اعلام می‌کنه)'); return; }
+    if (x.unit === 'کارتن') {
+      const pcs = x.n * it.carton;
+      const sum = pcs * it.buy;
+      total += sum;
+      lines.push('• ' + it.short + ': ' + fa(x.n) + ' کارتن (' + fa(pcs) + ' عدد)، تقریباً ' + money(sum) + ' عمده');
+      return;
+    }
+    const sum = x.n * it.retail;
+    total += sum;
+    lines.push('• ' + it.short + ': ' + fa(x.n) + ' عدد، تقریباً ' + money(sum) + ' خرده');
+    if (it.buy) lines.push('   ↳ اگه کارتنی (' + fa(it.carton) + ' عدد) برداری، هر عدد ' + money(it.buy) + ' درمیاد، به‌جای ' + money(it.retail));
+  });
+  const summary = 'سفارشت این شد:\n' + lines.join('\n') + (bulk.length ? '' : '\nجمع تقریبی: ' + money(total));
+  if (bulk.length) {
+    S.ask = 'handoff';
+    return say(summary, 'بعضی از محصولات حجمی‌ان و قیمتشون رو همکارم دقیق اعلام می‌کنه. اگه بخوای همین الان ثبتش کنم تا پیگیری بشه؟');
+  }
+  S.ask = 'order';
+  say(summary, channelAsk());
+}
+
+function multiSummary() {
+  const M = S.multi;
+  const kind = x => (x.it.bulkOnly || x.unit !== 'عدد') ? 'عمده' : 'خرده';
+  const kinds = [...new Set(M.map(kind))];
+  return {
+    names: M.map(x => x.it.short).join('، '),
+    need: M.map(x => x.it.short + ': ' + fa(x.n) + ' ' + x.unit).join('، '),
+    qty: M.map(x => fa(x.n) + ' ' + x.unit).join('، '),
+    buy: kinds.length > 1 ? 'خرده و عمده' : kinds[0]
+  };
+}
+
+/* افزودن محصول بیشتر: منوی قبلی با همان تیک‌ها و تعدادها دوباره باز می‌شه */
+function addMoreToOrder() {
+  const cur = S.multi || [];
+  S.ask = null;
+  orderMenu(cur.map(x => ({ id: x.it.id })), undefined, cur.map(x => ({ id: x.it.id, n: x.n, unit: x.unit })), 'محصولات قبلی‌ت تیک خوردن. هر چی دیگه لازم داری اضافه کن، بعد «ادامه» رو بزن.');
+}
+
 form.addEventListener('submit', e => {
   e.preventDefault();
   const t = input.value.trim();

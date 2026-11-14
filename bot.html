@@ -60,6 +60,29 @@ header p{margin:3px 0 0;color:var(--muted);font-size:12.5px;line-height:1.6}
 .obtn:disabled{opacity:.45;cursor:default}
 .oerr{min-height:0;color:#B3261E;font-size:12.5px;margin-top:6px}
 .oform button:focus-visible,.oform input:focus-visible,.oform select:focus-visible{outline:3px solid #7FB7C4;outline-offset:2px}
+
+.msg.photo{padding:8px;max-width:240px}
+.msg.photo img{display:block;width:100%;max-height:220px;object-fit:contain;border-radius:8px;background:#EEF3F4}
+.vpanel{position:fixed;inset:0;z-index:30;background:rgba(10,20,26,.6);display:flex;align-items:center;justify-content:center;padding:16px}
+.vp-card{width:min(100%,780px);max-height:100%;overflow:auto;background:#fff;border-radius:14px;box-shadow:0 10px 40px rgba(0,0,0,.35);display:flex;flex-direction:column}
+.vpanel[hidden]{display:none}
+.vp-head{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--line);font-weight:600;font-size:13.5px}
+.vp-title{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vp-x{font:inherit;border:0;background:var(--paper);border-radius:8px;width:28px;height:28px;cursor:pointer;color:var(--ink)}
+.vp-media{aspect-ratio:16/9;background:#0b1418;display:flex;align-items:center;justify-content:center}
+.vp-media iframe{width:100%;height:100%;border:0}
+.vp-media:fullscreen{aspect-ratio:auto;width:100vw;height:100vh;background:#000}
+.vp-media:-webkit-full-screen{aspect-ratio:auto;width:100vw;height:100vh;background:#000}
+.vp-fs{font:inherit;border:0;background:var(--paper);border-radius:8px;height:28px;padding:0 10px;cursor:pointer;color:var(--ink);font-size:12.5px;white-space:nowrap}
+.vp-media video{width:100%;height:100%;background:#000}
+.vp-media img{width:100%;height:100%;object-fit:contain;background:#EEF3F4}
+.vp-tabs{display:flex;gap:6px;padding:8px 10px;overflow-x:auto;white-space:nowrap}
+.vp-tab{font:inherit;font-size:12.5px;border:1.5px solid var(--brand);background:#fff;color:var(--brand);border-radius:10px;padding:5px 11px;cursor:pointer}
+.vp-tab.on{background:var(--brand);color:#fff}
+.vp-open-link{display:block;padding:0 12px 10px;font-size:12px;color:var(--brand)}
+.msg.bot .cta.vp-play{border:0;font:inherit;cursor:pointer}
+.otop .othumb{width:34px;height:34px;flex:0 0 auto;border-radius:6px;object-fit:contain;background:#EEF3F4}
+.otest{font:inherit;font-size:12px;border:1.5px solid var(--brand);background:#fff;color:var(--brand);border-radius:8px;padding:3px 8px;cursor:pointer;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -74,6 +97,8 @@ header p{margin:3px 0 0;color:var(--muted);font-size:12.5px;line-height:1.6}
     <button type="submit">ارسال</button>
   </form>
 </div>
+
+<aside id="vpanel" class="vpanel" hidden aria-label="نمایش محصول"></aside>
 
 <script>
 /* ===== تنظیمات ===== */
@@ -1057,6 +1082,16 @@ const EMOJIS = ['🌹', '🟢', '✅'];
 let emojiIdx = 0;
 function addBot(part) {
   if (typeof part === 'string') part = { text: part };
+  if (part.photo && part.photo.img) {
+    const d = document.createElement('div');
+    d.className = 'msg bot photo';
+    const im = document.createElement('img');
+    im.src = CONFIG.IMG_BASE + part.photo.img;
+    im.alt = part.photo.name || '';
+    im.addEventListener('error', () => d.remove());
+    d.appendChild(im);
+    chat.appendChild(d);
+  }
   if (part.text) {
     const d = document.createElement('div');
     d.className = 'msg bot';
@@ -1076,13 +1111,15 @@ function addBot(part) {
     chat.appendChild(d);
   }
   if (part.videos) {
+    const it = part.item;
     const mk = (u, i) => {
       const d = document.createElement('div');
       d.className = 'msg bot';
       const a = document.createElement('a');
-      a.className = 'cta';
+      a.className = 'cta vp-play';
       a.href = u; a.target = '_blank'; a.rel = 'noopener';
-      a.textContent = '▶️ ویدیو تست ' + fa(i + 1);
+      a.textContent = '▶️ پخش ویدیو تست ' + fa(i + 1);
+      a.addEventListener('click', ev => { if (it) { ev.preventDefault(); showProduct(it, 'v' + i); } });
       d.appendChild(a);
       chat.appendChild(d);
     };
@@ -1097,6 +1134,7 @@ function addBot(part) {
       d.appendChild(b);
       chat.appendChild(d);
     }
+    if (it) showProduct(it, 'v0');
   }
   if (part.files) {
     CATALOG_PDFS.forEach(c => {
@@ -2407,11 +2445,83 @@ function prefer(found) {
 
 const VIDEOS = {"multi": ["https://www.aparat.com/v/sva419y", "https://www.aparat.com/v/mfq9184", "https://www.aparat.com/v/jcs280x", "https://www.aparat.com/v/wjmg0qy"], "gas": ["https://www.aparat.com/v/gzrk14y", "https://www.aparat.com/v/jdcm071", "https://www.aparat.com/v/xulf06h", "https://www.aparat.com/v/ulax9a9", "https://www.aparat.com/v/ytrk65j", "https://www.aparat.com/v/via8xqj"], "sink": ["https://www.aparat.com/v/pvj4ouv", "https://www.aparat.com/v/rhcb4ko", "https://www.aparat.com/v/wmv7rt5", "https://www.aparat.com/v/jzwjq3f", "https://www.aparat.com/v/igs7a9p", "https://www.aparat.com/v/xuub49y", "https://www.aparat.com/v/sxmx2bh", "https://www.aparat.com/v/vko9q15"], "sofa": ["https://www.aparat.com/v/nrhp775", "https://www.aparat.com/v/dgw87vw", "https://www.aparat.com/v/kbgzbo9", "https://www.aparat.com/v/dwa5c36", "https://www.aparat.com/v/kudri5q", "https://www.aparat.com/v/zju3eu2", "https://www.aparat.com/v/lrs7eug"], "led": ["https://www.aparat.com/v/zwal0vo", "https://www.aparat.com/v/mric64p", "https://www.aparat.com/v/zojwtss"], "wallpaper": ["https://www.aparat.com/v/pkbssva", "https://www.aparat.com/v/ehf1x23"], "parquet": ["https://www.aparat.com/v/vqaspq1", "https://www.aparat.com/v/xxi4uu9", "https://www.aparat.com/v/hcnyubl", "https://www.aparat.com/v/rgq0r6r", "https://www.aparat.com/v/ridvud3"], "zero": ["https://www.aparat.com/v/hbj049k", "https://www.aparat.com/v/uee58ek", "https://www.aparat.com/v/txol3r7", "https://www.aparat.com/v/rmwzr8h", "https://www.aparat.com/v/lagxfpf", "https://www.aparat.com/v/eagwb4x", "https://www.aparat.com/v/rsozp22", "https://www.aparat.com/v/ewm1o5w", "https://www.aparat.com/v/cnog75c"], "engine": ["https://www.aparat.com/v/whc79m4", "https://www.aparat.com/v/zzjjg65", "https://www.aparat.com/v/wyz8k3k", "https://www.aparat.com/v/xym0oe3"], "rim": ["https://www.aparat.com/v/osdeza7", "https://www.aparat.com/v/bvb1n02", "https://www.aparat.com/v/afvpo38", "https://www.aparat.com/v/fsl0h32"], "multi_car": ["https://www.aparat.com/v/abso38f", "https://www.aparat.com/v/ild383c", "https://www.aparat.com/v/jci2528", "https://www.aparat.com/v/ajgi3pr", "https://www.aparat.com/v/ucka454"], "window": ["https://www.aparat.com/v/wab9wg9", "https://www.aparat.com/v/owrkriv"], "shampoo": ["https://www.aparat.com/v/vrr7v3g", "https://www.aparat.com/v/ycq93tk", "https://www.aparat.com/v/nwg6by3", "https://www.aparat.com/v/ookw75z", "https://www.aparat.com/v/lzcm1va"], "body": ["https://www.aparat.com/v/dkl8p3k", "https://www.aparat.com/v/who3822", "https://www.aparat.com/v/sur87s4", "https://www.aparat.com/v/nyu9c48", "https://www.aparat.com/v/asp5fdq"], "headlight": ["https://www.aparat.com/v/ver9e1y", "https://www.aparat.com/v/bdywd36", "https://www.aparat.com/v/syaky9v", "https://www.aparat.com/v/mpp598q"], "black": ["https://www.aparat.com/v/mvz4qd5", "https://www.aparat.com/v/qza45e0", "https://www.aparat.com/v/zzmo12s", "https://www.aparat.com/v/ljvoi0j"], "matte": ["https://www.aparat.com/v/kssq96r", "https://www.aparat.com/v/zaubx68", "https://www.aparat.com/v/smu8d4q", "https://www.aparat.com/v/kqo7a41", "https://www.aparat.com/v/wxx97h8"], "shine": ["https://www.aparat.com/v/lnsddtl", "https://www.aparat.com/v/mygqm4i"], "dash_si": ["https://www.aparat.com/v/gdz1dho", "https://www.aparat.com/v/ntzk4v2", "https://www.aparat.com/v/taeax83"], "dash_non": ["https://www.aparat.com/v/bla205b", "https://www.aparat.com/v/phk64x2"], "pro": ["https://www.aparat.com/v/gpiaci8", "https://www.aparat.com/v/jvz4214", "https://www.aparat.com/v/uzou08s", "https://www.aparat.com/v/cops4l1", "https://www.aparat.com/v/merqvd1"], "fresh": ["https://www.aparat.com/v/ejelu90", "https://www.aparat.com/v/ezjv82d", "https://www.aparat.com/v/phaxsff"], "cologne": ["https://www.aparat.com/v/myx2f11", "https://www.aparat.com/v/negc5ae"], "perfume": ["https://www.aparat.com/v/gcn0onx"], "leather": ["https://www.aparat.com/v/rsslhf2"]};
 const VIDEO_OF = {"h_multi": "multi", "h_gas": "gas", "h_sink": "sink", "h_sofa": "sofa", "h_led": "led", "h_wallpaper": "wallpaper", "h_parquet": "parquet", "c_matte": "matte", "c_shine": "shine", "c_dash_si": "dash_si", "c_dash_non": "dash_non", "c_pro": "pro", "c_zero": "zero", "c_engine": "engine", "c_rim": "rim", "c_multi_car": "multi_car", "c_window": "window", "c_shampoo": "shampoo", "c_body": "body", "c_headlight": "headlight", "c_black": "black", "f_bossman": "fresh", "f_madam": "fresh", "f_lav": "fresh", "f_cool": "fresh", "co_hamraz": "cologne", "co_kayra": "cologne", "lt_bare": "leather", "lt_box": "leather", "pf_dahill": "perfume", "pf_euph": "perfume", "pf_boss": "perfume", "pf_madam": "perfume", "pf_lav": "perfume", "pf_cool": "perfume"};
+/* ===== پنل کناری: عکس و ویدیوی تست محصول ===== */
+/* ویدیوی mp4 روی خود گیت‌هاب (پخش خودکار قطعی). کلید = همان کلید VIDEOS، مقدار = نام فایل‌ها به ترتیب ویدیوها.
+   مثال: { led: ['videos/led-1.mp4', 'videos/led-2.mp4'] } ؛ هر کدام که نوشته نشود از آپارات پخش می‌شود. */
+const VIDEO_FILES = {};
+function aparatEmbed(u) {
+  const m = /\/v\/([A-Za-z0-9]+)/.exec(u);
+  return m ? 'https://www.aparat.com/video/video/embed/videohash/' + m[1] + '/vt/frame?autoplay=true&autoPlay=1' : null;
+}
+function closeProductPanel() {
+  const p = document.getElementById('vpanel');
+  p.hidden = true; p.innerHTML = '';
+}
+function showProduct(it, tab) {
+  const p = document.getElementById('vpanel');
+  const urls = VIDEOS[VIDEO_OF[it.id]] || [];
+  if (!urls.length && !it.img) return;
+  if (!tab) tab = urls.length ? 'v0' : 'p';
+  p.innerHTML = '';
+  const card = document.createElement('div'); card.className = 'vp-card';
+  const head = document.createElement('div'); head.className = 'vp-head';
+  const t = document.createElement('span'); t.className = 'vp-title'; t.textContent = it.short || it.name;
+  const x = document.createElement('button'); x.type = 'button'; x.className = 'vp-x'; x.textContent = '✕'; x.setAttribute('aria-label', 'بستن');
+  x.addEventListener('click', closeProductPanel);
+  const fs = document.createElement('button'); fs.type = 'button'; fs.className = 'vp-fs'; fs.textContent = '⛶ تمام‌صفحه';
+  head.append(t, fs, x);
+  const media = document.createElement('div'); media.className = 'vp-media';
+  if (tab === 'p') {
+    const im = document.createElement('img'); im.src = CONFIG.IMG_BASE + it.img; im.alt = it.name; media.appendChild(im);
+  } else {
+    const vi = Number(tab.slice(1));
+    const u = urls[vi] || urls[0];
+    const mp = (VIDEO_FILES[VIDEO_OF[it.id]] || [])[vi];
+    const src = aparatEmbed(u);
+    if (mp) {
+      const v = document.createElement('video');
+      v.src = mp; v.controls = true; v.autoplay = true; v.playsInline = true;
+      media.appendChild(v);
+      const pr = v.play();
+      if (pr && pr.catch) pr.catch(() => { v.muted = true; v.play().catch(() => {}); });
+    } else if (src) {
+      const f = document.createElement('iframe'); f.src = src; f.allowFullscreen = true; f.setAttribute('allow', 'autoplay; fullscreen'); f.title = 'ویدیو تست'; media.appendChild(f);
+    }
+  }
+  fs.addEventListener('click', () => {
+    const el = media, f = el.requestFullscreen || el.webkitRequestFullscreen;
+    if (f) { const r = f.call(el); if (r && r.catch) r.catch(() => {}); return; }
+    const v = el.querySelector('video');
+    if (v && v.webkitEnterFullscreen) { v.webkitEnterFullscreen(); return; }
+    const a = urls[Number(tab.slice(1))];
+    if (a) window.open(a, '_blank');
+  });
+  const tabs = document.createElement('div'); tabs.className = 'vp-tabs';
+  const addTab = (key, label) => {
+    const b = document.createElement('button'); b.type = 'button';
+    b.className = 'vp-tab' + (key === tab ? ' on' : ''); b.textContent = label;
+    b.addEventListener('click', () => showProduct(it, key));
+    tabs.appendChild(b);
+  };
+  if (it.img) addTab('p', '🖼 عکس');
+  urls.forEach((u, i) => addTab('v' + i, '▶ ویدیو ' + fa(i + 1)));
+  card.append(head, media);
+  if (tabs.children.length > 1) card.appendChild(tabs);
+  if (tab !== 'p' && urls.length) {
+    const l = document.createElement('a'); l.className = 'vp-open-link'; l.target = '_blank'; l.rel = 'noopener';
+    l.href = urls[Number(tab.slice(1))] || urls[0]; l.textContent = 'اگه ویدیو پخش نشد، توی آپارات باز کن';
+    card.appendChild(l);
+  }
+  p.appendChild(card);
+  p.hidden = false;
+}
+document.getElementById('vpanel').addEventListener('click', ev => { if (ev.target.id === 'vpanel') closeProductPanel(); });
+document.addEventListener('keydown', ev => { if (ev.key === 'Escape' && !document.getElementById('vpanel').hidden) closeProductPanel(); });
 function videoAnswer(it) {
   S.product = it;
   const urls = VIDEOS[VIDEO_OF[it.id]];
   if (!urls) return say('برای این محصول فعلاً ویدیوی تست ندارم. ویدیوهای بقیه‌ی محصولات توی کاتالوگ آنلاین هست:', { link: { label: 'کاتالوگ آنلاین', href: CONFIG.CATALOG_URL } });
-  say({ text: 'ویدیوی تست «' + it.name.replace(/ ۵۰۰ سی‌سی/, '') + '» رو از آپارات ببین:', videos: urls });
+  say({ text: 'ویدیوی تست «' + it.name.replace(/ ۵۰۰ سی‌سی/, '') + '» رو وسط صفحه باز کردم. ویدیوهای دیگه‌ش هم این‌جاست:', videos: urls, item: it });
 }
 
 const START_CHOICES = [
@@ -2690,11 +2800,18 @@ function productAnswer(it, asked) {
   if (it.bulk) p1 += ' از ' + fa(CONFIG.BULK_MIN) + ' کارتن به بالا هر عدد ' + money(it.bulk) + ' می‌شه.';
   let p2 = USE[it.id] ? 'کاربردش: ' + USE[it.id] + '.' : (it.audience ? 'مخاطب اصلی خریدش: ' + it.audience + '.' : '');
   if (asked) p2 = 'برای کاری که می‌گی دقیق مطمئن نیستم. تو کاتالوگ، کاربردش این‌جوری معرفی شده: ' + (USE[it.id] || 'برای خوشبو کردن هوای فضا') + '.';
-  say(p1, p2, VIDEO_OF[it.id] ? 'اگه خواستی تست محصول رو ببینی، بنویس «ویدیو تست».' : null, {
-    text: 'می‌خوای سفارشش بدی؟ همین محصول توی منو از قبل تیک خورده؛ هر چی دیگه لازم داری رو هم کنارش تیک بزن.',
-    choices: [{ key: 'order', label: 'سفارش این محصول' }],
-    onChoice: () => orderMenu([it])
+  const hasVid = !!VIDEO_OF[it.id] && !!VIDEOS[VIDEO_OF[it.id]];
+  const ch = (hasVid ? [{ key: 'video', label: '🎬 دیدن تست محصول' }] : []).concat([{ key: 'order', label: 'سفارش این محصول' }]);
+  say({ photo: it }, p1, p2, {
+    text: hasVid ? 'می‌خوای تست محصول رو ببینی یا سفارشش بدی؟ اگه سفارش بدی، همین محصول توی منو از قبل تیک خورده.' : 'می‌خوای سفارشش بدی؟ همین محصول توی منو از قبل تیک خورده؛ هر چی دیگه لازم داری رو هم کنارش تیک بزن.',
+    choices: ch,
+    onChoice: k => {
+      if (k !== 'video') return orderMenu([it]);
+      videoAnswer(it);
+      say({ text: 'اگه پسندیدی، سفارشش رو همین‌جا ثبت کن.', choices: [{ key: 'order', label: 'سفارش این محصول' }], onChoice: () => orderMenu([it]) });
+    }
   });
+  if (it.img && !hasVid) showProduct(it, 'p');
 }
 
 function handleQty(num, unit) {
@@ -3004,7 +3121,17 @@ function addOrderForm(cfg) {
       const pr = document.createElement('span');
       pr.className = 'oprice';
       pr.textContent = menuPrice(it);
-      top.append(cb, nm, pr);
+      if (it.img) {
+        const th = document.createElement('img'); th.className = 'othumb'; th.alt = '';
+        th.src = CONFIG.IMG_BASE + it.img; th.loading = 'lazy';
+        th.addEventListener('error', () => th.remove());
+        top.append(cb, th, nm, pr);
+      } else top.append(cb, nm, pr);
+      if (VIDEO_OF[id] && VIDEOS[VIDEO_OF[id]]) {
+        const tb = document.createElement('button'); tb.type = 'button'; tb.className = 'otest'; tb.textContent = '▶ تست';
+        tb.addEventListener('click', ev => { ev.preventDefault(); ev.stopPropagation(); showProduct(it); });
+        top.appendChild(tb);
+      }
       const ctl = document.createElement('div');
       ctl.className = 'oqty';
       ctl.hidden = !cb.checked;

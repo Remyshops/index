@@ -105,6 +105,7 @@ header p{margin:3px 0 0;color:var(--muted);font-size:12.5px;line-height:1.6}
 const CONFIG = {
   WHATSAPP: '989389561367',
   EITAA_URL: 'https://eitaa.com/remyshop',
+  EITAA_CHAT: 'https://eitaa.com/EZGAMETV',             // لینک گفتگوی مستقیم ایتا با همکار (مثلاً https://eitaa.com/username)؛ خالی یعنی همان EITAA_URL
   INSTAGRAM_URL: 'https://instagram.com/remyshops',
   CATALOG_URL: 'https://remyshops.github.io/index/',
   BOOTH_URL: 'https://basalam.com/editor',
@@ -1107,6 +1108,7 @@ function addBot(part) {
     a.className = 'cta';
     a.href = part.link.href; a.target = '_blank'; a.rel = 'noopener';
     a.textContent = part.link.label;
+    if (part.link.onClick) a.addEventListener('click', part.link.onClick);
     d.appendChild(a);
     chat.appendChild(d);
   }
@@ -2579,6 +2581,7 @@ function handle(text) {
   if (S.ask && RX.no.test(n)) { S.ask = null; return say('باشه، هر وقت خواستی بگو.'); }
   if (S.ask === 'order') {
     if (RX.chWa.test(n)) return setChannel('whatsapp');
+    if (/ایتا(?!لی)|eitaa/.test(n)) return setChannel('eitaa');
     if (RX.chBas.test(n)) return setChannel('basalam');
     if (/اضافه|یهچیزدیگه|محصولدیگه|بقیه/.test(n)) return addMoreToOrder();
   }
@@ -2688,8 +2691,8 @@ const S = { step: null, lead: {}, ask: null, biz: null, product: null, qty: null
 /* ===== انتخاب روش خرید: باسلام یا واتساپ ===== */
 function channelAsk() {
   return {
-    text: 'می‌خوای سفارشت رو از باسلام ثبت کنی یا از واتساپ؟ اگه چیز دیگه‌ای هم لازم داری، قبل از ثبت اضافه‌ش کن.',
-    choices: [{ key: 'basalam', label: 'باسلام' }, { key: 'whatsapp', label: 'واتساپ' }, { key: 'more', label: 'افزودن محصول بیشتر' }],
+    text: 'می‌خوای سفارشت رو از باسلام ثبت کنی، یا از واتساپ یا ایتا؟ اگه چیز دیگه‌ای هم لازم داری، قبل از ثبت اضافه‌ش کن.',
+    choices: [{ key: 'basalam', label: 'باسلام' }, { key: 'whatsapp', label: 'واتساپ' }, { key: 'eitaa', label: 'ایتا' }, { key: 'more', label: 'افزودن محصول بیشتر' }],
     onChoice: setChannel
   };
 }
@@ -2709,7 +2712,7 @@ function setChannel(key) {
       if (noLink.length) parts.push({ text: noLink.map(x => x.it.short).join('، ') + ' لینک اختصاصی ندارن؛ توی غرفه‌ی رمی شاپ در باسلام پیداشون می‌کنی.', link: { label: 'غرفه‌ی رمی شاپ در باسلام', href: CONFIG.BOOTH_URL } });
       return say(...parts);
     }
-    return startLead('خوبه، سفارش رو از واتساپ ثبت می‌کنیم. چند تا سؤال کوتاه می‌پرسم تا همکارم راحت پیگیری کنه. نام و نام خانوادگی‌ت چیه؟');
+    return startLead('خوبه، سفارش رو از ' + (key === 'eitaa' ? 'ایتا' : 'واتساپ') + ' ثبت می‌کنیم. چند تا سؤال کوتاه می‌پرسم تا همکارم راحت پیگیری کنه. نام و نام خانوادگی‌ت چیه؟');
   }
   S.channel = key;
   S.ask = null;
@@ -2719,7 +2722,7 @@ function setChannel(key) {
     if (it) return say({ text: 'عالیه! ' + it.name + ' لینک اختصاصی نداره؛ توی غرفه‌ی رمی شاپ در باسلام اسمش رو سرچ کن.', link: { label: 'غرفه‌ی رمی شاپ در باسلام', href: CONFIG.BOOTH_URL } });
     return say({ text: 'عالیه! محصولاتمون توی غرفه‌ی رمی شاپ در باسلام هستن.', link: { label: 'غرفه‌ی رمی شاپ در باسلام', href: CONFIG.BOOTH_URL } }, 'کدوم محصول رو می‌خوای؟');
   }
-  startLead('خوبه، سفارش رو از واتساپ ثبت می‌کنیم. چند تا سؤال کوتاه می‌پرسم تا همکارم راحت پیگیری کنه. نام و نام خانوادگی‌ت چیه؟');
+  startLead('خوبه، سفارش رو از ' + (key === 'eitaa' ? 'ایتا' : 'واتساپ') + ' ثبت می‌کنیم. چند تا سؤال کوتاه می‌پرسم تا همکارم راحت پیگیری کنه. نام و نام خانوادگی‌ت چیه؟');
 }
 
 function detectBiz(n) {
@@ -2875,15 +2878,23 @@ function startLead(intro, ctxOverride, kind) {
 const LEAD_CHOICES = [
   { key: 'ok', label: 'تأیید و ارسال' },
   { key: 'name', label: 'ویرایش نام' },
+  { key: 'phone', label: 'ویرایش شماره موبایل' },
   { key: 'postal', label: 'ویرایش کدپستی' },
   { key: 'address', label: 'ویرایش آدرس' },
   { key: 'need', label: 'ویرایش محصول' },
   { key: 'qty', label: 'ویرایش تعداد' }
 ];
 
+function normPhone(text) {
+  let d = toLatinDigits(text).replace(/[\s\-()+]/g, '');
+  d = d.replace(/^0098/, '').replace(/^98(?=9)/, '');
+  if (/^9\d{9}$/.test(d)) d = '0' + d;
+  return /^09\d{9}$/.test(d) ? d : null;
+}
 function leadLines(L) {
   return [
     'نام: ' + L.name,
+    'شماره موبایل: ' + (L.phone || 'نامشخص'),
     'نوع کسب‌وکار: ' + L.biz,
     'کدپستی: ' + L.postal,
     'آدرس: ' + L.address,
@@ -2907,6 +2918,7 @@ function leadEditPick(key) {
   if (key === 'ok') { S.step = null; return finish(); }
   const prompts = {
     name: 'نام و نام خانوادگی جدید رو بنویس:',
+    phone: 'شماره موبایل جدید رو بنویس (مثلاً ۰۹۱۲۳۴۵۶۷۸۹):',
     postal: 'کدپستی جدید رو بنویس (۱۰ رقم):',
     address: 'آدرس کامل جدید رو بنویس (شهر، خیابان، کوچه و پلاک):',
     need: 'محصول یا سفارش رو دوباره بنویس:',
@@ -2933,6 +2945,13 @@ function leadStep(text) {
       return say('نام خانوادگی‌ت رو هم بنویس، لطفاً.');
     }
     L.name = t.slice(0, 80);
+    return confirmLead();
+  }
+  if (S.step === 'edit_phone') {
+    const ph = normPhone(text);
+    if (ph) L.phone = ph;
+    else if (skip) L.phone = 'نامشخص';
+    else return say('شماره موبایل باید مثل ۰۹۱۲۳۴۵۶۷۸۹ باشه. اگه نمی‌خوای بدی، بنویس «ندارم».');
     return confirmLead();
   }
   if (S.step === 'edit_postal') {
@@ -2967,8 +2986,16 @@ function leadStep(text) {
       return say('فقط اسمت رو نوشتی. نام خانوادگی\u200cت رو هم بنویس، لطفاً.');
     }
     L.name = t.slice(0, 80);
+    S.step = 'phone';
+    return say('ممنون ' + L.name + '. شماره موبایل\u200cت رو بنویس تا همکارم بتونه باهات هماهنگ کنه (مثلاً ۰۹۱۲۳۴۵۶۷۸۹).');
+  }
+  if (S.step === 'phone') {
+    const ph = normPhone(text);
+    if (ph) L.phone = ph;
+    else if (skip) L.phone = 'نامشخص';
+    else return say('شماره موبایل باید مثل ۰۹۱۲۳۴۵۶۷۸۹ باشه. اگه نمی‌خوای بدی، بنویس «ندارم».');
     S.step = 'postal';
-    return say('ممنون ' + L.name + '. کدپستی\u200cت رو بنویس (۱۰ رقم).');
+    return say('کدپستی\u200cت رو بنویس (۱۰ رقم).');
   }
   if (S.step === 'postal') {
     const digits = toLatinDigits(text).replace(/[\s\-]/g, '');
@@ -3001,16 +3028,48 @@ function leadStep(text) {
   }
 }
 
+/* متن نهایی که مشتری برای همکار می‌فرستد (واتساپ/ایتا) */
+function buildLeadMessage(L) {
+  const has = v => v && String(v).trim() && String(v).trim() !== 'نامشخص';
+  const complaint = L.kind === 'complaint';
+  const need = String(L.need || '') + (has(L.qty) && String(L.need || '').indexOf(L.qty) === -1 ? ' (' + L.qty + ')' : '');
+  const r = ['سلام، وقت بخیر ✅', complaint ? 'از طریق گفتگوی سایت پخش نانو جی‌پلاس، این مشکل رو ثبت کردم:' : 'از طریق گفتگوی سایت پخش نانو جی‌پلاس، این سفارش رو ثبت کردم:', ''];
+  r.push('✅ نام: ' + L.name);
+  if (has(L.phone)) r.push('✅ شماره موبایل: ' + L.phone);
+  if (has(L.biz)) r.push('✅ کسب‌وکار: ' + L.biz);
+  r.push((complaint ? '✅ موضوع: ' : '✅ سفارش: ') + need);
+  if (!complaint && has(L.buy)) r.push('✅ نوع خرید: ' + L.buy);
+  if (has(L.address)) r.push('✅ آدرس: ' + L.address);
+  if (has(L.postal)) r.push('✅ کدپستی: ' + L.postal);
+  r.push('', complaint ? 'لطفاً پیگیری کنید و نتیجه رو به من خبر بدید. ممنون ✅' : 'لطفاً برای تأیید سفارش و هماهنگی پرداخت و ارسال با من در ارتباط باشید. ممنون ✅');
+  return r.join('\n');
+}
+
 function finish() {
   S.multi = null;
   const L = S.lead;
-  const status = L.kind === 'complaint' ? 'نیاز به پیگیری انسانی (شکایت)' : 'نیاز به پیگیری انسانی';
-  const summary = 'سلام، از گفتگوی سایت پخش نانو جی‌پلاس:\n' + leadLines(L).join('\n') + '\nخرید: ' + L.buy + '\nکانال: واتساپ\nوضعیت: ' + status + '\nیادداشت: ' + L.ctx;
+  const eitaa = S.channel === 'eitaa';
+  const summary = buildLeadMessage(L);
   let saved = '';
   if (CONFIG.LEAD_WEBHOOK) { sendLead(L); saved = ' نسخه‌ای از درخواستت هم ثبت شد.'; }
+  if (eitaa) {
+    return say('ممنون ' + L.name + '، درخواستت آماده‌ست.' + saved,
+      { text: 'دکمه‌ی زیر متن درخواستت رو کپی می‌کنه و ایتا باز می‌شه؛ فقط پیست کن و برای همکارم بفرست تا پیگیری کنه. ' + HOURS_TEXT,
+        link: { label: 'ارسال در ایتا', href: CONFIG.EITAA_CHAT || CONFIG.EITAA_URL, onClick: () => copyText(summary) } });
+  }
   const wa = 'https://wa.me/' + CONFIG.WHATSAPP + '?text=' + encodeURIComponent(summary);
   say('ممنون ' + L.name + '، درخواستت آماده‌ست.' + saved,
     { text: 'با دکمه‌ی زیر، همین پیام رو از واتساپ برای همکارم بفرست تا پیگیری کنه. ' + HOURS_TEXT, link: { label: 'ارسال در واتساپ', href: wa } });
+}
+
+function copyText(t) {
+  try { navigator.clipboard.writeText(t).catch(() => legacyCopy(t)); } catch (e) { legacyCopy(t); }
+}
+function legacyCopy(t) {
+  try {
+    const ta = document.createElement('textarea'); ta.value = t; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove();
+  } catch (e) {}
 }
 
 function sendLead(L) {
@@ -3019,7 +3078,7 @@ function sendLead(L) {
       method: 'POST',
       mode: 'no-cors',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify({ name: L.name, postal_code: L.postal, address: L.address, need: L.need, context: L.ctx, business: L.biz, qty: L.qty, purchase: L.buy, channel: 'whatsapp', source: 'website-chat', time: new Date().toISOString() })
+      body: JSON.stringify({ name: L.name, phone: L.phone, postal_code: L.postal, address: L.address, need: L.need, context: L.ctx, business: L.biz, qty: L.qty, purchase: L.buy, channel: (S.channel === 'eitaa' ? 'eitaa' : 'whatsapp'), source: 'website-chat', time: new Date().toISOString() })
     });
   } catch (e) { /* ثبت نباید گفتگو را متوقف کند */ }
 }

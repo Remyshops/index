@@ -568,6 +568,18 @@
     border:1px solid var(--line);
   }
   .item-thumb img{ width:100%; height:100%; object-fit:contain; display:block; }
+  .item-buy{
+    flex-shrink:0;
+    padding:5px 10px;
+    border-radius:8px;
+    font-size:12px;
+    font-weight:700;
+    text-decoration:none;
+    color:#ffffff;
+    background:linear-gradient(135deg, var(--drop), var(--drop-2));
+    white-space:nowrap;
+  }
+  .simple-items li:not(:has(.price-tag)) .item-buy{ margin-right:auto; }
   .simple-items{
     list-style:none;
     margin-bottom:14px;
@@ -2149,18 +2161,18 @@ const products = [
     {label:"ویدیوی تست ۴", url:"https://aparat.com/v/rgq0r6r"},
     {label:"ویدیوی تست ۵", url:"https://aparat.com/v/ridvud3"}
   ]},
-  { name:"واکس مات کننده لاستیک", price:419000, cat:"واکس", buyUrl:"https://basalam.com/editor", img:"tire-matte.webp", videos:[
+  { name:"واکس مات کننده لاستیک", price:419000, cat:"واکس", buyUrl:"https://basalam.com/editor/product/65354609", img:"tire-matte.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/kssq96r"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/zaubx68"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/smu8d4q"},
     {label:"ویدیوی تست ۴", url:"https://aparat.com/v/kqo7a41"},
     {label:"ویدیوی تست ۵", url:"https://aparat.com/v/wxx97h8"}
   ]},
-  { name:"واکس براق کننده لاستیک ( براق شاین)", price:509000, cat:"واکس", buyUrl:"https://basalam.com/editor/", img:"black-shine.webp", videos:[
+  { name:"واکس براق کننده لاستیک ( براق شاین)", price:509000, cat:"واکس", buyUrl:"https://basalam.com/editor/product/65355092", img:"black-shine.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/lnsddtl"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/mygqm4i"}
   ]},
-  { name:"واکس داشبورد سیلیکونی", price:409000, cat:"واکس", buyUrl:"https://basalam.com/editor", img:"dashboard-silicon-wax.webp", videos:[
+  { name:"واکس داشبورد سیلیکونی", price:409000, cat:"واکس", buyUrl:"https://basalam.com/editor/product/65354843", img:"dashboard-silicon-wax.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://aparat.com/v/gdz1dho"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/ntzk4v2"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/taeax83"}
@@ -2176,7 +2188,7 @@ const products = [
     {label:"ویدیوی تست ۴", url:"https://aparat.com/v/cops4l1"},
     {label:"ویدیوی تست ۵", url:"https://www.aparat.com/v/merqvd1"}
   ]},
-  { name:"صفر شوی", price:409000, cat:"خودرویی", buyUrl:"https://basalam.com/editor", img:"zero-car-wash.webp", videos:[
+  { name:"صفر شوی", price:409000, cat:"خودرویی", buyUrl:"https://basalam.com/editor/product/58353747", img:"zero-car-wash.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://www.aparat.com/v/hbj049k"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/uee58ek"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/txol3r7"},
@@ -2189,7 +2201,7 @@ const products = [
     {label:"ویدیوی تست 10", url:"https://aparat.com/v/qgg29h5"},
     {label:"ویدیوی تست 11", url:"https://aparat.com/v/xawlse9"}
   ]},
-  { name:"موتور شوی", price:409000, cat:"خودرویی", buyUrl:"https://basalam.com/editor", img:"engine-cleaner.webp", videos:[
+  { name:"موتور شوی", price:409000, cat:"خودرویی", buyUrl:"https://basalam.com/editor/product/58451891", img:"engine-cleaner.webp", videos:[
     {label:"ویدیوی تست ۱", url:"https://www.aparat.com/v/whc79m4"},
     {label:"ویدیوی تست ۲", url:"https://aparat.com/v/zzjjg65"},
     {label:"ویدیوی تست ۳", url:"https://aparat.com/v/wyz8k3k"},
@@ -2258,18 +2270,18 @@ const simpleCategories = [
   { title:"ادکلن", buyUrl:"https://basalam.com/editor", introLabel:"معرفی ادکلن", catImg:"cologne-set.webp", videoUrls:[
     "https://aparat.com/v/myx2f11","https://aparat.com/v/negc5ae"
   ], items:[
-    {name:"ادکلن زنانه همراز", price:1219000},{name:"ادکلن مردانه کایرا", price:1219000}
+    {name:"ادکلن زنانه همراز", price:1219000, url:"https://basalam.com/editor/product/52753049"},{name:"ادکلن مردانه کایرا", price:1219000, url:"https://basalam.com/editor/product/52753129"}
   ]},
   { title:"خوشبو کننده", buyUrl:"https://basalam.com/editor", introLabel:"معرفی خوشبو کننده", catImg:"air-freshener-set.webp", videoUrls:[
     "https://aparat.com/v/ejelu90","https://aparat.com/v/ezjv82d","https://aparat.com/v/phaxsff","https://aparat.com/v/szx9qt2"
   ], items:[
-    {name:"اسپری خوشبوکننده هوا رایحه باس من", price:369000},{name:"اسپری خوشبوکننده هوا رایحه مادام بیوتی", price:369000},
-    {name:"اسپری خوشبوکننده هوا رایحه لاوندر", price:369000},{name:"اسپری خوشبوکننده هوا رایحه کول فرش", price:369000}
+    {name:"اسپری خوشبوکننده هوا رایحه باس من", price:369000, url:"https://basalam.com/editor/product/58239246"},{name:"اسپری خوشبوکننده هوا رایحه مادام بیوتی", price:369000, url:"https://basalam.com/editor/product/58239466"},
+    {name:"اسپری خوشبوکننده هوا رایحه لاوندر", price:369000, url:"https://basalam.com/editor/product/58238927"},{name:"اسپری خوشبوکننده هوا رایحه کول فرش", price:369000, url:"https://basalam.com/editor/product/58239595"}
   ]},
   { title:"واکس چرم", buyUrl:"https://basalam.com/editor", introLabel:"معرفی واکس چرم جی پلاس", catImg:"leather-wax.webp", videoUrls:[
     "https://aparat.com/v/rsslhf2"
   ], items:[
-    {name:"نانو چرم کیف و کفش بدون جعبه", price:359000},{name:"نانو چرم کیف و کفش با جعبه", price:389000}
+    {name:"نانو چرم کیف و کفش بدون جعبه", price:359000, url:"https://basalam.com/editor/product/60293578"},{name:"نانو چرم کیف و کفش با جعبه", price:389000}
   ]}
 ];
 
@@ -3166,7 +3178,8 @@ function renderSimpleCats(filter=""){
         if (typeof it === "string") return `<li>${it}</li>`;
         const thumb = it.img ? `<span class="item-thumb"><img src="${it.img}" alt="${it.name}" loading="lazy" decoding="async"></span>` : "";
         const priceHtml = itemPrice(it) ? `<span class="price-tag" style="margin:0 0 0 auto">${itemPrice(it)}</span>` : "";
-        return `<li class="has-thumb">${thumb}<span>${it.name}</span>${priceHtml}</li>`;
+        const buyHtml = it.url ? `<a class="item-buy" href="${it.url}" target="_blank" rel="noopener">🛒 خرید</a>` : "";
+        return `<li class="has-thumb">${thumb}<span>${it.name}</span>${priceHtml}${buyHtml}</li>`;
       }).join("");
       block.innerHTML = `
         <h3><span class="drop"></span>${cat.title}</h3>
